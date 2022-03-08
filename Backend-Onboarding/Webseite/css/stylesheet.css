@@ -17,10 +17,22 @@ body {
     margin-right: 42px;
 }
 
-.navigation a {
+a {
     text-decoration: none;
-    color: white;
     font-size: 16pt;
+    color: black;
+}
+
+.navigation a {
+    color: white;
+}
+
+aside {
+    width: 200px;
+}
+header {
+    display: grid;
+    grid-template-columns: auto 1fr 1fr;
 }
 
 .menu {
@@ -30,17 +42,28 @@ body {
 }
 
 .btn {
+    cursor: pointer;
     background-color: #00ACDF;
     border: none;
     border-radius: 10px;
     height: 40px;
     width: 91px;
     color: white;
-    font-size: 16pt;
+    font-size: 16px;
+}
+
+.btn:hover {
+    background-color: #03799c;
 }
 
 .btn-larger {
     width: 150px;
+}
+
+.btn-inverted {
+    border-color: white;
+    border-style: solid;
+    border-width: 2px !important;
 }
 
 .clr {
@@ -51,55 +74,33 @@ body {
     float: right;
 }
 
-.header-background {
-    position: relative;
-    background-color: #001427;
-    height: 888px;
-    width: 100%;
-    overflow: visible;
-    padding-top: 53px;
-}
-
-#large-title {
-    color: white;
-    font-size: 96pt;
-    font-weight: bolder;
-}
-
-#subtitle {
-    color: white;
-    font-size: 23pt;
-    font-weight: normal;
-}
-
-#main-title {
-    color: white;
-    left: 50%;
-    top: 10px;
-    text-align: center;
-
-    /* NOCH ZIEMLICH UNSCHOEN */
-    position: absolute;
-    margin-top: 53px;
-}
-
-.side {
-    width: 20%;
-    height: 100%;
-}
-
-#side-left {
+#container {
     float: left;
+    padding-top: 53px; 
+    display: grid;
+    grid-template-columns: auto auto auto;
 }
 
-#side-right {
-    float: right;
+body {
+    background-repeat: no-repeat;
+    background-image: linear-gradient(to bottom, #001427, #001427), linear-gradient(to bottom, white, white);
+    background-size: 100% 888px, 100%;
+}
+
+header img {
+    display: block;
+    width: 215px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#service-article{
+    max-width: 1387px;
 }
 
 #main-content {
-    float: left;
-    width: 60%;
     text-align: center;
+    max-width: 1520px;
 }
 
 #side-left a {
@@ -113,42 +114,107 @@ body {
     left: 100px;
 }
 
-#sozial-media a img {
-    width: 10px;
+#sozial-media img {
+    max-width: 24px;
+    max-height: 24px;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
+#main-grpahics {
+    display: grid;
+    margin-top: 50px;
+    grid-template-columns: auto auto auto;
+    justify-content: center;
 }
 
 #main-grpahics img {
-    display: inline;
+    display: block;
+    margin: auto;
 }
 
 #apps {
-    display: inline;
+    margin-top: 100px;
+}
+
+#title {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 700px;
+}
+
+#subtitle {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    color: white;
+    font-size: 23px;
+    font-weight: normal;
+    margin-top: 50px;
+    max-width: 940px;
+}
+
+.large-title {
+    color: white;
+    font-size: 96px;
+    font-weight: bolder;
+    line-height: 1;
+    margin-top: 200px;
 }
 
 .medium-title {
-    margin-top: 100px;
-    font-size: 80pt;
+    margin-top: 200px;
+    font-size: 80px;
+    color: #001427;
 }
 
 .low-title {
     margin-top: 100px;
-    font-size: 56pt;
+    font-size: 56px;
     line-height: 1;
+    color: #001427;
+}
+
+.box{
+    margin-top: 100px;
+    text-align: left;
 }
 
 .box p {
-    text-align: left;
     line-height: 1.5;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+.box img {
+    display: block;
+    margin: auto;
 }
 
 .box-right {
     float: right;
-    width: 45%;
+    width: 50%;
 }
 
 .box-left{
     float: left;
-    width: 45%;
+    width: 50%;
+}
+
+.service-margin {
+    margin-top: 75px;
+}
+
+#testimonial {
+    margin-top: 30px;
+}
+
+#testimonial p {
+    max-width: 940px;
+    font-size: 23px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .testimonial-box {
@@ -182,4 +248,63 @@ body {
 #testimonial-left {
     margin-right: 5px;
     float: left;
+}
+
+#subscription {
+    color: white;
+    padding-top: 100px;
+    padding-left: 50px;
+    padding-bottom: 100px;
+    background-color: #00ACDF;
+    text-align: left;
+    border-radius: 10px;
+}
+
+#subscription a {
+    color: white;
+    font-size: 80px;
+    margin-bottom: 50px;
+}
+
+#subscription p {
+    font-size: 23px;
+    margin-bottom: 50px;
+    max-width: 940px;
+}
+
+#overview {
+    margin-top: 100px;
+    margin-bottom: 50px;
+    display: grid;
+    grid-template-columns: 4fr 1fr 1fr 1fr;
+    justify-content: left;
+    text-align: left;
+}
+
+#overview ul, a {
+    display: inline-block;
+    text-align: left;
+    list-style: none;
+    font-size: 18px;
+    margin: 0;
+    padding: 0;
+}
+
+.overview-title {
+    margin-bottom: 15px;
+    font-size: 20px;
+}
+
+#overview ul img {
+    margin-right: 10px;
+}
+
+footer {
+    background-color: #001427;
+    height: 50px;
+    text-align: center;
+    color: white;
+    padding: auto;
+    vertical-align: middle;
+    line-height: 50px;
 }
