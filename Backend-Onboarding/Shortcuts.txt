@@ -1,0 +1,8 @@
+Alt + Pfeiltasten: Verschieben einer ganzen Zeile
+Strg + k + C: Kommentar
+
+css:   . für class und # für id
+
+block: Füllt ganze breite
+inline: nur benötigter Platz (Elemente dann nebenenander)
+inline-block: mixt beides

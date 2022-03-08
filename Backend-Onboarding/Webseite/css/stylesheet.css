@@ -1,0 +1,185 @@
+* {
+    box-sizing: border-box;
+    margin: 0px;
+    padding: 0px;
+}
+
+body {
+    font-family: "Poppins";
+}
+
+.navigation {
+    list-style: none;
+}
+
+.navigation li {
+    float: left;
+    margin-right: 42px;
+}
+
+.navigation a {
+    text-decoration: none;
+    color: white;
+    font-size: 16pt;
+}
+
+.menu {
+    overflow: auto;
+    float: left;
+    position: absolute;
+}
+
+.btn {
+    background-color: #00ACDF;
+    border: none;
+    border-radius: 10px;
+    height: 40px;
+    width: 91px;
+    color: white;
+    font-size: 16pt;
+}
+
+.btn-larger {
+    width: 150px;
+}
+
+.clr {
+    clear: both;
+}
+
+#contact {
+    float: right;
+}
+
+.header-background {
+    position: relative;
+    background-color: #001427;
+    height: 888px;
+    width: 100%;
+    overflow: visible;
+    padding-top: 53px;
+}
+
+#large-title {
+    color: white;
+    font-size: 96pt;
+    font-weight: bolder;
+}
+
+#subtitle {
+    color: white;
+    font-size: 23pt;
+    font-weight: normal;
+}
+
+#main-title {
+    color: white;
+    left: 50%;
+    top: 10px;
+    text-align: center;
+
+    /* NOCH ZIEMLICH UNSCHOEN */
+    position: absolute;
+    margin-top: 53px;
+}
+
+.side {
+    width: 20%;
+    height: 100%;
+}
+
+#side-left {
+    float: left;
+}
+
+#side-right {
+    float: right;
+}
+
+#main-content {
+    float: left;
+    width: 60%;
+    text-align: center;
+}
+
+#side-left a {
+    display: block;
+    margin-top: 20px;
+}
+
+#sozial-media {
+    position: absolute;
+    bottom: 100px;
+    left: 100px;
+}
+
+#sozial-media a img {
+    width: 10px;
+}
+
+#main-grpahics img {
+    display: inline;
+}
+
+#apps {
+    display: inline;
+}
+
+.medium-title {
+    margin-top: 100px;
+    font-size: 80pt;
+}
+
+.low-title {
+    margin-top: 100px;
+    font-size: 56pt;
+    line-height: 1;
+}
+
+.box p {
+    text-align: left;
+    line-height: 1.5;
+}
+
+.box-right {
+    float: right;
+    width: 45%;
+}
+
+.box-left{
+    float: left;
+    width: 45%;
+}
+
+.testimonial-box {
+    width: 48.5%;
+    background-color: #F2F2F7;
+    border-radius: 10px;
+    height: auto;
+    margin-top: 50px;
+    text-align: left;
+    padding: 15px 15px 30px 15px;
+}
+.testimonial-box img {
+    float: left;
+    display: inline;
+    height: 50px;
+}
+
+.testimonial-box span {
+    line-height: 50px;
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 10px;
+    font-weight: bolder;
+}
+
+#testimonial-right {
+    margin-left: 5px;
+    float: right;
+}
+
+#testimonial-left {
+    margin-right: 5px;
+    float: left;
+}
