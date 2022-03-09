@@ -14,7 +14,7 @@
 
 <body>
     <div class="container">
-        <aside class="side-left side">
+        <aside>
             <div id="sozial-media">
                 <a href="#"><img src="img/linkedin.png" alt=""></a>
                 <a href="#"><img src="img/xing.png" alt=""></a>
@@ -27,179 +27,199 @@
 
             <header>
                 <nav>
+                    <label for="menu-btn"><img id="menu-img" src="img/white-menu.png" alt=""></label>
+                    <input id="menu-btn" onclick="menuClick()" hidden>
                     <ul class="navigation">
                         <li><a href="index.html">Home</a></li>
                         <li><a href="about.html">About</a></li>
                         <li><a href="#">Page2</a></li>
                         <li><a href="#">Page3</a></li>
+                        <li id="contact-menu"><a href="#">Kontakt</a></li>
                     </ul>
                 </nav>
-                <img src="img/logo-reanmo.png" alt="reanmo">
+                <img id="main-logo" src="img/logo-reanmo.png" alt="reanmo">
                 <div>
-                    <button class="contact btn">Kontakt</button>
+                    <button id="contact-btn" class="contact btn">Kontakt</button>
                 </div>
             </header>
-            <div class="clr"></div>
-            <main class="main-content">
-                <p class="page-title large-title">Smart Home Applicaion</p>
-                <p id="subtitle">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
-                    invidunt ut
-                    labore et dolore magna aliquyam erat, sed diam voluptua.</p>
-                <article id="main-grpahics">
-                    <img src="img/graphic-5.png" alt="">
-                    <img src="img/graphic-2.png" alt="">
-                    <img src="img/graphic-4.png" alt="">
-                </article>
-                <article id="apps">
-                    <img src="img/app_store.png" alt="">
-                    <img src="img/google_play.png" alt="">
-                </article>
-                <p class="medium-title">Our Service</p>
-                <article id="service-article" class="box">
-                    <div class="box-left">
-                        <img src="img/graphic-1.png" alt="">
-                    </div>
-                    <div class="box-right">
-                        <span class="low-title">Smart Home - Smart Service</span>
-                        <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
-                            invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et
-                            accusam
-                            et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est
-                            Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
-                            diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
-                            voluptua.</p>
-                        <button class="btn btn-larger">Lerne mehr</button>
-                    </div>
-                </article>
+            <nav id="app-navigation">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="#">Page2</a>
+                <a href="#">Page3</a>
+                <a id="contact-menu" href="#">Kontakt</a>
+            </nav>
+            <div id="content">
                 <div class="clr"></div>
-                <article class="box">
-                    <div class="box-left">
-                        <span class="low-title">How to manage your Rooms?</span>
-                        <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
-                            invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et
-                            accusam
-                            et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est
-                            Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
-                            diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
-                            voluptua.</p>
-                        <button class="btn btn-larger">Lerne mehr</button>
-                    </div>
-                    <div class="box-right">
+                <main class="main-content">
+                    <p class="page-title large-title">Smart Home Application</p>
+                    <p id="subtitle">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod
+                        tempor
+                        invidunt ut
+                        labore et dolore magna aliquyam erat, sed diam voluptua.</p>
+                    <article id="main-grpahics">
+                        <img src="img/graphic-5.png" alt="">
+                        <img src="img/graphic-2.png" alt="">
                         <img src="img/graphic-4.png" alt="">
-                    </div>
-                </article>
-                <div class="clr"></div>
-                <p class="medium-title">Testimonials</p>
-                <article id="testimonial">
+                    </article>
+                    <article id="apps">
+                        <img src="img/app_store.png" alt="">
+                        <img src="img/google_play.png" alt="">
+                    </article>
+                    <p class="medium-title">Our Service</p>
+                    <article id="service-article" class="box">
+                        <div class="box-left">
+                            <img src="img/graphic-1.png" alt="">
+                        </div>
+                        <div class="box-right">
+                            <span class="low-title">Smart Home - Smart Service</span>
+                            <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
+                                invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et
+                                accusam
+                                et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est
+                                Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
+                                diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
+                                voluptua.</p>
+                            <button class="btn btn-larger">Lerne mehr</button>
+                        </div>
+                    </article>
+                    <div class="clr"></div>
+                    <article id="lower-box" class="box">
+                        <div class="box-left">
+                            <span class="low-title">How to manage your Rooms?</span>
+                            <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
+                                invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et
+                                accusam
+                                et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est
+                                Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
+                                diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
+                                voluptua.</p>
+                            <button class="btn btn-larger">Lerne mehr</button>
+                        </div>
+                        <div id="lower-right-box" class="box-right">
+                            <img src="img/graphic-4.png" alt="">
+                        </div>
+                    </article>
+                    <div class="clr"></div>
+                    <p class="medium-title">Testimonials</p>
                     <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt
                         ut
                         labore et dolore magna aliquyam erat, sed diam voluptua.</p>
-                    <div id="testimonial-left" class="testimonial-box">
-                        <div>
+                    <article id="testimonial">
+                        <div class="testimonial-box">
                             <img src="img/musk.png" alt="">
                             <span>Elon Musk</span>
+                            <p class="testimonial-description">Lorem ipsum dolor sit amet, consetetur sadipscing elitr,
+                                sed
+                                diam nonumy eirmod tempor
+                                invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et
+                                accusam
+                                et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est
+                                Lorem ipsum dolor sit amet.</p>
                         </div>
-                        <div class="clr"></div>
-                        <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
-                            invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et
-                            accusam
-                            et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est
-                            Lorem ipsum dolor sit amet.</p>
-                    </div>
-                    <div id="testimonial-right" class="testimonial-box">
-                        <div>
+                        <div class="testimonial-box">
                             <img src="img/bezos.png" alt="">
                             <span>Jeff Bezos</span>
+                            <p class="testimonial-description">Lorem ipsum dolor sit amet, consetetur sadipscing elitr,
+                                sed
+                                diam nonumy eirmod tempor
+                                invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et
+                                accusam
+                                et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est
+                                Lorem ipsum dolor sit amet.</p>
                         </div>
-                        <div class="clr"></div>
+                    </article>
+                    <div class="clr"></div>
+                    <p class="medium-title">FAQ</p>
+                    <article id="faqs">
+                        <div id="faq_container_1" class="faq">
+                            <label for="1"><img id="faq_img_1" src="img/plus.png" alt=""></label>
+                            <input type="button" id="1" onclick="test(this.id)" hidden>
+                            <p>Lorem ipsum dolor sit amet, consetetur sadipscing?</p>
+                            <div></div>
+                            <p id="faq_content_1">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
+                                nonumy
+                                eirmod tempor invidunt ut labore et dolore
+                                magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et
+                                ea
+                                rebum. Stet clita kasd
+                                gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+                        </div>
+                        <div id="faq_container_2" class="faq">
+                            <label for="2"><img id="faq_img_2" src="img/plus.png" alt=""></label>
+                            <input type="button" id="2" onclick="test(this.id)" hidden>
+                            <p>Lorem ipsum dolor sit amet, consetetur sadipscing?</p>
+                            <div></div>
+                            <p id="faq_content_2">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
+                                nonumy
+                                eirmod tempor invidunt ut labore et dolore
+                                magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et
+                                ea
+                                rebum. Stet clita kasd
+                                gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+                        </div>
+                        <div id="faq_container_3" class="faq">
+                            <label for="3"><img id="faq_img_3" src="img/plus.png" alt=""></label>
+                            <input type="button" id="3" onclick="test(this.id)" hidden>
+                            <p>Lorem ipsum dolor sit amet, consetetur sadipscing?</p>
+                            <div></div>
+                            <p id="faq_content_3">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
+                                nonumy
+                                eirmod tempor invidunt ut labore et dolore
+                                magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et
+                                ea
+                                rebum. Stet clita kasd
+                                gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+                        </div>
+                        <div id="faq_container_4" class="faq">
+                            <label for="4"><img id="faq_img_4" src="img/plus.png" alt=""></label>
+                            <input type="button" id="4" onclick="test(this.id)" hidden>
+                            <p>Lorem ipsum dolor sit amet, consetetur sadipscing?</p>
+                            <div></div>
+                            <p id="faq_content_4">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
+                                nonumy
+                                eirmod tempor invidunt ut labore et dolore
+                                magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et
+                                ea
+                                rebum. Stet clita kasd
+                                gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+                        </div>
+                    </article>
+                    <div class="clr"></div>
+                    <article id="subscription">
+                        <a class="large-title">Subscribe to get updated</a>
                         <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
-                            invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et
-                            accusam
-                            et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est
-                            Lorem ipsum dolor sit amet.</p>
-                    </div>
-                </article>
-                <div class="clr"></div>
-                <p class="medium-title">FAQ</p>
-                <article id="faqs">
-                    <div id="faq_container_1" class="faq">
-                        <label for="1"><img id="faq_img_1" src="img/plus.png" alt=""></label>
-                        <input type="button" id="1" onclick="test(this.id)" hidden>
-                        <p>Lorem ipsum dolor sit amet, consetetur sadipscing?</p>
-                        <div></div>
-                        <p id="faq_content_1">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
-                            eirmod tempor invidunt ut labore et dolore
-                            magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea
-                            rebum. Stet clita kasd
-                            gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
-                    </div>
-                    <div id="faq_container_2" class="faq">
-                        <label for="2"><img id="faq_img_2" src="img/plus.png" alt=""></label>
-                        <input type="button" id="2" onclick="test(this.id)" hidden>
-                        <p>Lorem ipsum dolor sit amet, consetetur sadipscing?</p>
-                        <div></div>
-                        <p id="faq_content_2">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
-                            eirmod tempor invidunt ut labore et dolore
-                            magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea
-                            rebum. Stet clita kasd
-                            gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
-                    </div>
-                    <div id="faq_container_3" class="faq">
-                        <label for="3"><img id="faq_img_3" src="img/plus.png" alt=""></label>
-                        <input type="button" id="3" onclick="test(this.id)" hidden>
-                        <p>Lorem ipsum dolor sit amet, consetetur sadipscing?</p>
-                        <div></div>
-                        <p id="faq_content_3">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
-                            eirmod tempor invidunt ut labore et dolore
-                            magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea
-                            rebum. Stet clita kasd
-                            gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
-                    </div>
-                    <div id="faq_container_4" class="faq">
-                        <label for="4"><img id="faq_img_4" src="img/plus.png" alt=""></label>
-                        <input type="button" id="4" onclick="test(this.id)" hidden>
-                        <p>Lorem ipsum dolor sit amet, consetetur sadipscing?</p>
-                        <div></div>
-                        <p id="faq_content_4">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
-                            eirmod tempor invidunt ut labore et dolore
-                            magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea
-                            rebum. Stet clita kasd
-                            gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
-                    </div>
-                </article>
-                <div class="clr"></div>
-                <article id="subscription">
-                    <a>Subscribe to get updated</a>
-                    <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt
-                        ut labore et dolore
-                        magna aliquyam erat, sed diam voluptua.</p>
-                    <button class="btn btn-larger btn-inverted">Subscribe</button>
-                </article>
-                <article id="overview">
-                    <div>
-                        <img class="overview-title" src="img/logo-reanmo-dark.png" alt="Logo">
-                        <p>02871 2372 427</p>
-                        <p>info@reanmo.com</p>
-                    </div>
-                    <ul>
-                        <li class="overview-title">Links</li>
-                        <li><a href="#">Home</a></li>
-                        <li><a href="#">Portfolio</a></li>
-                        <li><a href="#">Service</a></li>
-                        <li><a href="about.html">About</a></li>
-                        <li><a href="#">Magazin</a></li>
-                    </ul>
-                    <ul>
-                        <li class="overview-title">Legal</li>
-                        <li><a href="#">Impressum</a></li>
-                        <li><a href="#">Datenschutz</a></li>
-                    </ul>
-                    <ul>
-                        <li class="overview-title">Language</li>
-                        <li><img src="img/german.png" alt=""><img src="img/english.png" alt=""></li>
-                    </ul>
-                </article>
-            </main>
+                            invidunt
+                            ut labore et dolore
+                            magna aliquyam erat, sed diam voluptua.</p>
+                        <button class="btn btn-larger btn-inverted">Subscribe</button>
+                    </article>
+                    <article id="overview">
+                        <div>
+                            <img class="overview-title" src="img/logo-reanmo-dark.png" alt="Logo">
+                            <p>02871 2372 427</p>
+                            <p>info@reanmo.com</p>
+                        </div>
+                        <ul>
+                            <li class="overview-title">Links</li>
+                            <li><a href="#">Home</a></li>
+                            <li><a href="#">Portfolio</a></li>
+                            <li><a href="#">Service</a></li>
+                            <li><a href="about.html">About</a></li>
+                            <li><a href="#">Magazin</a></li>
+                        </ul>
+                        <ul>
+                            <li class="overview-title">Legal</li>
+                            <li><a href="#">Impressum</a></li>
+                            <li><a href="#">Datenschutz</a></li>
+                        </ul>
+                        <ul>
+                            <li class="overview-title">Language</li>
+                            <li><img src="img/german.png" alt=""><img src="img/english.png" alt=""></li>
+                        </ul>
+                    </article>
+                </main>
+            </div>
         </div>
         <aside class="side-right side"></aside>
     </div>
