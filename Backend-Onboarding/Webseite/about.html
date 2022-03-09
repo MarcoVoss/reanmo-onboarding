@@ -13,196 +13,207 @@
 
 <body>
     <div class="container">
-        <aside class="side-left side">
-            <div id="sozial-media">
-                <a href="#"><img src="img/linkedin.png" alt=""></a>
-                <a href="#"><img src="img/xing.png" alt=""></a>
-                <a href="#"><img src="img/instagram.png" alt=""></a>
-                <a href="#"><img src="img/facebook.png" alt=""></a>
-                <a href="#"><img src="img/youtube-play.png" alt=""></a>
+        <aside>
+            <div id="sozial-media" class="flex-center flex-column">
+                <a href="#"><img class="img-tiny" src="img/linkedin.png" alt=""></a>
+                <a href="#"><img class="img-tiny" src="img/xing.png" alt=""></a>
+                <a href="#"><img class="img-tiny" src="img/instagram.png" alt=""></a>
+                <a href="#"><img class="img-tiny" src="img/facebook.png" alt=""></a>
+                <a href="#"><img class="img-tiny" src="img/youtube-play.png" alt=""></a>
             </div>
         </aside>
         <div>
-
             <header>
-                <nav>
-                    <label for="menu-btn"><img id="menu-img" src="img/white-menu.png" alt=""></label>
-                    <input id="menu-btn" onclick="menuClick()" hidden>
-                    <ul class="navigation">
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="about.html">About</a></li>
-                        <li><a href="#">Page2</a></li>
-                        <li><a href="#">Page3</a></li>
-                        <li id="contact-menu"><a href="#">Kontakt</a></li>
-                    </ul>
-                </nav>
-                <img id="main-logo" src="img/logo-reanmo.png" alt="reanmo">
-                <div>
-                    <button id="contact-btn" class="contact btn">Kontakt</button>
+                <div class="flex-left">
+                    <nav>
+                        <img id="menu-img" src="img/white-menu.png" onclick="menuClick()" alt="">
+                        <ul class="navigation">
+                            <li><a href="index.html">Home</a></li>
+                            <li><a href="about.html">About</a></li>
+                            <li><a href="#">Page2</a></li>
+                            <li><a href="#">Page3</a></li>
+                            <li id="contact-menu"><a href="#">Kontakt</a></li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="flex-center">
+                    <img id="main-logo" class="img-large" src="img/logo-reanmo.png" alt="reanmo">
+                </div>
+                <div class="flex-right">
+                    <button id="contact-btn" class="btn">Kontakt</button>
                 </div>
             </header>
-            <nav id="app-navigation">
+            <nav id="app-navigation" class="app-navigation">
                 <a href="index.html">Home</a>
                 <a href="about.html">About</a>
                 <a href="#">Page2</a>
                 <a href="#">Page3</a>
                 <a id="contact-menu" href="#">Kontakt</a>
             </nav>
-            <div id="content">
-                <div class="clr"></div>
-                <main class="main-content">
-                    <p class="page-title large-title">About Us</p>
-                    <article id="abstract">
-                        <div class="abstract-box">
-                            <div class="imagebox">
-                                <img src="img/office.jpg" alt="">
+            <main id="content" class="main-content">
+                <section>
+                    <div class="flex-center flex-column">
+                        <h1 class="font-light">About Us</h1>
+                        <article id="about-overview" class="flex-center">
+                            <div class="clean-box flex-center flex-column aboutCustom">
+                                <div class="imagebox">
+                                    <img class="img-fill" src="img/office.jpg" alt="">
+                                </div>
+                                <h2>Company</h2>
+                                <button class="btn-circle btn space-top"><a href="#company"><img src="img/eye.png"
+                                            alt=""></a></button>
                             </div>
-                            <p class="low-title">Company</p>
-                            <button class="btn-circle btn"><a href="#company"><img src="img/eye.png"
-                                        alt=""></a></button>
-                        </div>
-                        <div class="abstract-box">
-                            <div class="imagebox">
-                                <img src="img/people.jpg" alt="">
-                            </div>
-                            <p class="low-title">People</p>
-                            <button class="btn-circle btn"><a href="#people"><img src="img/eye.png" alt=""></a></button>
+                            <div class="clean-box flex-center flex-column aboutCustom">
+                                <div class="imagebox">
+                                    <img class="img-fill" src="img/people.jpg" alt="">
+                                </div>
+                                <h2>People</h2>
+                                <button class="btn-circle btn space-top"><a href="#people"><img src="img/eye.png"
+                                            alt=""></a></button>
 
-                        </div>
-                        <div class="abstract-box">
-                            <div class="imagebox">
-                                <img src="img/review.jpg" alt="">
                             </div>
-                            <p class="low-title">Clients</p>
-                            <button class="btn-circle btn"><a href="#clients"><img src="img/eye.png"
-                                        alt=""></a></button>
-                        </div>
-                    </article>
+                            <div class="clean-box flex-center flex-column aboutCustom">
+                                <div class="imagebox">
+                                    <img class="img-fill" src="img/review.jpg" alt="">
+                                </div>
+                                <h2>Clients</h2>
+                                <button class="btn-circle btn space-top"><a href="#clients"><img src="img/eye.png"
+                                            alt=""></a></button>
+                            </div>
+                        </article>
+                    </div>
+                </section>
+                <section>
                     <article id="company" class="box">
                         <div>
-                            <img src="img/office.jpg" alt="">
+                            <img class="img-huge img-rounded" src="img/office.jpg" alt="">
                         </div>
                         <div>
-                            <span class="low-title">Company</span>
-                            <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
+                            <h2>Company</h2>
+                            <h5>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
                                 invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et
                                 accusam
                                 et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est
                                 Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
                                 diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
-                                voluptua.</p>
+                                voluptua.</h5>
                         </div>
                     </article>
                     <article id="people">
-                        <p class="low-title">People</p>
+                        <h2>People</h2>
                         <div id="employees">
-                            <div class="employee">
+                            <div class="employee flex-center flex-column">
                                 <div class="employee-imagebox">
                                     <img src="img/office.jpg" alt="">
                                 </div>
-                                <p>Name</p>
-                                <p>Stelle</p>
+                                <h5>Name</h5>
+                                <h5>Stelle</h5>
                             </div>
-                            <div class="employee">
+                            <div class="employee flex-center flex-column">
                                 <div class="employee-imagebox">
                                     <img src="img/office.jpg" alt="">
                                 </div>
-                                <p>Name</p>
-                                <p>Stelle</p>
+                                <h5>Name</h5>
+                                <h5>Stelle</h5>
                             </div>
-                            <div class="employee">
+                            <div class="employee flex-center flex-column">
                                 <div class="employee-imagebox">
                                     <img src="img/office.jpg" alt="">
                                 </div>
-                                <p>Name</p>
-                                <p>Stelle</p>
+                                <h5>Name</h5>
+                                <h5>Stelle</h5>
                             </div>
-                            <div class="employee">
+                            <div class="employee flex-center flex-column">
                                 <div class="employee-imagebox">
                                     <img src="img/office.jpg" alt="">
                                 </div>
-                                <p>Name</p>
-                                <p>Stelle</p>
+                                <h5>Name</h5>
+                                <h5>Stelle</h5>
                             </div>
-                            <div class="employee">
+                            <div class="employee flex-center flex-column">
                                 <div class="employee-imagebox">
                                     <img src="img/office.jpg" alt="">
                                 </div>
-                                <p>Name</p>
-                                <p>Stelle</p>
+                                <h5>Name</h5>
+                                <h5>Stelle</h5>
                             </div>
-                            <div class="employee">
+                            <div class="employee flex-center flex-column">
                                 <div class="employee-imagebox">
                                     <img src="img/office.jpg" alt="">
                                 </div>
-                                <p>Name</p>
-                                <p>Stelle</p>
+                                <h5>Name</h5>
+                                <h5>Stelle</h5>
                             </div>
-                            <div class="employee">
+                            <div class="employee flex-center flex-column">
                                 <div class="employee-imagebox">
                                     <img src="img/office.jpg" alt="">
                                 </div>
-                                <p>Name</p>
-                                <p>Stelle</p>
+                                <h5>Name</h5>
+                                <h5>Stelle</h5>
                             </div>
-                            <div class="employee">
+                            <div class="employee flex-center flex-column">
                                 <div class="employee-imagebox">
                                     <img src="img/office.jpg" alt="">
                                 </div>
-                                <p>Name</p>
-                                <p>Stelle</p>
+                                <h5>Name</h5>
+                                <h5>Stelle</h5>
                             </div>
-                            <div class="employee">
+                            <div class="employee flex-center flex-column">
                                 <div class="employee-imagebox">
                                     <img src="img/office.jpg" alt="">
                                 </div>
-                                <p>Name</p>
-                                <p>Stelle</p>
+                                <h5>Name</h5>
+                                <h5>Stelle</h5>
                             </div>
-                            <div class="employee">
+                            <div class="employee flex-center flex-column">
                                 <div class="employee-imagebox">
                                     <img src="img/office.jpg" alt="">
                                 </div>
-                                <p>Name</p>
-                                <p>Stelle</p>
+                                <h5>Name</h5>
+                                <h5>Stelle</h5>
                             </div>
                         </div>
                     </article>
-                    <div class="clr"></div>
+                </section>
+                <section>
                     <article class="box">
                         <div>
-                            <span class="low-title">Clients</span>
-                            <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
+                            <h2>Clients</h2>
+                            <h5>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
                                 invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et
                                 accusam
                                 et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est
                                 Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
                                 diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
-                                voluptua.</p>
+                                voluptua.</h5>
                         </div>
                         <div id="clients">
-                            <img src="img/logo-example.jpg" alt="">
-                            <img src="img/logo-example.jpg" alt="">
-                            <img src="img/logo-example.jpg" alt="">
-                            <img src="img/logo-example.jpg" alt="">
-                            <img src="img/logo-example.jpg" alt="">
-                            <img src="img/logo-example.jpg" alt="">
-                            <img src="img/logo-example.jpg" alt="">
-                            <img src="img/logo-example.jpg" alt="">
-                            <img src="img/logo-example.jpg" alt="">
-                            <img src="img/logo-example.jpg" alt="">
-                            <img src="img/logo-example.jpg" alt="">
-                            <img src="img/logo-example.jpg" alt="">
+                            <img class="img-medium" src="img/logo-example.jpg" alt="">
+                            <img class="img-medium" src="img/logo-example.jpg" alt="">
+                            <img class="img-medium" src="img/logo-example.jpg" alt="">
+                            <img class="img-medium" src="img/logo-example.jpg" alt="">
+                            <img class="img-medium" src="img/logo-example.jpg" alt="">
+                            <img class="img-medium" src="img/logo-example.jpg" alt="">
+                            <img class="img-medium" src="img/logo-example.jpg" alt="">
+                            <img class="img-medium" src="img/logo-example.jpg" alt="">
+                            <img class="img-medium" src="img/logo-example.jpg" alt="">
+                            <img class="img-medium" src="img/logo-example.jpg" alt="">
+                            <img class="img-medium" src="img/logo-example.jpg" alt="">
+                            <img class="img-medium" src="img/logo-example.jpg" alt="">
                         </div>
                     </article>
+                </section>
+                <section>
                     <article id="overview">
                         <div>
-                            <img class="overview-title" src="img/logo-reanmo-dark.png" alt="Logo">
+                            <img class="img-medium" src="img/logo-reanmo-dark.png" alt="Logo">
                             <p>02871 2372 427</p>
                             <p>info@reanmo.com</p>
                         </div>
                         <ul>
-                            <li class="overview-title">Links</li>
+                            <li>
+                                <h5 class="font-dark">Links</h5>
+                            </li>
                             <li><a href="#">Home</a></li>
                             <li><a href="#">Portfolio</a></li>
                             <li><a href="#">Service</a></li>
@@ -210,17 +221,24 @@
                             <li><a href="#">Magazin</a></li>
                         </ul>
                         <ul>
-                            <li class="overview-title">Legal</li>
+                            <li>
+                                <h5 class="font-dark">Legal</h5>
+                            </li>
                             <li><a href="#">Impressum</a></li>
                             <li><a href="#">Datenschutz</a></li>
                         </ul>
                         <ul>
-                            <li class="overview-title">Language</li>
-                            <li><img src="img/german.png" alt=""><img src="img/english.png" alt=""></li>
+                            <li>
+                                <h5 class="font-dark">Language</h5>
+                            </li>
+                            <li>
+                                <img class="img-tiny" src="img/german.png" alt="">
+                                <img class="img-tiny" src="img/english.png" alt="">
+                            </li>
                         </ul>
                     </article>
-                </main>
-            </div>
+                </section>
+            </main>
         </div>
         <aside class="side"></aside>
     </div>

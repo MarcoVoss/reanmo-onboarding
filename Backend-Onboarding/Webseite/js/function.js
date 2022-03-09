@@ -1,5 +1,5 @@
 function test(id) {
-    var image = document.getElementById('faq_img_' + id);
+    var image = document.getElementById(id);
     var container = document.getElementById('faq_container_' + id);
     var content = document.getElementById('faq_content_' + id);
     if (image.src.includes('plus')) {
@@ -20,6 +20,7 @@ function menuClick() {
     var image = document.getElementById('menu-img');
     var content = document.getElementById('content');
     var navigation = document.getElementById('app-navigation');
+
     if (content.style.display != 'none') {
         content.style.display = 'none';
         navigation.style.display = 'flex';
