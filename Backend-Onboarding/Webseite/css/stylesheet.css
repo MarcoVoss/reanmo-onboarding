@@ -229,6 +229,11 @@ a {
     justify-content: space-around;
 }
 
+.menuAnimation{
+    animation-name: app-manu-anim;
+    animation-duration: 0.5s;
+}
+
 .app-navigation a {
     color: #001427;
     font-size: 40px;
@@ -369,6 +374,11 @@ img {
 
 #menu-img {
     display: none;
+}
+
+@keyframes app-manu-anim {
+    from { transform : translateX(-30em)}
+    to   { transform : translateX(0em)}
 }
 
 @media(max-width: 550px) {

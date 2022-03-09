@@ -5,8 +5,8 @@ function test(id) {
     if (image.src.includes('plus')) {
         image.src = 'img/minus.png';
         container.style.backgroundColor = 'white';
-        content.style.display = 'block';
         container.style.boxShadow = '0 0 6px #F2F2F7';
+        content.style.display = 'block';
     } else {
         image.src = 'img/plus.png';
         container.style.backgroundColor = '#F2F2F7';
@@ -28,6 +28,7 @@ function menuClick() {
         logo.src = 'img/logo-reanmo-dark.png';
         document.body.style.backgroundImage = 'linear-gradient(to bottom, white, white)';
         document.querySelector('footer').style = 'display: none';
+        navigation.classList.toggle('menuAnimation');
     } else {
         content.style.display = 'inline-block';
         navigation.style.display = 'none';
