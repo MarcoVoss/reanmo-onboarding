@@ -93,6 +93,38 @@ header {
     margin-top: 50px;
 }
 
+#faqs {
+    max-width: 890px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.faq {
+    text-align: left;
+    display: grid;
+    grid-template-columns: 50px 100%;
+    background-color: #F2F2F7;
+    border-radius: 10px;
+    align-items: center;
+    margin: 10px;
+    padding: 30px 15px;
+    font-family: 'Inter var', sans-serif;    
+}
+
+#faq_content_1, #faq_content_2, #faq_content_3, #faq_content_4 {
+    display: none;
+    color: #7A7A7F;
+    max-width: 702px;
+}
+
+.faq img {
+    height: 24px;
+    width: 24px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 .employee {
     border-color: #001427;
     border-width: 2px;
@@ -282,13 +314,15 @@ header img {
 
 #testimonial {
     margin-top: 30px;
+    font-family: 'Inter var', sans-serif;
+    font-size: 20px;
 }
 
 #testimonial p {
     max-width: 940px;
-    font-size: 23px;
     margin-left: auto;
-    margin-right: auto;
+    margin-right: auto;    
+    color: #7A7A7F;
 }
 
 .testimonial-box {
@@ -311,7 +345,6 @@ header img {
     display: inline-block;
     vertical-align: middle;
     margin-left: 10px;
-    font-weight: bolder;
 }
 
 #testimonial-right {
@@ -332,6 +365,7 @@ header img {
     background-color: #00ACDF;
     text-align: left;
     border-radius: 10px;
+    margin-top: 200px;
 }
 
 #subscription a {
