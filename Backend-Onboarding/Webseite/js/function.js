@@ -6,12 +6,12 @@ function test(id) {
         image.src = 'img/minus.png';
         container.style.backgroundColor = 'white';
         container.style.boxShadow = '0 0 6px #F2F2F7';
-        content.style.display = 'block';
+        this.growDiv(id);
     } else {
         image.src = 'img/plus.png';
         container.style.backgroundColor = '#F2F2F7';
-        content.style.display = 'none';
         container.style.boxShadow = 'none';
+        growDiv(id);
     }
 }
 
@@ -36,5 +36,15 @@ function menuClick() {
         logo.src = 'img/logo-reanmo.png';
         document.body.style.backgroundImage = 'linear-gradient(to bottom, #001427, #001427), linear-gradient(to bottom, white, white)';
         document.querySelector('footer').style = 'display: block';
+    }
+}
+
+function growDiv(id) {
+    var growDiv = document.getElementById('faq_content_' + id);
+    if (growDiv.clientHeight) {
+        growDiv.style.height = 0;
+    } else {
+        var wrapper = document.querySelector('#measuringWrapper_' + id);
+        growDiv.style.height = wrapper.clientHeight + "px";
     }
 }

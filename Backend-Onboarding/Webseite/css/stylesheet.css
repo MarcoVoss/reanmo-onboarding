@@ -331,9 +331,15 @@ a {
 }
 
 .faq-content {
-    display: none;
     color: #7A7A7F;
     max-width: 702px;
+    -moz-transition: height .5s;
+    -ms-transition: height .5s;
+    -o-transition: height .5s;
+    -webkit-transition: height .5s;
+    height: 0;
+    transition: height .5s;
+    overflow: hidden;
 }
 
 img {
