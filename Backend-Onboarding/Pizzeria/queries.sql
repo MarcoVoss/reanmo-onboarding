@@ -40,6 +40,19 @@ WHERE d.bestellung_id in (
     GROUP BY l.bestellung_id
     HAVING count(l.bestellung_id) >= 3)
 
+SELECT l.bestellung_id, p.name
+FROM pizzeria.lieferung as l
+LEFT JOIN pizzeria.produkt as p ON l.produkt_id = p.produkt_id
+WHERE l.bestellung_id not in (
+        SELECT DISTINCT bestellung_id 
+        FROM pizzeria.lieferung 
+        WHERE anzahl < 2
+    ) and l.bestellung_id not in (
+        SELECT bestellung_id 
+        FROM pizzeria.lieferung 
+        WHERE bestellung_id = l.bestellung_id
+        HAVING count(*) < 3
+    ) 
 -- Kunden die alle Produkte bereits bestellt haben
 SELECT k.kunde_id
 FROM pizzeria.kunde as k
