@@ -27,31 +27,31 @@
             call_user_func([$controller, $function], $params);
         }
 
-        public function routeExists($method, $function) {
+        private function routeExists($method, $function) {
             return isset(ROUTES[$method][$function]);
         }
 
-        public function getController($method, $function) {
+        private function getController($method, $function) {
             return ROUTES[$method][$function][0];
         }
 
-        public function getFunction($method, $function) {
+        private function getFunction($method, $function) {
             return ROUTES[$method][$function][1];
         }
 
-        public function needsAuthorization($method, $function) {
+        private function needsAuthorization($method, $function) {
             return ROUTES[$method][$function][2];
         }
 
-        public function isLoggedIn() {
+        private function isLoggedIn() {
             return isset($_SESSION['user_id']);
         }
 
-        public function getRequestMethod() {
+        private function getRequestMethod() {
             return $_SERVER['REQUEST_METHOD'];
         }
 
-        public function getUrl() {
+        private function getUrl() {
             if(isset($_GET['url'])) {
                 $url = rtrim($_GET['url'], '/');
                 $url = filter_var($url, FILTER_SANITIZE_URL);
