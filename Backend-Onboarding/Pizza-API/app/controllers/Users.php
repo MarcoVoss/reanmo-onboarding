@@ -50,7 +50,6 @@
         }
 
         private function createSession($user) {
-            session_start();
             $_SESSION['user_id'] = $user->id;
             $_SESSION['mail'] = $user->email;
             $_SESSION['name'] = $user->name;

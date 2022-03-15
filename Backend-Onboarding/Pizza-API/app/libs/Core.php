@@ -20,7 +20,6 @@
             if($this->needsAuthorization($method, $url[0]) and !$this->isLoggedIn())
                 ExceptionHelper::forbiddenAccessException();
 
-            unset($url[0]);
             require_once $urlPath;
             $controller = new $controllerName;
 
