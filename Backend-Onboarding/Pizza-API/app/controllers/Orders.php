@@ -12,8 +12,9 @@
 
         public function order() {
             $data = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-            
-            if($this->verifyOrder($data))
+            $data['user_id'] = $_SESSION['user_id'];
+
+            if(!$this->verifyOrder($data))
                 ExceptionHelper::badRequestException();
 
             return $this->cartModel->create($data);

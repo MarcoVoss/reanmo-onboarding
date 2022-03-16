@@ -31,7 +31,11 @@
 
             $mail = trim($_POST['email']);
             $password = trim($_POST['password']);   
-            $user = $this->userModel->getByEmail($mail);       
+            $user = $this->userModel->getByEmail($mail);  
+
+            if(!$user)
+                ExceptionHelper::unauthorizedException();
+
             $success = password_verify($password, $user->password);
 
             if ($success) {                
@@ -55,13 +59,16 @@
                 'email' => $request[1],
                 'phone' => $request[2],
                 'password' => $this->hashPassword($request[3]),
+            ];
+
+            $key = [
                 'preEmail' => $_SESSION['email']
             ];
 
             if($this->userAlreadyExists($data['email']))
                 ExceptionHelper::mailAlreadyExistException();
             
-            if($this->userModel->update($data)) {
+            if($this->userModel->update($key, $data)) {
                 $user = $this->userModel->getByEmail($data['email']); 
                 $this->createSession($user);
             } else {

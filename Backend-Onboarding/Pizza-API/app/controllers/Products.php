@@ -21,7 +21,7 @@
             return array_values($test);
         }
 
-        private function generateSizeObj($data) {
+        private function generateSizeObj($row) {
             return [
                 'id' => $row->SId,
                 'name' => $row->SName,
@@ -29,13 +29,13 @@
             ];
         }
 
-        private function generateProductObj($data) {
+        private function generateProductObj($row) {
             return [
                 'id' => $row->PId,
                 'name' => $row->PName,
                 'category' => $row->CName,
                 'image_path' => $row->Path,
-                'sizes' => [ $this->generateSizeObj($data)]
+                'sizes' => [ $this->generateSizeObj($row)]
             ];
         }
     }

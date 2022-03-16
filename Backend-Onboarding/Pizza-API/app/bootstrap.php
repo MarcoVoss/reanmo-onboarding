@@ -5,3 +5,4 @@
     require_once 'config/db-config.php';
     require_once 'config/route-config.php';
     require_once 'helpers/ExceptionHelper.php';
+    require_once 'models/CRUDModel.php';

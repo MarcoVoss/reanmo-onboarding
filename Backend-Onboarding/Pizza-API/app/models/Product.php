@@ -1,5 +1,5 @@
 <?php
-    class Product {
+    class Product extends CRUDModel{
         private $db;
         public function __construct() {
             $this->db = new Database();
@@ -23,23 +23,29 @@
             return $this->db->resultSet();
         }
 
-        public function getById($id) {
+        public function getOne($key) {
             $this->db->query('SELECT p.id, p.name, c.name, p.imagePath, s.id, s.name, ps.price
                 FROM products_sizes as ps
                 LEFT JOIN products as p ON ps.product_id=p.id 
                 LEFT JOIN sizes as s ON ps.size_id=s.id
                 LEFT JOIN categories as c ON p.category_id=c.id
                 WHERE id= :id');
-            $this->db->bind(':id', $id);
+            $this->db->bind(':id', $key['id']);
             return $this->db->single();
         }
 
-        public function update($data) {
+        public function update($key, $data) {
             $this->db->query('UPDATE products SET category_id=:category_id, name=:name WHERE id= :id');
-            $this->db->bind(':id', $data['id']);
+            $this->db->bind(':id', $key['id']);
             $this->db->bind(':name', $data['name']);
             $this->db->bind(':category_id', $data['category_id']);
             $this->db->bind(':imagePath', $data['path']);
+            return $this->db->single();
+        }
+
+        public function delete($key) {
+            $this->db->query('DELETE FROM products_sizes as ps WHERE id= :id');
+            $this->db->bind(':id', $key['id']);
             return $this->db->single();
         }
 
