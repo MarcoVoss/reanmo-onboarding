@@ -14,7 +14,7 @@
             $data = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
             $data['user_id'] = $_SESSION['user_id'];
 
-            if(!$this->verifyOrder($data))
+            if(!$this->verifyOrder($data) or ($this->verifyOrder($data) and $this->cartModel->getOne($data)))
                 ExceptionHelper::badRequestException();
 
             return $this->cartModel->create($data);

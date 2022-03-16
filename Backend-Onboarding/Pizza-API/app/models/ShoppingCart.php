@@ -21,10 +21,10 @@
         }
 
         public function getOne($key) {
-            $this->db->query('SELECT * FROM products_users_sizes WHERE user_id=:user_id, product_id=:product_id, size_id=:size_id');
-            $this->db->bind(':user_id', $user_id);
-            $this->db->bind(':product_id', $product_id);
-            $this->db->bind(':size_id', $size_id);
+            $this->db->query('SELECT * FROM products_users_sizes WHERE user_id=:user_id and product_id=:product_id and size_id=:size_id');
+            $this->db->bind(':user_id', $key['user_id']);
+            $this->db->bind(':product_id', $key['product_id']);
+            $this->db->bind(':size_id', $key['size_id']);
             return $this->db->single();
         }
 

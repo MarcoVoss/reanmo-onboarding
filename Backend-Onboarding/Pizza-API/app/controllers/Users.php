@@ -65,10 +65,10 @@
                 'preEmail' => $_SESSION['email']
             ];
 
-            if($this->userAlreadyExists($data['email']))
+            if($data['email'] != $_SESSION['email'] and $this->userAlreadyExists($data['email']))
                 ExceptionHelper::mailAlreadyExistException();
             
-            if($this->userModel->update($key, $data)) {
+            if($this->userModel->updateByEmail($key, $data)) {
                 $user = $this->userModel->getByEmail($data['email']); 
                 $this->createSession($user);
             } else {
@@ -92,7 +92,7 @@
         }
 
         private function verifyUpdateData($data) {
-            return isset($data) and count($data) == 4;
+            return isset($data) and count($data) >= 4;
         }
 
         private function createSession($user) {
