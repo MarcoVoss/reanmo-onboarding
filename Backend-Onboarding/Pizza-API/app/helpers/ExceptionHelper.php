@@ -20,6 +20,10 @@
             ExceptionHelper::httpException(401);
         }
 
+        public static function internalServerError() {
+            ExceptionHelper::httpException(500);
+        }
+
         public static function httpException($code) {
             http_response_code($code);
             die();

@@ -12,8 +12,4 @@
 
             require_once $viewPath;
         }
-
-        public function jsonView($data) {
-
-        }
     }

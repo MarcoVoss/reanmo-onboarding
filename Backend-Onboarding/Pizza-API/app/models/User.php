@@ -6,9 +6,9 @@
         }
 
         public function create($data) {
-            $this->db->query('INSERT INTO users (name, email, phone, password) VALUES (:name, :mail, :phone, :password)');
+            $this->db->query('INSERT INTO users (name, email, phone, password) VALUES (:name, :email, :phone, :password)');
             $this->db->bind(':name', $data['name']);
-            $this->db->bind(':mail', $data['mail']);
+            $this->db->bind(':email', $data['email']);
             $this->db->bind(':phone', $data['phone']);
             $this->db->bind(':password', $data['password']);
             $this->db->single();
@@ -27,9 +27,10 @@
         }
 
         public function update($data) {
-            $this->db->query('UPDATE users SET (name, email, phone, password) VALUES (:name, :mail, :phone, :password)');
+            $this->db->query('UPDATE users SET name=:name, email=:email, phone=:phone, password=:password WHERE email=:preEmail');
             $this->db->bind(':name', $data['name']);
-            $this->db->bind(':mail', $data['mail']);
+            $this->db->bind(':email', $data['email']);
+            $this->db->bind(':preEmail', $data['preEmail']);
             $this->db->bind(':phone', $data['phone']);
             $this->db->bind(':password', $data['password']);
             $this->db->single();

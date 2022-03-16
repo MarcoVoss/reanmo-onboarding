@@ -1,2 +1,2 @@
 <?php
-    print_r(json_encode ($data));
+    print_r(json_encode($data));

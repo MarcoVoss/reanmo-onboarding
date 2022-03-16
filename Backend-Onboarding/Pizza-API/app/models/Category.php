@@ -1,12 +1,12 @@
 <?php
-    class User {
+    class Category {
         private $db;
         public function __construct() {
             $this->db = new Database();
         }
 
         public function create($data) {
-            $this->db->query('INSERT INTO categories (name, image) VALUES (:name, null)');
+            $this->db->query('INSERT INTO categories (name) VALUES (:name)');
             $this->db->bind(':name', $data['name']);
             $this->db->single();
             return $this->db->rowCount() > 0;

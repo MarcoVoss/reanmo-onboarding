@@ -3,7 +3,8 @@
         'POST' => [
             'register' => ['Users', 'register', false],
             'login' => ['Users', 'login', false],
-            'logout' => ['Users', 'logout', false]
+            'logout' => ['Users', 'logout', false],
+            'order' => ['Orders', 'order', false]
         ], 
         'GET' => [
             'products' => ['Products', 'products', true],
