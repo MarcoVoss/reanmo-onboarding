@@ -8,15 +8,15 @@ return new class extends Migration
 {
     public function up()
     {
-        Schema::create('password_resets', function (Blueprint $table) {
-            $table->string('email')->index();
-            $table->string('token');
-            $table->timestamp('created_at')->nullable();
+        Schema::create('post_likes', function (Blueprint $table) {
+            $table->foreignId('user_id');
+            $table->foreignId('post_id');
+            $table->timestamps();
         });
     }
 
     public function down()
     {
-        Schema::dropIfExists('password_resets');
+        Schema::dropIfExists('post_likes');
     }
 };
