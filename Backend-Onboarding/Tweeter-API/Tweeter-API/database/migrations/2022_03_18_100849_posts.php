@@ -12,7 +12,6 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id');
             $table->string('message');
-            $table->date('date');
             $table->timestamps();
         });
     }

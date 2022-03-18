@@ -11,7 +11,6 @@ class PostFactory extends Factory
     {
         return [
             'message' => $this->faker->sentence(),
-            'date' => now(),
             'user_id' => User::factory(),
         ];
     }

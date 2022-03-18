@@ -2,62 +2,61 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Comment;
 use Illuminate\Http\Request;
 
 class CommentsController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        //
+        return Comment::all()->where('user_id', $this->currentUserId());
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        //
+        $fields = $request->validate([
+            'post_id' => 'required',
+            'message' => 'required|string'
+        ]);
+
+        Comment::create([
+            'post_id' => $fields['post_id'],
+            'message' => $fields['message']
+        ]);
+
+        return $this->success(201);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
-        //
+        return Comment::find($id);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
-        //
+        $fields = $request->validate([
+            'message' => 'required|string'
+        ]);
+
+        $comment = Comment::find($id);
+
+        if(!$this->isMyComment($comment))
+            return $this->forbiddenAccess();
+
+        $comment->message = $fields['message'];
+        $comment->save();
+        return $this->success();
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
-        //
+        if(!$this->isMyComment(Comment::find($id)))
+            return $this->forbiddenAccess();
+        Comment::destroy($id);
+        return $this->success();
+    }
+
+    private function isMyComment($comment) {
+        return isset($comment) and $comment->user_id == $this->currentUserId();
     }
 }

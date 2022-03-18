@@ -1,30 +1,46 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CommentLikesController;
+use App\Http\Controllers\PostsController;
+use App\Http\Controllers\CommentsController;
+use App\Http\Controllers\FollowersController;
+use App\Http\Controllers\NewsController;
+use App\Http\Controllers\PostLikesController;
 
 // Public routes
 Route::post('/register', [AuthController::class, 'register']);
+
 Route::post('/login', [AuthController::class, 'login']);
 
 // Protected routes
 Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::post('/logout', [AuthController::class, 'logout']);
 
-    Route::resource('/posts', PostsController::class);
+    Route::resource('/followers', FollowersController::class, ['only' => [
+        'destroy', 'store'
+    ]]);
 
-    Route::resource('/comments', CommentsController::class);
+    Route::resource('/posts', PostsController::class, ['except' => [
+        'create', 'edit'
+    ]]);
 
-    Route::get('/news', [NewsController::class, 'index']);
-    Route::get('/news/{id}', [NewsController::class, 'show']);
+    Route::resource('/comments', CommentsController::class, ['except' => [
+        'create', 'edit'
+    ]]);
 
-    Route::delete('/followers', [FollowersController::class, 'destroy']);
-    Route::post('/followers', [FollowersController::class, 'store']);
+    Route::resource('/news', NewsController::class, ['only' => [
+        'index', 'show'
+    ]]);
 
-    Route::delete('/posts/likes', [PostLikesController::class, 'destroy']);
-    Route::post('/posts/likes', [PostLikesController::class, 'store']);
 
-    Route::delete('/comments/likes', [CommentLikesController::class, 'destroy']);
-    Route::post('/comments/likes', [CommentLikesController::class, 'store']);
+
+    Route::resource('/posts/likes', PostLikesController::class, ['only' => [
+        'destroy', 'store'
+    ]]);
+
+    Route::resource('/comments/likes', CommentLikesController::class, ['only' => [
+        'destroy', 'store'
+    ]]);
 });
