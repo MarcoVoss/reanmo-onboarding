@@ -7,6 +7,10 @@ use Illuminate\Http\Request;
 
 class FollowersController extends Controller
 {
+    public function __construct() {
+        parent::__construct('Follower');
+    }
+
     public function index() {
         return Follower::all()->where('followed_id', $this->currentUserId());
     }
@@ -16,7 +20,7 @@ class FollowersController extends Controller
             ->where('user_id', $id)
             ->first();
 
-        if(!$relationship->exists())
+        if(!$relationship)
             return $this->notFoundException();
 
         if(!$relationship->delete())

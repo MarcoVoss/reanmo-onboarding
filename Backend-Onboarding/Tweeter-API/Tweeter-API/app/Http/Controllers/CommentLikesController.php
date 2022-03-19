@@ -7,9 +7,13 @@ use App\Models\CommentLike;
 
 class CommentLikesController extends Controller
 {
+    public function __construct() {
+        parent::__construct('Comment-User-Like-Relationship');
+    }
+
     public function destroy($id) {
         $like = CommentLike::find($id);
-        if(!$like->exists())
+        if(!$like)
             return $this->notFoundException();
 
         if(!$this->isMyComment($like))

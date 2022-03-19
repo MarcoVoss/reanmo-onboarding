@@ -7,13 +7,17 @@ use App\Models\PostLike;
 
 class PostLikesController extends Controller
 {
+    public function __construct() {
+        parent::__construct('Post-User-Like-Relationship');
+    }
+
     public function destroy($id) {
         $relationship = PostLike::all()
             ->where('user_id', $this->currentUserId())
             ->where('post_id', $id)
             ->first();
 
-        if(!$relationship->exists())
+        if(!$relationship)
             return $this->notFoundException();
 
         if(!$relationship->delete())

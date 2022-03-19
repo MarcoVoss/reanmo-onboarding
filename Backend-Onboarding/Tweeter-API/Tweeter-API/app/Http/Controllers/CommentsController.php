@@ -7,6 +7,10 @@ use Illuminate\Http\Request;
 
 class CommentsController extends Controller
 {
+    public function __construct() {
+        parent::__construct('Comment');
+    }
+
     public function index()
     {
         return Comment::all()->where('user_id', $this->currentUserId());
@@ -35,7 +39,7 @@ class CommentsController extends Controller
     public function update(Request $request, $id)
     {
         $comment = Comment::find($id);
-        if(!$comment->exists())
+        if(!$comment)
             return $this->notFoundException();
 
         if(!$this->isMyComment($comment))
@@ -54,7 +58,7 @@ class CommentsController extends Controller
     public function destroy($id)
     {
         $comment = Comment::find($id);
-        if(!$comment->exists())
+        if(!$comment)
             return $this->notFoundException();
 
         if(!$this->isMyComment($comment))
@@ -66,7 +70,7 @@ class CommentsController extends Controller
         return $this->success();
     }
 
-    private function isMyComment($comment) {
-        return isset($comment) and $comment->user_id == $this->currentUserId();
+    private function isMyComment(Comment $comment) {
+        return $comment->user_id == $this->currentUserId();
     }
 }

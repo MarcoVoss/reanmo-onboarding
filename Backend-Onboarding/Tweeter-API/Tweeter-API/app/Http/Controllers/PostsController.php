@@ -4,9 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Post;
+use Illuminate\Database\Eloquent\Model;
 
 class PostsController extends Controller
 {
+    public function __construct() {
+        parent::__construct('Post');
+    }
+
     public function index()
     {
         return Post::all()->where('user_id', $this->currentUserId());
@@ -30,7 +35,7 @@ class PostsController extends Controller
     {
         $post = $this->index()->find($id);
 
-        if(!$post->exists())
+        if(!$post)
             return $this->notFoundException();
 
         return $post;
@@ -40,7 +45,7 @@ class PostsController extends Controller
     {
         $post = $this->index()->find($id);
 
-        if(!$post->exists())
+        if(!$post)
             return $this->notFoundException();
 
         if(!$this->isMyPost($post))
@@ -62,13 +67,13 @@ class PostsController extends Controller
     public function destroy($id)
     {
         $post = $this->index()->find($id);
-        if(!$post->exists())
+        if(!$post)
             return $this->notFoundException();
 
         if(!$this->isMyPost($post))
             return $this->forbiddenAccess();
 
-        if(!Post::destroy($id));
+        if(!Post::destroy($id))
             return $this->failedException();
 
         return $this->success();

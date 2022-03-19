@@ -2,25 +2,32 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
 
-class Controller extends BaseController
+abstract class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
+    protected string $NAME = 'Base-Controller';
+
+    protected function __construct($name) {
+        $this->NAME = $name;
+    }
+
     protected function notFoundException() {
-        return response('Not found!', 404);
+        return response("$this->NAME not found!", 404);
     }
 
     protected function forbiddenAccess() {
-        return response('Not yours!', 403);
+        return response("$this->NAME is not yours!", 403);
     }
 
     protected function failedException() {
-        return response('That did not work!', 500);
+        return response("$this->NAME did not work!", 500);
     }
 
     protected function success($nr = 200) {

@@ -6,6 +6,11 @@ use App\Models\Post;
 
 class NewsController extends Controller
 {
+    public function __construct()
+    {
+        parent::__construct('News');
+    }
+
     public function index() {
         return Post::leftJoin('followers', 'followers.user_id', '=', "posts.user_id")
             ->where('followers.follower_id', '=', $this->currentUserId())
@@ -13,6 +18,11 @@ class NewsController extends Controller
     }
 
     public function show($id) {
-        return $this->index()->find($id);
+        $post = $this->index()->find($id);
+
+        if(!$post)
+            $this->notFoundException();
+
+        return $post;
     }
 }
