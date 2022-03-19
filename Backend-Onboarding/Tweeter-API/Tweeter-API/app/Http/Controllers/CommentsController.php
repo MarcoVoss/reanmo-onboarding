@@ -57,10 +57,10 @@ class CommentsController extends Controller
         if(!$comment->exists())
             return $this->notFoundException();
 
-        if(!$this->isMyComment())
+        if(!$this->isMyComment($comment))
             return $this->forbiddenAccess();
 
-        if(!Comment::destroy($id));
+        if(!Comment::destroy($id))
             return $this->failedException();
 
         return $this->success();
