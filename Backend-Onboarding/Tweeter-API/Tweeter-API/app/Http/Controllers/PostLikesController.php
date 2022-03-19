@@ -13,10 +13,11 @@ class PostLikesController extends Controller
             ->where('post_id', $id)
             ->first();
 
-        if(!$relationship)
-            return $this->forbiddenAccess();
+        if(!$relationship->exists())
+            return $this->notFoundException();
 
-        $relationship->delete();
+        if(!$relationship->delete())
+            return $this->failedException();
 
         return $this->success();
     }

@@ -28,38 +28,53 @@ class PostsController extends Controller
 
     public function show($id)
     {
-        return Post::find($id);
+        $post = $this->index()->find($id);
+
+        if(!$post->exists())
+            return $this->notFoundException();
+
+        return $post;
     }
 
     public function update(Request $request, $id)
     {
+        $post = $this->index()->find($id);
+
+        if(!$post->exists())
+            return $this->notFoundException();
+
+        if(!$this->isMyPost($post))
+            return $this->forbiddenAccess();
+
         $fields = $request->validate([
             'message' => 'required|string',
             'id' => 'required'
         ]);
 
-        $post = Post::find($id);
-
-        if(!$this->isMyPost($post))
-            return $this->forbiddenAccess();
-
         $post->message = $fields['message'];
 
         if(!$post->save())
-            return response('Could not be saved!', 500);
+            return $this->failedException();
+
         return $this->success(204);
     }
 
     public function destroy($id)
     {
-        if(!$this->isMyPost(Post::find($id)))
+        $post = $this->index()->find($id);
+        if(!$post->exists())
+            return $this->notFoundException();
+
+        if(!$this->isMyPost($post))
             return $this->forbiddenAccess();
 
-        Post::destroy($id);
+        if(!Post::destroy($id));
+            return $this->failedException();
+
         return $this->success();
     }
 
-    private function isMyPost($post) {
-        return isset($post) and $post->user_id == $this->currentUserId();
+    private function isMyPost(Post $post) {
+        return $post->user_id == $this->currentUserId();
     }
 }

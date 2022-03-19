@@ -7,16 +7,20 @@ use Illuminate\Http\Request;
 
 class FollowersController extends Controller
 {
+    public function index() {
+        return Follower::all()->where('followed_id', $this->currentUserId());
+    }
+
     public function destroy($id) {
-        $relationship = Follower::all()
+        $relationship = $this->index()
             ->where('user_id', $id)
-            ->where('followed_id', $this->currentUserId())
             ->first();
 
-        if(!$relationship)
-            return $this->forbiddenAccess();
+        if(!$relationship->exists())
+            return $this->notFoundException();
 
-        $relationship->delete();
+        if(!$relationship->delete())
+            return $this->failedException();
 
         return $this->success();
     }
@@ -30,6 +34,7 @@ class FollowersController extends Controller
             'follower_id' => $this->currentUserId(),
             'user_id' => $fields['follower_id']
         ]);
+
         return $this->success(201);
     }
 }

@@ -34,26 +34,21 @@ class AuthController extends Controller
 
         $user = User::where('email', $fields['email'])->first();
 
-        if(!$user || !Hash::check($fields['password'], $user->password)) {
+        if(!$user->exists() || !Hash::check($fields['password'], $user->password))
             return response(['message' => 'Bad Credentials'], 401);
-        }
 
         return $this->_login($user);
     }
 
     public function logout() {
         auth()->user()->tokens()->delete();
-        return response(['message' => 'logged out'], 200);
+        return $this->success();
     }
 
     private function _login($user) {
-        $token = $user->createToken('token');
-
-        $response = [
+        return [
             'user' => $user,
-            'token' => $token
+            'token' => $user->createToken('token')
         ];
-
-        return response($response, 200);
     }
 }

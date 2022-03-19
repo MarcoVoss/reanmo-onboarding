@@ -9,8 +9,8 @@ return new class extends Migration
     public function up()
     {
         Schema::create('comment_likes', function (Blueprint $table) {
-            $table->foreignId('user_id');
-            $table->foreignId('comment_id');
+            $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreignId('comment_id')->references('id')->on('comments')->onDelete('cascade');
             $table->timestamps();
         });
     }

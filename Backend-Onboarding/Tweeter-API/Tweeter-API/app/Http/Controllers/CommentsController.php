@@ -34,25 +34,35 @@ class CommentsController extends Controller
 
     public function update(Request $request, $id)
     {
-        $fields = $request->validate([
-            'message' => 'required|string'
-        ]);
-
         $comment = Comment::find($id);
+        if(!$comment->exists())
+            return $this->notFoundException();
 
         if(!$this->isMyComment($comment))
             return $this->forbiddenAccess();
 
+        $fields = $request->validate([
+            'message' => 'required|string'
+        ]);
+
         $comment->message = $fields['message'];
         $comment->save();
+
         return $this->success();
     }
 
     public function destroy($id)
     {
-        if(!$this->isMyComment(Comment::find($id)))
+        $comment = Comment::find($id);
+        if(!$comment->exists())
+            return $this->notFoundException();
+
+        if(!$this->isMyComment())
             return $this->forbiddenAccess();
-        Comment::destroy($id);
+
+        if(!Comment::destroy($id));
+            return $this->failedException();
+
         return $this->success();
     }
 

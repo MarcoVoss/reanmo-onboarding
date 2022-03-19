@@ -19,7 +19,7 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::post('/logout', [AuthController::class, 'logout']);
 
     Route::resource('/followers', FollowersController::class, ['only' => [
-        'destroy', 'store'
+        'destroy', 'store', 'index'
     ]]);
 
     Route::resource('/posts', PostsController::class, ['except' => [
@@ -33,8 +33,6 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::resource('/news', NewsController::class, ['only' => [
         'index', 'show'
     ]]);
-
-
 
     Route::resource('/posts/likes', PostLikesController::class, ['only' => [
         'destroy', 'store'

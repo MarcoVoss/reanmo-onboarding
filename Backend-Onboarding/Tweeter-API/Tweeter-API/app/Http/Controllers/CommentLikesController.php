@@ -8,9 +8,16 @@ use App\Models\CommentLike;
 class CommentLikesController extends Controller
 {
     public function destroy($id) {
-        if(!$this->isMyComment(CommentLike::find($id)))
+        $like = CommentLike::find($id);
+        if(!$like->exists())
+            return $this->notFoundException();
+
+        if(!$this->isMyComment($like))
             return $this->forbiddenAccess();
-        CommentLike::destroy($id);
+
+        if(!CommentLike::destroy($id))
+            return $this->failedException();
+
         return $this->success();
     }
 
@@ -23,10 +30,11 @@ class CommentLikesController extends Controller
            'user_id' => $this->currentUserId(),
            'comment_id' => $like['comment_id']
         ]);
+
         return $this->success();
     }
 
-    private function isMyComment($comment) {
-        return isset($comment) and $comment->user_id == $this->currentUserId();
+    private function isMyComment(CommentLike $like) {
+        return $like->user_id == $this->currentUserId();
     }
 }

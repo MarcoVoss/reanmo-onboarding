@@ -9,8 +9,8 @@ return new class extends Migration
     public function up()
     {
         Schema::create('followers', function (Blueprint $table) {
-            $table->foreignId('user_id');
-            $table->foreignId('follower_id');
+            $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreignId('follower_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

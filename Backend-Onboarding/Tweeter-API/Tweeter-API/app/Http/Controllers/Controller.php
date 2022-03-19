@@ -11,8 +11,16 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
+    protected function notFoundException() {
+        return response('Not found!', 404);
+    }
+
     protected function forbiddenAccess() {
         return response('Not yours!', 403);
+    }
+
+    protected function failedException() {
+        return response('That did not work!', 500);
     }
 
     protected function success($nr = 200) {
