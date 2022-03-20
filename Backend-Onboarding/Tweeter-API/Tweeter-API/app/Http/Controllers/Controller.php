@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Facades\Log;
 
 abstract class Controller extends BaseController
 {
@@ -19,19 +19,24 @@ abstract class Controller extends BaseController
     }
 
     protected function notFoundException() {
-        return response("$this->NAME not found!", 404);
+        return $this->exceptionResponse("$this->NAME not found!", 404);
     }
 
     protected function forbiddenAccess() {
-        return response("$this->NAME is not yours!", 403);
+        return $this->exceptionResponse("$this->NAME is not yours!", 403);
     }
 
     protected function failedException() {
-        return response("$this->NAME did not work!", 500);
+        return $this->exceptionResponse("$this->NAME did not work!", 500);
     }
 
     protected function success($nr = 200) {
-        return response('OK', $nr);
+        return $this->exceptionResponse('OK', $nr);
+    }
+
+    private function exceptionResponse($message, $nr) {
+        Log::error($message);
+        return response($message, $nr);
     }
 
     protected function currentUserId() {
