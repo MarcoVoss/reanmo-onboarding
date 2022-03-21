@@ -20,10 +20,13 @@ class AuthController extends Controller
             'name' => $fields['name'],
             'email' => $fields['email'],
             'password' => bcrypt($fields['password']),
-            'image' => $fields['image']
+            'image' => $fields['image'] ?? null
         ]);
 
-        return $this->_login($user);
+        if(!$user)
+            return $this->failedException();
+
+        return $this->success(201);
     }
 
     public function login(UserLoginRequest $request) {
