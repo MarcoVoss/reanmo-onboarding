@@ -31,7 +31,7 @@ class AuthController extends Controller
 
         $user = User::getByEmail($fields['email']);
 
-        if(!$user->exists() || !Hash::check($fields['password'], $user->password))
+        if(!$user || !Hash::check($fields['password'], $user->password))
             return response('Bad Credentials', 401);
 
         return $this->_login($user);

@@ -4,10 +4,9 @@ namespace App\Http\Controllers;
 
 
 use App\Models\User;
+use App\Requests\IdRequest;
 use App\Requests\UserUpdateRequest;
 use App\Requests\UserSearchRequest;
-use Illuminate\Http\Request;
-use function PHPUnit\Framework\isNull;
 
 class ProfilesController extends Controller
 {

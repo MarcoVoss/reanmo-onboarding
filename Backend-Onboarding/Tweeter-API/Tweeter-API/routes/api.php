@@ -45,7 +45,7 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
 
     Route::get('/profiles/search', [ProfilesController::class, 'search']);
     Route::resource('/profiles', ProfilesController::class, ['only' => [
-        'index', 'show',
+        'index', 'show', 'destroy'
     ]]);
 
     Route::get('/profile', [ProfilesController::class, 'showMe']);
