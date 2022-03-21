@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\PostLike;
+use App\Requests\PostLikesStoreRequest;
 
 class PostLikesController extends Controller
 {
@@ -26,10 +26,8 @@ class PostLikesController extends Controller
         return $this->success();
     }
 
-    public function store(Request $request) {
-        $fields = $request->validate([
-            'post_id' => 'required|int'
-        ]);
+    public function store(PostLikesStoreRequest $request) {
+        $fields = $request->validated();
 
         PostLike::create([
             'post_id' => $fields['post_id'],

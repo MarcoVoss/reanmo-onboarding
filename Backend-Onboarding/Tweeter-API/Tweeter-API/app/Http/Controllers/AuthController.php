@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use Illuminate\Http\Request;
+use App\Requests\UserLoginRequest;
+use App\Requests\UserStoreRequest;
 use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
@@ -12,13 +13,8 @@ class AuthController extends Controller
         parent::__construct('Auth');
     }
 
-    public function register(Request $request) {
-        $fields = $request->validate([
-            'name' => 'required|string',
-            'email' => 'required|string|unique:users,email',
-            'password' => 'required|string|confirmed',
-            'image' => 'nullable',
-        ]);
+    public function register(UserStoreRequest $request) {
+        $fields = $request->validated();
 
         $user = User::create([
             'name' => $fields['name'],
@@ -30,11 +26,8 @@ class AuthController extends Controller
         return $this->_login($user);
     }
 
-    public function login(Request $request) {
-        $fields = $request->validate([
-            'email' => 'required|string',
-            'password' => 'required|string',
-        ]);
+    public function login(UserLoginRequest $request) {
+        $fields = $request->validated();
 
         $user = User::where('email', $fields['email'])->first();
 

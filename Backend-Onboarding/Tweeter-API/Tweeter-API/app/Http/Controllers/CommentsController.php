@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Comment;
-use Illuminate\Http\Request;
+use App\Requests\CommentStoreRequest;
+use App\Requests\CommentUpdateRequest;
 
 class CommentsController extends Controller
 {
@@ -16,12 +17,9 @@ class CommentsController extends Controller
         return Comment::all()->where('user_id', $this->currentUserId());
     }
 
-    public function store(Request $request)
+    public function store(CommentStoreRequest $request)
     {
-        $fields = $request->validate([
-            'post_id' => 'required',
-            'message' => 'required|string'
-        ]);
+        $fields = $request->validated();
 
         Comment::create([
             'post_id' => $fields['post_id'],
@@ -36,7 +34,7 @@ class CommentsController extends Controller
         return Comment::find($id);
     }
 
-    public function update(Request $request, $id)
+    public function update(CommentUpdateRequest $request, $id)
     {
         $comment = Comment::find($id);
         if(!$comment)
@@ -45,9 +43,7 @@ class CommentsController extends Controller
         if(!$this->isMyComment($comment))
             return $this->forbiddenAccess();
 
-        $fields = $request->validate([
-            'message' => 'required|string'
-        ]);
+        $fields = $request->validated();
 
         $comment->message = $fields['message'];
         $comment->save();

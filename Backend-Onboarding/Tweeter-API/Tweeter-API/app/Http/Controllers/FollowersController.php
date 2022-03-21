@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Follower;
-use Illuminate\Http\Request;
+use App\Requests\CommentUpdateRequest;
+use App\Requests\FollowerStoreRequest;
 
 class FollowersController extends Controller
 {
@@ -29,10 +30,8 @@ class FollowersController extends Controller
         return $this->success();
     }
 
-    public function store(Request $request) {
-        $fields = $request->validate([
-            'follower_id' => 'required'
-        ]);
+    public function store(FollowerStoreRequest $request) {
+        $fields = $request->validated();
 
         Follower::create([
             'follower_id' => $this->currentUserId(),

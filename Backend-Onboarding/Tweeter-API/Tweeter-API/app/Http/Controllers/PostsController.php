@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Requests\PostStoreRequest;
+use App\Requests\PostUpdateRequest;
 use App\Models\Post;
-use Illuminate\Database\Eloquent\Model;
 
 class PostsController extends Controller
 {
@@ -17,11 +17,9 @@ class PostsController extends Controller
         return Post::all()->where('user_id', $this->currentUserId());
     }
 
-    public function store(Request $request)
+    public function store(PostStoreRequest $request)
     {
-        $fields = $request->validate([
-            'message' => 'required|string',
-        ]);
+        $fields = $request->validated();
 
         Post::create([
             'message' => $fields['message'],
@@ -41,7 +39,7 @@ class PostsController extends Controller
         return $post;
     }
 
-    public function update(Request $request, $id)
+    public function update(PostUpdateRequest $request, $id)
     {
         $post = $this->index()->find($id);
 
@@ -51,10 +49,7 @@ class PostsController extends Controller
         if(!$this->isMyPost($post))
             return $this->forbiddenAccess();
 
-        $fields = $request->validate([
-            'message' => 'required|string',
-            'id' => 'required'
-        ]);
+        $fields = $request->validated();
 
         $post->message = $fields['message'];
 

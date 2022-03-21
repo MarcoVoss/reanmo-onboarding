@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Requests\CommentLikeStoreRequest;
 use App\Models\CommentLike;
 
 class CommentLikesController extends Controller
@@ -25,10 +25,8 @@ class CommentLikesController extends Controller
         return $this->success();
     }
 
-    public function store(Request $request) {
-        $like = $request->validate([
-           'comment_id' => 'required'
-        ]);
+    public function store(CommentLikeStoreRequest $request) {
+        $like = $request->validated();
 
         CommentLike::create([
            'user_id' => $this->currentUserId(),
