@@ -13,11 +13,31 @@ class Comment extends Model
         'message',
     ];
 
-    public function user() {
+    public static function byId($id)
+    {
+        return Comment::all()
+            ->find($id);
+    }
+
+    public static function byUser($id)
+    {
+        return Comment::all()
+            ->where('user_id', $id)
+            ->get();
+    }
+
+    public static function all($columns = ['*'])
+    {
+        return Comment::with(['user', 'post']);
+    }
+
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
 
-    public function post() {
+    public function post()
+    {
         return $this->belongsTo(Post::class);
     }
 }

@@ -8,6 +8,7 @@ use App\Http\Controllers\CommentsController;
 use App\Http\Controllers\FollowersController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\PostLikesController;
+use App\Http\Controllers\ProfilesController;
 
 // Public routes
 Route::post('/register', [AuthController::class, 'register']);
@@ -41,4 +42,12 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::resource('/comments/likes', CommentLikesController::class, ['only' => [
         'destroy', 'store'
     ]]);
+
+    Route::get('/profiles/search', [ProfilesController::class, 'search']);
+    Route::resource('/profiles', ProfilesController::class, ['only' => [
+        'index', 'show',
+    ]]);
+
+    Route::get('/profile', [ProfilesController::class, 'showMe']);
+    Route::Put('/profile', [ProfilesController::class, 'update']);
 });

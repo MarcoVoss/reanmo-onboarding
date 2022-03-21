@@ -15,7 +15,9 @@ class Follower extends Model
     ];
 
     public static function getAllByFollowerId($id) {
-        return Follower::all()->where('followed_id', $id);
+        return Follower::with('user')
+            ->where('follower_id', $id)
+            ->get();
     }
 
     public static function getFirstByUserAndFollower($uid, $fid) {

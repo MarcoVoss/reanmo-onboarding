@@ -14,7 +14,7 @@ class CommentsController extends Controller
 
     public function index()
     {
-        return Comment::all()->where('user_id', $this->currentUserId());
+        return Comment::byUser($this->currentUserId());
     }
 
     public function store(CommentStoreRequest $request)
@@ -31,12 +31,12 @@ class CommentsController extends Controller
 
     public function show($id)
     {
-        return Comment::find($id);
+        return Comment::byId($id);
     }
 
     public function update(CommentUpdateRequest $request, $id)
     {
-        $comment = Comment::find($id);
+        $comment = Comment::byId($id);
         if(!$comment)
             return $this->notFoundException();
 
@@ -53,7 +53,7 @@ class CommentsController extends Controller
 
     public function destroy($id)
     {
-        $comment = Comment::find($id);
+        $comment = Comment::byId($id);
         if(!$comment)
             return $this->notFoundException();
 

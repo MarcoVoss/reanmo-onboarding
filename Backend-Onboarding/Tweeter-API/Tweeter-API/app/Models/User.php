@@ -27,6 +27,20 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public static function getByName($name) {
+        if(!$name)
+            return User::all();
+        return User::where('name', 'like', "%$name%")
+            ->get();
+    }
+
+    public function scopeFilterName($query, $name) {
+        if(!$name)
+            return;
+        $query->where('name', 'like', "%$name%")
+            ->get();
+    }
+
     public static function getByEmail(String $email) {
         return User::where('email', $email)->first();
     }

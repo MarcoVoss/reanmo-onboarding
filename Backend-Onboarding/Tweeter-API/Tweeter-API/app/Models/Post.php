@@ -15,14 +15,17 @@ class Post extends Model
     ];
 
     public static function getByUser($id) {
-        return Post::all()->where('user_id', $id)->collect();
+        return Post::with(['user', 'comments'])
+            ->where('user_id', $id)
+            ->get();
     }
 
     public static function getByFollows($id) {
-        return Post::whereExists(function ($query) use ($id){
-            $query->select('followers.user_id')
-                ->from('followers')
-                ->whereRaw("followers.follower_id = $id and followers.user_id = posts.user_id");
+        return Post::with(['user', 'comments'])
+            ->whereExists(function ($query) use ($id){
+                $query->select('followers.user_id')
+                    ->from('followers')
+                    ->whereRaw("followers.follower_id = $id and followers.user_id = posts.user_id");
         })->get();
     }
 
