@@ -27,6 +27,10 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public static function getByEmail(String $email) {
+        return User::where('email', $email)->first();
+    }
+
     public function posts() {
         return $this->hasMany(Post::class);
     }

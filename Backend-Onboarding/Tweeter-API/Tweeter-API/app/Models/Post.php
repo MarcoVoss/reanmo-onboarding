@@ -14,6 +14,18 @@ class Post extends Model
         'user_id'
     ];
 
+    public static function getByUser($id) {
+        return Post::all()->where('user_id', $id)->collect();
+    }
+
+    public static function getByFollows($id) {
+        return Post::whereExists(function ($query) use ($id){
+            $query->select('followers.user_id')
+                ->from('followers')
+                ->whereRaw("followers.follower_id = $id and followers.user_id = posts.user_id");
+        })->get();
+    }
+
     public function user() {
         return $this->belongsTo(User::class);
     }

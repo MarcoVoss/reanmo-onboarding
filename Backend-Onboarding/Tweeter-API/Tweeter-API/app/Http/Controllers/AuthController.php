@@ -29,10 +29,10 @@ class AuthController extends Controller
     public function login(UserLoginRequest $request) {
         $fields = $request->validated();
 
-        $user = User::where('email', $fields['email'])->first();
+        $user = User::getByEmail($fields['email']);
 
         if(!$user->exists() || !Hash::check($fields['password'], $user->password))
-            return response(['message' => 'Bad Credentials'], 401);
+            return response('Bad Credentials', 401);
 
         return $this->_login($user);
     }

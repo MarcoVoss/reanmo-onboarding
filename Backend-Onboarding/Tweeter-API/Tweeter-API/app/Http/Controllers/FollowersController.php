@@ -13,13 +13,11 @@ class FollowersController extends Controller
     }
 
     public function index() {
-        return Follower::all()->where('followed_id', $this->currentUserId());
+        return Follower::getAllByFollowerId($this->currentUserId());
     }
 
     public function destroy($id) {
-        $relationship = $this->index()
-            ->where('user_id', $id)
-            ->first();
+        $relationship = Follower::getFirstByUserAndFollower($id, $this->currentUserId());
 
         if(!$relationship)
             return $this->notFoundException();

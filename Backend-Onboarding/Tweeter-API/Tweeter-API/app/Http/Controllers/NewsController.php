@@ -12,9 +12,7 @@ class NewsController extends Controller
     }
 
     public function index() {
-        return Post::leftJoin('followers', 'followers.user_id', '=', "posts.user_id")
-            ->where('followers.follower_id', '=', $this->currentUserId())
-            ->get();
+        return Post::getByFollows($this->currentUserId());
     }
 
     public function show($id) {

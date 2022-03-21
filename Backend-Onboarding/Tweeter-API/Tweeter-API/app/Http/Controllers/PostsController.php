@@ -14,7 +14,7 @@ class PostsController extends Controller
 
     public function index()
     {
-        return Post::all()->where('user_id', $this->currentUserId());
+        return Post::getByUser($this->currentUserId());
     }
 
     public function store(PostStoreRequest $request)

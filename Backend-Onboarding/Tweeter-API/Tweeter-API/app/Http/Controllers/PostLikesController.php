@@ -12,10 +12,7 @@ class PostLikesController extends Controller
     }
 
     public function destroy($id) {
-        $relationship = PostLike::all()
-            ->where('user_id', $this->currentUserId())
-            ->where('post_id', $id)
-            ->first();
+        $relationship = PostLike::getOne($this->currentUserId(), $id);
 
         if(!$relationship)
             return $this->notFoundException();

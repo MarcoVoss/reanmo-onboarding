@@ -14,6 +14,13 @@ class PostLike extends Model
         'post_id'
     ];
 
+    public static function getOne($uId, $pId) {
+        return PostLike::all()
+            ->where('user_id', $uId)
+            ->where('post_id', $pId)
+            ->first();
+    }
+
     public function user() {
         return $this->belongsTo(User::class);
     }
