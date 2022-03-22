@@ -57,4 +57,31 @@ class AuthTest extends TestCase
         $response = $this->post('/api/register', $data);
         $response->assertStatus(302);
     }
+
+    public function test_login_success() {
+        $this->test_user_registration_success();
+        $data = [
+            'email' => 'marco@gmx.de',
+            'password' => 'password',
+        ];
+        $response = $this->post('/api/login', $data);
+        $response->assertStatus(200);
+    }
+
+    public function test_login_wrong_credentials() {
+        $data = [
+            'email' => 'bla@gmx.de',
+            'password' => 'bla',
+        ];
+        $response = $this->post('/api/login', $data);
+        $response->assertStatus(401);
+    }
+
+    public function test_not_enough_credentials() {
+        $data = [
+            'password' => 'bla',
+        ];
+        $response = $this->post('/api/login', $data);
+        $response->assertStatus(302);
+    }
 }

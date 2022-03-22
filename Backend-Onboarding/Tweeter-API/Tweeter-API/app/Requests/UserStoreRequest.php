@@ -10,7 +10,7 @@ class UserStoreRequest extends FormRequest
         return [
             'name' => 'required|string',
             'email' => 'required|string|unique:users,email|email',
-            'password' => 'required|string|confirmed',
+            'password' => 'required|min:6|regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x])(?=.*[!$#%]).*$/|confirmed',
             'image' => 'nullable',
         ];
     }
