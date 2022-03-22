@@ -21,7 +21,7 @@ class PostLikesController extends Controller
         if(!$relationship->delete())
             return $this->failedException();
 
-        return $this->success($relationship);
+        return response(status: 204);
     }
 
     public function store(PostLikesStoreRequest $request) {

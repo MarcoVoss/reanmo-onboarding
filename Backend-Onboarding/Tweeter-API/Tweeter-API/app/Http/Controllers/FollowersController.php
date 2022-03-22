@@ -25,7 +25,7 @@ class FollowersController extends Controller
         if(!$relationship->delete())
             return $this->failedException();
 
-        return $this->success();
+        return response(status: 204);
     }
 
     public function store(FollowerStoreRequest $request) {

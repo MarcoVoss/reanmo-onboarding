@@ -23,7 +23,7 @@ class CommentLikesController extends Controller
         if(!CommentLike::destroy($id))
             return $this->failedException();
 
-        return $this->success($like);
+        return response(status: 204);
     }
 
     public function store(CommentLikeStoreRequest $request) {

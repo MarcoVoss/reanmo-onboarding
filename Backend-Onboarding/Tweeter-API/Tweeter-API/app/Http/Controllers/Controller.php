@@ -30,10 +30,6 @@ abstract class Controller extends BaseController
         return $this->exceptionResponse("$this->NAME did not work!", 500);
     }
 
-    protected function success($obj, $nr = 200) {
-        return response($obj, $nr);
-    }
-
     private function exceptionResponse($message, $nr) {
         Log::error($message);
         return response($message, $nr);
