@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Requests\CommentLikeStoreRequest;
+use App\Http\Requests\CommentLikeStoreRequest;
+use App\Http\Resources\CommentLikeResource;
 use App\Models\CommentLike;
 
 class CommentLikesController extends Controller
@@ -22,18 +23,18 @@ class CommentLikesController extends Controller
         if(!CommentLike::destroy($id))
             return $this->failedException();
 
-        return $this->success();
+        return $this->success($like);
     }
 
     public function store(CommentLikeStoreRequest $request) {
-        $like = $request->validated();
+        $fields = $request->validated();
 
-        CommentLike::create([
+        $like = CommentLike::create([
            'user_id' => $this->currentUserId(),
-           'comment_id' => $like['comment_id']
+           'comment_id' => $fields['comment_id']
         ]);
 
-        return $this->success();
+        return response(CommentLikeResource::make($like), 201);
     }
 
     private function isMyComment(CommentLike $like) {

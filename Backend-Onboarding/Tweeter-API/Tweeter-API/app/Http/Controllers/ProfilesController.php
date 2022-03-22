@@ -3,12 +3,10 @@
 namespace App\Http\Controllers;
 
 
-use App\Http\Resources\UserCollection;
+use App\Http\Requests\UserSearchRequest;
+use App\Http\Requests\UserUpdateRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
-use App\Requests\IdRequest;
-use App\Requests\UserUpdateRequest;
-use App\Requests\UserSearchRequest;
 
 class ProfilesController extends Controller
 {
@@ -18,62 +16,36 @@ class ProfilesController extends Controller
 
     public function index()
     {
-        return new UserCollection(User::all());
+        return response(UserResource::collection(User::all()));
     }
 
     public function search(UserSearchRequest $request)
     {
         $fields = $request->validated();
-        return new UserCollection(User::latest()->filterName($fields['name'])->get());
+        $users = User::latest()->filterName($fields['name'])->get();
+        return response(UserResource::collection($users));
     }
 
-    public function show($id)
+    public function show(User $user)
     {
-        $user = User::find($id);
-        if(!$user)
-            return $this->notFoundException();
-        return new UserResource($user);
+        return response(UserResource::make($user));
     }
 
-    public function update(UserUpdateRequest $request, $id)
+    public function update(UserUpdateRequest $request, User $user)
     {
-        $user = User::find($id);
-        if(!$user)
-            return $this->notFoundException();
-
-        if(!$this->isMyProfile($user))
-            return $this->forbiddenAccess();
-
-        $fields = $request->validated();
-        $user->name = $fields['name'] ?? $user->name;
-        $user->image = $fields['image'] ?? $user->image;
-        $user->email = $fields['email'] ?? $user->email;
-        $user->password = $fields['password'] ?? $user->password;
-        $user->save();
-        return $this->success();
+        $user->update($this->forbiddenAccess());
+        return response(UserResource::make($user));
     }
 
-    public function destroy($id)
+    public function destroy(User $user)
     {
-        $user = $this->show($id);
-
-        if(!$user)
-            return $this->notFoundException();
-
-        if(!$this->isMyProfile($user))
-            return $this->forbiddenAccess();
-
         $user->delete();
-        return $this->success();
+        return response(status: 204);
     }
 
     public function showMe()
     {
-        return new UserResource($this->show($this->currentUserId()));
-    }
-
-    private function isMyProfile(User $user)
-    {
-        return $user->id == $this->currentUserId();
+        $user = $this->show($this->currentUserId());
+        return response(UserResource::make($user));
     }
 }

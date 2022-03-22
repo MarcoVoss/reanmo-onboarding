@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\FollowerStoreRequest;
+use App\Http\Resources\FollowerResource;
 use App\Models\Follower;
-use App\Requests\CommentUpdateRequest;
-use App\Requests\FollowerStoreRequest;
 
 class FollowersController extends Controller
 {
@@ -31,11 +31,11 @@ class FollowersController extends Controller
     public function store(FollowerStoreRequest $request) {
         $fields = $request->validated();
 
-        Follower::create([
+        $follower = Follower::create([
             'follower_id' => $this->currentUserId(),
             'user_id' => $fields['follower_id']
         ]);
 
-        return $this->success(201);
+        return response(FollowerResource::make($follower), 201);
     }
 }

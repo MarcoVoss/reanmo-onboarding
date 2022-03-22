@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\PostResource;
 use App\Models\Post;
 
 class NewsController extends Controller
@@ -12,15 +13,11 @@ class NewsController extends Controller
     }
 
     public function index() {
-        return Post::getByFollows($this->currentUserId());
+        $posts = Post::getByFollows($this->currentUserId());
+        return response(PostResource::collection($posts));
     }
 
-    public function show($id) {
-        $post = $this->index()->find($id);
-
-        if(!$post)
-            $this->notFoundException();
-
-        return $post;
+    public function show(Post $post) {
+        return response(PostResource::make($post));
     }
 }

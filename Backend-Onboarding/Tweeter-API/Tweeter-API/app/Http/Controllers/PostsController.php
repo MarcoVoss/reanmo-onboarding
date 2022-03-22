@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Requests\PostStoreRequest;
-use App\Requests\PostUpdateRequest;
+use App\Http\Requests\PostStoreRequest;
+use App\Http\Requests\PostUpdateRequest;
+use App\Http\Resources\PostResource;
 use App\Models\Post;
 
 class PostsController extends Controller
@@ -14,67 +15,36 @@ class PostsController extends Controller
 
     public function index()
     {
-        return Post::getByUser($this->currentUserId());
+        $posts = Post::getByUser($this->currentUserId());
+        return response(PostResource::collection($posts));
     }
 
     public function store(PostStoreRequest $request)
     {
         $fields = $request->validated();
 
-        Post::create([
+        $post = Post::create([
             'message' => $fields['message'],
             'user_id' => $this->currentUserId(),
         ]);
 
-        return $this->success(201);
+        return response(PostResource::make($post), 201);
     }
 
-    public function show($id)
+    public function show(Post $post)
     {
-        $post = $this->index()->find($id);
-
-        if(!$post)
-            return $this->notFoundException();
-
-        return $post;
+        return response(PostResource::make($post));
     }
 
-    public function update(PostUpdateRequest $request, $id)
+    public function update(PostUpdateRequest $request, Post $post)
     {
-        $post = $this->index()->find($id);
-
-        if(!$post)
-            return $this->notFoundException();
-
-        if(!$this->isMyPost($post))
-            return $this->forbiddenAccess();
-
-        $fields = $request->validated();
-
-        $post->message = $fields['message'];
-
-        if(!$post->save())
-            return $this->failedException();
-
-        return $this->success(204);
+        $post->update($request->validated());
+        return response(PostResource::make($post));
     }
 
-    public function destroy($id)
+    public function destroy(Post $post)
     {
-        $post = $this->index()->find($id);
-        if(!$post)
-            return $this->notFoundException();
-
-        if(!$this->isMyPost($post))
-            return $this->forbiddenAccess();
-
-        if(!Post::destroy($id))
-            return $this->failedException();
-
-        return $this->success();
-    }
-
-    private function isMyPost(Post $post) {
-        return $post->user_id == $this->currentUserId();
+        $post->delete();
+        return response(status: 204);
     }
 }

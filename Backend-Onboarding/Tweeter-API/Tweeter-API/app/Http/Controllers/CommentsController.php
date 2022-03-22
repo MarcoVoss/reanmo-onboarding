@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CommentStoreRequest;
+use App\Http\Requests\CommentUpdateRequest;
+use App\Http\Resources\CommentResource;
 use App\Models\Comment;
-use App\Requests\CommentStoreRequest;
-use App\Requests\CommentUpdateRequest;
 
 class CommentsController extends Controller
 {
@@ -14,59 +15,30 @@ class CommentsController extends Controller
 
     public function index()
     {
-        return Comment::byUser($this->currentUserId());
+        $comments = Comment::byUser($this->currentUserId());
+        return response(CommentResource::collection($comments));
     }
 
     public function store(CommentStoreRequest $request)
     {
-        $fields = $request->validated();
-
-        Comment::create([
-            'post_id' => $fields['post_id'],
-            'message' => $fields['message']
-        ]);
-
-        return $this->success(201);
+        $comment = Comment::create($request->validated());
+        return response(CommentResource::make($comment), 201);
     }
 
-    public function show($id)
+    public function show(Comment $comment)
     {
-        return Comment::byId($id);
+        return response(CommentResource::make($comment));
     }
 
-    public function update(CommentUpdateRequest $request, $id)
+    public function update(CommentUpdateRequest $request, Comment $comment)
     {
-        $comment = Comment::byId($id);
-        if(!$comment)
-            return $this->notFoundException();
-
-        if(!$this->isMyComment($comment))
-            return $this->forbiddenAccess();
-
-        $fields = $request->validated();
-
-        $comment->message = $fields['message'];
-        $comment->save();
-
-        return $this->success();
+        $comment->update($request->validated());
+        return response(CommentResource::make($comment));
     }
 
-    public function destroy($id)
+    public function destroy(Comment $comment)
     {
-        $comment = Comment::byId($id);
-        if(!$comment)
-            return $this->notFoundException();
-
-        if(!$this->isMyComment($comment))
-            return $this->forbiddenAccess();
-
-        if(!Comment::destroy($id))
-            return $this->failedException();
-
-        return $this->success();
-    }
-
-    private function isMyComment(Comment $comment) {
-        return $comment->user_id == $this->currentUserId();
+        $comment->delete();
+        return response(204);
     }
 }

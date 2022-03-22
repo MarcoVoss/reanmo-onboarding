@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PostLikesStoreRequest;
+use App\Http\Resources\PostLikeResource;
 use App\Models\PostLike;
-use App\Requests\PostLikesStoreRequest;
 
 class PostLikesController extends Controller
 {
@@ -20,17 +21,17 @@ class PostLikesController extends Controller
         if(!$relationship->delete())
             return $this->failedException();
 
-        return $this->success();
+        return $this->success($relationship);
     }
 
     public function store(PostLikesStoreRequest $request) {
         $fields = $request->validated();
 
-        PostLike::create([
+        $like = PostLike::create([
             'post_id' => $fields['post_id'],
             'user_id' => $this->currentUserId()
         ]);
 
-        return $this->success(201);
+        return response(PostLikeResource::make($like), 201);
     }
 }

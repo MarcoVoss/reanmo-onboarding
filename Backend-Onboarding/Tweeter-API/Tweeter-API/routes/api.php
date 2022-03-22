@@ -19,34 +19,34 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::post('/logout', [AuthController::class, 'logout']);
 
-    Route::resource('/followers', FollowersController::class, ['only' => [
-        'destroy', 'store', 'index'
-    ]]);
+    Route::get("/followers", [ProfilesController::class, 'index']);
+    Route::delete("/followers/{follower}", [ProfilesController::class, 'destroy']);
 
-    Route::resource('/posts', PostsController::class, ['except' => [
-        'create', 'edit'
-    ]]);
+    Route::get("/posts/{post}", [PostsController::class, 'show']);
+    Route::get("/posts", [PostsController::class, 'index']);
+    Route::post("/posts", [PostsController::class, 'store']);
+    Route::put("/posts/{post}", [PostsController::class, 'update']);
+    Route::delete("/posts/{post}", [PostsController::class, 'destroy']);
 
-    Route::resource('/comments', CommentsController::class, ['except' => [
-        'create', 'edit'
-    ]]);
+    Route::get("/comments/{comment}", [CommentsController::class, 'show']);
+    Route::get("/comments", [CommentsController::class, 'index']);
+    Route::post("/comments", [CommentsController::class, 'store']);
+    Route::put("/comments/{comment}", [CommentsController::class, 'update']);
+    Route::delete("/comments/{comment}", [CommentsController::class, 'destroy']);
 
-    Route::resource('/news', NewsController::class, ['only' => [
-        'index', 'show'
-    ]]);
+    Route::get("/news", [NewsController::class, "index"]);
+    Route::get("/news/{post}", [NewsController::class, "show"]);
 
-    Route::resource('/posts/likes', PostLikesController::class, ['only' => [
-        'destroy', 'store'
-    ]]);
+    Route::delete("/posts/likes", [PostLikesController::class, "destroy"]);
+    Route::post("/posts/likes", [PostLikesController::class, "store"]);
 
-    Route::resource('/comments/likes', CommentLikesController::class, ['only' => [
-        'destroy', 'store'
-    ]]);
+    Route::delete("/comments/likes", [CommentLikesController::class, "destroy"]);
+    Route::post("/comments/likes", [CommentLikesController::class, "store"]);
 
     Route::get('/profiles/search', [ProfilesController::class, 'search']);
-    Route::resource('/profiles', ProfilesController::class, ['only' => [
-        'index', 'show', 'destroy'
-    ]]);
+    Route::get("/profiles", [ProfilesController::class, 'index']);
+    Route::get("/profiles/{user}", [ProfilesController::class, 'show']);
+    Route::delete("/profiles", [ProfilesController::class, 'destroy']);
 
     Route::get('/profile', [ProfilesController::class, 'showMe']);
     Route::Put('/profile/{id}', [ProfilesController::class, 'update']);
