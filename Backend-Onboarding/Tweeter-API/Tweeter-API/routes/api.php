@@ -19,8 +19,8 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::post('/logout', [AuthController::class, 'logout']);
 
-    Route::get("/followers", [ProfilesController::class, 'index']);
-    Route::delete("/followers/{follower}", [ProfilesController::class, 'destroy']);
+    Route::get("/followers", [FollowersController::class, 'index']);
+    Route::delete("/followers/{follower}", [FollowersController::class, 'destroy']);
 
     Route::get("/posts/{post}", [PostsController::class, 'show']);
     Route::get("/posts", [PostsController::class, 'index']);
