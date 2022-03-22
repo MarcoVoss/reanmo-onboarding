@@ -3,14 +3,13 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Log;
 
 class UserUpdateRequest extends FormRequest
 {
     public function authorize()
     {
-        $userId = $this->route('id');
-        return $userId == auth()->user()->id;
+        $user = $this->route('user');
+        return $user->id == auth()->user()->id;
     }
 
     public function rules()

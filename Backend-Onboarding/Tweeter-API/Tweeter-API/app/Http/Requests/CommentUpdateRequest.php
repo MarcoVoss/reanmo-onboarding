@@ -8,7 +8,8 @@ class CommentUpdateRequest extends FormRequest
 {
     public function authorize()
     {
-        return false;
+        $comment = $this->route("comment");
+        return $comment->user_id = auth()->user()->id;
     }
 
     public function rules()
