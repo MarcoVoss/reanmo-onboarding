@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 
+use App\Http\Resources\UserCollection;
+use App\Http\Resources\UserResource;
 use App\Models\User;
 use App\Requests\IdRequest;
 use App\Requests\UserUpdateRequest;
@@ -16,13 +18,13 @@ class ProfilesController extends Controller
 
     public function index()
     {
-        return User::all();
+        return new UserCollection(User::all());
     }
 
     public function search(UserSearchRequest $request)
     {
         $fields = $request->validated();
-        return User::latest()->filterName($fields['name'])->get();
+        return new UserCollection(User::latest()->filterName($fields['name'])->get());
     }
 
     public function show($id)
@@ -30,7 +32,7 @@ class ProfilesController extends Controller
         $user = User::find($id);
         if(!$user)
             return $this->notFoundException();
-        return $user;
+        return new UserResource($user);
     }
 
     public function update(UserUpdateRequest $request, $id)
@@ -67,7 +69,7 @@ class ProfilesController extends Controller
 
     public function showMe()
     {
-        return $this->show($this->currentUserId());
+        return new UserResource($this->show($this->currentUserId()));
     }
 
     private function isMyProfile(User $user)
