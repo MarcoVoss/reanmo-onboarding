@@ -14,8 +14,8 @@ class AuthTest extends TestCase
             'name' => 'Marco',
             'email' => 'marco@gmx.de',
             'image' => 'some/where',
-            'password' => 'password',
-            'password_confirmation' => 'password'
+            'password' => '!1password',
+            'password_confirmation' => '!1password'
         ];
         $response = $this->post('/api/register', $data);
         $response->assertStatus(201);
@@ -25,7 +25,7 @@ class AuthTest extends TestCase
         $data = [
             'name' => 'Marco',
             'email' => 'marco@gmx.de',
-            'password' => 'password',
+            'password' => '!1password',
         ];
         $response = $this->post('/api/register', $data);
         $response->assertStatus(302);
@@ -35,8 +35,8 @@ class AuthTest extends TestCase
         $data = [
             'name' => 'Marco',
             'email' => 'marco_gmx_de',
-            'password' => 'password',
-            'password_confirmation' => 'password',
+            'password' => '!1password',
+            'password_confirmation' => '!1password',
             'image' => 'some/where',
         ];
         $response = $this->post('/api/register', $data);
@@ -48,8 +48,8 @@ class AuthTest extends TestCase
             'name' => 'Marco',
             'email' => 'test@gmx.de',
             'image' => 'some/where',
-            'password' => 'password',
-            'password_confirmation' => 'password'
+            'password' => '!1password',
+            'password_confirmation' => '!1password'
         ];
         $response = $this->post('/api/register', $data);
         $response->assertStatus(201);
@@ -62,7 +62,7 @@ class AuthTest extends TestCase
         $this->test_user_registration_success();
         $data = [
             'email' => 'marco@gmx.de',
-            'password' => 'password',
+            'password' => '!1password',
         ];
         $response = $this->post('/api/login', $data);
         $response->assertStatus(200);
