@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Image;
 use App\Models\User;
 use App\Models\Post;
 use App\Models\Comment;
@@ -21,5 +22,6 @@ class DatabaseSeeder extends Seeder
         CommentLike::factory(10)->create();
         PostLike::factory(10)->create();
         Follower::factory(10)->create();
+        Image::factory(10)->create();
     }
 }

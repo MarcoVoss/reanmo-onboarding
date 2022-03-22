@@ -14,16 +14,24 @@ class Follower extends Model
         'user_id'
     ];
 
-    public static function getAllByFollowerId($id) {
-        return Follower::with('user')
-            ->where('follower_id', $id)
-            ->get();
+    protected function setKeysForSelectQuery($query)
+    {
+        return $query
+            ->where('follower_id', '=', $this->getAttribute('follower_id'))
+            ->where('user_id', '=', $this->getAttribute('user_id'));
     }
 
-    public static function getFirstByUserAndFollower($uid, $fid) {
-        return Follower::getAllByFollowerId($fid)
-            ->where('user_id', $uid)
-            ->first();
+    protected function setKeysForSaveQuery($query)
+    {
+        return $query
+            ->where('follower_id', '=', $this->getAttribute('follower_id'))
+            ->where('user_id', '=', $this->getAttribute('user_id'));
+    }
+
+    public static function getAllByFollowerId($id) {
+        return Follower::with('user')
+            ->where('follower_id', "=", $id)
+            ->get();
     }
 
     public function user() {

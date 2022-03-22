@@ -11,7 +11,8 @@ class Post extends Model
 
     protected $fillable = [
         'message',
-        'user_id'
+        'user_id',
+        'image_id'
     ];
 
     public static function getByUser($id) {
@@ -31,6 +32,10 @@ class Post extends Model
 
     public function user() {
         return $this->belongsTo(User::class);
+    }
+
+    public function image() {
+        return $this->belongsTo(Image::class);
     }
 
     public function comments() {

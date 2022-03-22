@@ -9,6 +9,7 @@ use App\Http\Controllers\FollowersController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\PostLikesController;
 use App\Http\Controllers\ProfilesController;
+use App\Http\Controllers\ImageController;
 
 // Public routes
 Route::post('/register', [AuthController::class, 'register']);
@@ -20,6 +21,7 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::post('/logout', [AuthController::class, 'logout']);
 
     Route::get("/followers", [FollowersController::class, 'index']);
+    Route::post("/followers", [FollowersController::class, 'store']);
     Route::delete("/followers/{follower}", [FollowersController::class, 'destroy']);
 
     Route::get("/posts/{post}", [PostsController::class, 'show']);
@@ -50,4 +52,9 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
 
     Route::get('/profile', [ProfilesController::class, 'showMe']);
     Route::Put('/profile/{id}', [ProfilesController::class, 'update']);
+
+    Route::get("/image/{image}", [ImageController::class, 'show']);
+    Route::post("/image", [ImageController::class, 'store']);
+    Route::put("/image/{image}", [ImageController::class, 'update']);
+    Route::delete("/image/{image}", [ImageController::class, 'destroy']);
 });

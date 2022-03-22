@@ -15,7 +15,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'image'
+        'image_id'
     ];
 
     protected $hidden = [
@@ -36,6 +36,10 @@ class User extends Authenticatable
 
     public static function getByEmail(String $email) {
         return User::where('email', $email)->first();
+    }
+
+    public function image() {
+        return $this->belongsTo(Image::class);
     }
 
     public function posts() {

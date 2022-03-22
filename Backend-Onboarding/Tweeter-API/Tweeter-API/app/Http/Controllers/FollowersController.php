@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\FollowerStoreRequest;
 use App\Http\Resources\FollowerResource;
 use App\Models\Follower;
+use Illuminate\Support\Facades\Log;
 
 class FollowersController extends Controller
 {
@@ -16,14 +17,16 @@ class FollowersController extends Controller
         return Follower::getAllByFollowerId($this->currentUserId());
     }
 
-    public function destroy($id) {
-        $relationship = Follower::getFirstByUserAndFollower($id, $this->currentUserId());
+    public function destroy(Follower $follower) {
+        Log::info($follower);
 
-        if(!$relationship)
-            return $this->notFoundException();
+//        $relationship = Follower::getFirstByUserAndFollower($id, $this->currentUserId());
 
-        if(!$relationship->delete())
-            return $this->failedException();
+//        if(!$relationship)
+//            return $this->notFoundException();
+//
+//        if(!$relationship->delete())
+//            return $this->failedException();
 
         return response(status: 204);
     }
