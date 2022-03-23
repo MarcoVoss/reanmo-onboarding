@@ -7,16 +7,22 @@ use App\Models\User;
 use App\Models\Post;
 use App\Models\Comment;
 
-use Database\Factories\CommentFactory;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
     public function run()
     {
-        User::factory(10)->create();
-        Post::factory(10)->create();
-        Comment::factory(10)->create();
-        Image::factory(10)->create();
+        $users = User::factory(10)->create();
+        $posts = Post::factory(10)->create();
+        $comments = Comment::factory(10)->create();
+        $images = Image::factory(10)->create();
+        foreach ($users as $user) {
+            $user->commentLikes()->saveMany($comments);
+            $user->postLikes()->saveMany($posts);
+            $user->save(['image' => $images->random()]);
+            $user->comments()->saveMany(Comment::factory(10)->create());
+            $user->follower()->saveMany($users);
+        }
     }
 }

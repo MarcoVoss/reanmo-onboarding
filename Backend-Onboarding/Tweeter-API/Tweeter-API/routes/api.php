@@ -44,9 +44,9 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::get("/news", [NewsController::class, "index"]);
     Route::get("/news/{post}", [NewsController::class, "show"]);
 
-    Route::delete("/posts-likes/{id}", [PostLikesController::class, "destroy"]);
-    Route::get('/posts-likes', [PostLikesController::class, "index"]);
-    Route::post("/posts-likes", [PostLikesController::class, "store"]);
+    Route::delete("/post-likes/{id}", [PostLikesController::class, "destroy"]);
+    Route::get('/post-likes', [PostLikesController::class, "index"]);
+    Route::post("/post-likes", [PostLikesController::class, "store"]);
 
     Route::delete("/comment-likes/{id}", [CommentLikesController::class, "destroy"]);
     Route::get('/comment-likes', [CommentLikesController::class, "index"]);

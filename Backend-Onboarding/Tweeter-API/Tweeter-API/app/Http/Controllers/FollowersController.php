@@ -13,22 +13,17 @@ class FollowersController extends Controller
     }
 
     public function index() {
-        return auth()->user()->follower()->get();
+        return response(FollowerResource::collection(auth()->user()->followed()->get()));
     }
 
-    public function destroy(UserUser $follower) {
-        $follower->delete();
+    public function destroy($id) {
+        auth()->user()->followed()->detach($id);
         return response(status: 204);
     }
 
     public function store(FollowerStoreRequest $request) {
         $fields = $request->validated();
-
-        $follower = UserUser::create([
-            'follower_id' => $this->currentUserId(),
-            'user_id' => $fields['follower_id']
-        ]);
-
-        return response(FollowerResource::make($follower), 201);
+        auth()->user()->followed()->syncWithoutDetaching($fields['follower_id']);
+        return response(status: 200);
     }
 }
