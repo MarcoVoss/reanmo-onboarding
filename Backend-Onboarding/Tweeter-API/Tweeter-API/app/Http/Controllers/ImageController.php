@@ -2,14 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CommentStoreRequest;
-use App\Http\Requests\CommentUpdateRequest;
 use App\Http\Requests\ImageStoreRequest;
 use App\Http\Requests\ImageUpdateRequest;
-use App\Http\Resources\CommentResource;
 use App\Http\Resources\ImageResource;
-use App\Models\Comment;
 use App\Models\Image;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Str;
 
 class ImageController extends Controller
 {
@@ -19,7 +17,11 @@ class ImageController extends Controller
 
     public function store(ImageStoreRequest $request)
     {
-        $image = Image::create($request->validated());
+        $fields = $request->validated();
+        $path = $this->saveImage($fields['image'], Str::uuid());
+        $image = Image::create([
+            'path' => $path
+        ]);
         return response(ImageResource::make($image), 201);
     }
 
@@ -30,7 +32,11 @@ class ImageController extends Controller
 
     public function update(ImageUpdateRequest $request, Image $image)
     {
-        $image->update($request->validated());
+        $fields = $request->validated();
+        $path = $this->saveImage($fields['image'], Str::uuid());
+        $image->update([
+            'path' => $path
+        ]);
         return response(ImageResource::make($image));
     }
 
@@ -38,5 +44,9 @@ class ImageController extends Controller
     {
         $image->delete();
         return response(204);
+    }
+
+    private function saveImage(UploadedFile $image, $fileName) {
+        return $image->storeAs('images', "$fileName.{$image->extension()}", 'public');
     }
 }

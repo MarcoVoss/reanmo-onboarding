@@ -14,7 +14,8 @@ class PostStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'message' => 'required|string'
+            'message' => 'required|string',
+            'image_id' => 'int'
         ];
     }
 }

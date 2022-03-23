@@ -13,7 +13,6 @@ return new class extends Migration
             $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreignId('image_id')->references('id')->on('images');
             $table->string('message');
-
             $table->timestamps();
         });
     }

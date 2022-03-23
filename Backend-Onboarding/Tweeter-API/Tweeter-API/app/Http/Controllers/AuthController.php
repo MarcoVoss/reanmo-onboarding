@@ -21,6 +21,7 @@ class AuthController extends Controller
             'name' => $fields['name'],
             'email' => $fields['email'],
             'password' => bcrypt($fields['password']),
+            'image_id' => $fields['image_id'] ?? null
         ]);
 
         return response(UserResource::make($user), 201);

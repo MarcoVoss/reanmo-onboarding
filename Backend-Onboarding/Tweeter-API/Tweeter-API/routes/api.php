@@ -16,6 +16,11 @@ Route::post('/register', [AuthController::class, 'register']);
 
 Route::post('/login', [AuthController::class, 'login']);
 
+Route::get("/images/{image}", [ImageController::class, 'show']);
+Route::post("/images", [ImageController::class, 'store']);
+Route::put("/images/{image}", [ImageController::class, 'update']);
+Route::delete("/images/{image}", [ImageController::class, 'destroy']);
+
 // Protected routes
 Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::post('/logout', [AuthController::class, 'logout']);
@@ -39,11 +44,13 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::get("/news", [NewsController::class, "index"]);
     Route::get("/news/{post}", [NewsController::class, "show"]);
 
-    Route::delete("/posts/likes", [PostLikesController::class, "destroy"]);
-    Route::post("/posts/likes", [PostLikesController::class, "store"]);
+    Route::delete("/posts-likes/{id}", [PostLikesController::class, "destroy"]);
+    Route::get('/posts-likes', [PostLikesController::class, "index"]);
+    Route::post("/posts-likes", [PostLikesController::class, "store"]);
 
-    Route::delete("/comments/likes", [CommentLikesController::class, "destroy"]);
-    Route::post("/comments/likes", [CommentLikesController::class, "store"]);
+    Route::delete("/comment-likes/{id}", [CommentLikesController::class, "destroy"]);
+    Route::get('/comment-likes', [CommentLikesController::class, "index"]);
+    Route::post("/comment-likes", [CommentLikesController::class, "store"]);
 
     Route::get('/profiles/search', [ProfilesController::class, 'search']);
     Route::get("/profiles", [ProfilesController::class, 'index']);
@@ -52,9 +59,4 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
 
     Route::get('/profile', [ProfilesController::class, 'showMe']);
     Route::Put('/profile/{id}', [ProfilesController::class, 'update']);
-
-    Route::get("/image/{image}", [ImageController::class, 'show']);
-    Route::post("/image", [ImageController::class, 'store']);
-    Route::put("/image/{image}", [ImageController::class, 'update']);
-    Route::delete("/image/{image}", [ImageController::class, 'destroy']);
 });

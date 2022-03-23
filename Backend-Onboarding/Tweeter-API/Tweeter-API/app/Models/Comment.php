@@ -11,19 +11,14 @@ class Comment extends Model
 
     protected $fillable = [
         'message',
+        'user_id',
+        'post_id'
     ];
-
-    public static function byId($id)
-    {
-        return Comment::all()
-            ->find($id);
-    }
 
     public static function byUser($id)
     {
         return Comment::all()
-            ->where('user_id', $id)
-            ->get();
+            ->where('user_id', $id);
     }
 
     public static function all($columns = ['*'])
@@ -39,5 +34,10 @@ class Comment extends Model
     public function post()
     {
         return $this->belongsTo(Post::class);
+    }
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'comment_users', 'comment_id', 'user_id');
     }
 }

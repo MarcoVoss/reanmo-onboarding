@@ -18,6 +18,7 @@ class UserUpdateRequest extends FormRequest
             'name' => 'string',
             'email' => 'string|unique:users,email',
             'password' => 'string|confirmed',
+            'image_id' => 'int'
         ];
     }
 }

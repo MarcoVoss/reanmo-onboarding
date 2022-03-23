@@ -16,6 +16,7 @@ class PostUpdateRequest extends FormRequest
     {
         return [
             'message' => 'required|string',
+            'image_id' => 'int'
         ];
     }
 }

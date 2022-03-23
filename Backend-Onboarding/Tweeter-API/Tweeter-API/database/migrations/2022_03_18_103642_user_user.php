@@ -8,15 +8,16 @@ return new class extends Migration
 {
     public function up()
     {
-        Schema::create('comment_likes', function (Blueprint $table) {
+        Schema::create('user_users', function (Blueprint $table) {
+            $table->id();
             $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreignId('comment_id')->references('id')->on('comments')->onDelete('cascade');
+            $table->foreignId('follower_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }
 
     public function down()
     {
-        Schema::dropIfExists('comment_likes');
+        Schema::dropIfExists('user_users');
     }
 };

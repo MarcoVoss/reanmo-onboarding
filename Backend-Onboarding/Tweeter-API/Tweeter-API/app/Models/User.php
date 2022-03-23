@@ -51,18 +51,18 @@ class User extends Authenticatable
     }
 
     public function commentLikes() {
-        return $this->hasMany(CommentLike::class);
+        return $this->belongsToMany(Comment::class, 'comment_users', 'user_id', 'comment_id');
     }
 
     public function postLikes() {
-        return $this->hasMany(PostLike::class);
+        return $this->belongsToMany(Post::class, 'post_users', 'user_id', 'post_id');
     }
 
     public function follower() {
-        return $this->hasMany(Follower::class);
+        return $this->belongsToMany(User::class, 'user_users', 'user_id', 'follower_id');
     }
 
     public function followed() {
-        return $this->hasMany(Follower::class);
+        return $this->belongsToMany(User::class, 'user_users', 'follower_id', 'user_id');
     }
 }

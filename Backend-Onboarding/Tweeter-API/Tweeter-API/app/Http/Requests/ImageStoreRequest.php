@@ -8,13 +8,13 @@ class ImageStoreRequest extends FormRequest
 {
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     public function rules()
     {
         return [
-            'image' => 'required|image'
+            'image' => 'required|image|file'
         ];
     }
 }

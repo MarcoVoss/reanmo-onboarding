@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\PostLikesStoreRequest;
 use App\Http\Resources\PostLikeResource;
-use App\Models\PostLike;
 
 class PostLikesController extends Controller
 {
@@ -12,26 +11,18 @@ class PostLikesController extends Controller
         parent::__construct('Post-User-Like-Relationship');
     }
 
+    public function index() {
+        return response(PostLikeResource::collection(auth()->user()->postLikes()->get()));
+    }
+
     public function destroy($id) {
-        $relationship = PostLike::getOne($this->currentUserId(), $id);
-
-        if(!$relationship)
-            return $this->notFoundException();
-
-        if(!$relationship->delete())
-            return $this->failedException();
-
+        auth()->user()->postLikes()->detach($id);
         return response(status: 204);
     }
 
     public function store(PostLikesStoreRequest $request) {
         $fields = $request->validated();
-
-        $like = PostLike::create([
-            'post_id' => $fields['post_id'],
-            'user_id' => $this->currentUserId()
-        ]);
-
-        return response(PostLikeResource::make($like), 201);
+        $result = auth()->user()->postLikes()->syncWithoutDetaching($fields['post_id']);
+        return response(PostLikeResource::collection($result), 201);
     }
 }
