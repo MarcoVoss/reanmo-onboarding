@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\PostResource;
+use App\Http\Resources\PostLikeResource;
 use App\Models\Post;
 
 class PostLikesController extends Controller
@@ -12,16 +12,17 @@ class PostLikesController extends Controller
     }
 
     public function index(Post $post) {
-        return response($post->users()->count());
+        return response(PostLikeResource::make($post));
     }
 
     public function destroy(Post $post) {
-        $post->users()->detach(auth()->user());
+        $post->likes()->detach(auth()->user());
         return response(status: 204);
     }
 
     public function store(Post $post) {
-        $post->users()->syncWithoutDetaching(auth()->user());
-        return response($this->index($post), 201);
+        $user = auth()->user();
+        $post->likes()->syncWithoutDetaching($user);
+        return response(PostLikeResource::make($post), 201);
     }
 }

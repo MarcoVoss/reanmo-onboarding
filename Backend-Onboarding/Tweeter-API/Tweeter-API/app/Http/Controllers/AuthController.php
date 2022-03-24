@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UserLoginRequest;
 use App\Http\Requests\UserStoreRequest;
+use App\Http\Resources\LoginResource;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
@@ -35,10 +36,8 @@ class AuthController extends Controller
         if(!$user || !Hash::check($fields['password'], $user->password))
             return response('Bad Credentials', 401);
 
-        return [
-            'user' => $user,
-            'token' => $user->createToken('token')
-        ];
+        $token = $user->createToken('token');
+        return LoginResource::make($user, $token);
     }
 
     public function logout() {

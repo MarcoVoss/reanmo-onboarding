@@ -3,9 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
-class FollowerStoreRequest extends FormRequest
+class ProfileImageStoreRequest extends FormRequest
 {
     public function authorize()
     {
@@ -15,6 +14,8 @@ class FollowerStoreRequest extends FormRequest
 
     public function rules()
     {
-        return [];
+        return [
+            'image' => 'required|image|file'
+        ];
     }
 }

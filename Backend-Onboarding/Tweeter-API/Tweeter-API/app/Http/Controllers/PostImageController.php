@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ImageStoreRequest;
-use App\Http\Requests\ImageUpdateRequest;
+use App\Http\Requests\PostImageDeleteRequest;
+use App\Http\Requests\PostImageStoreRequest;
+use App\Http\Requests\PostImageUpdateRequest;
 use App\Http\Resources\ImageResource;
-use App\Http\Resources\PostResource;
 use App\Models\Post;
-use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 
@@ -23,24 +22,25 @@ class PostImageController extends Controller
         return response(ImageResource::make($post->image));
     }
 
-    public function store(ImageStoreRequest $request, Post $post)
+    public function store(PostImageStoreRequest $request, Post $post)
     {
         $fields = $request->validated();
         $path = $this->saveImage($fields['image'], Str::uuid());
-        $post->image->update(['path' => $path]);
-        return response(PostResource::make($post));
+        $image = $post->image->create(['path' => $path]);
+        return response(ImageResource::make($image));
     }
 
-    public function update(ImageUpdateRequest $request, Post $post)
+    public function update(PostImageUpdateRequest $request, Post $post)
     {
         $fields = $request->validated();
         $path = $this->saveImage($fields['image'], Str::uuid());
-        $post->image->update(['path' => $path]);
-        return response(PostResource::make($post));
+        $image = $post->image->update(['path' => $path]);
+        return response(ImageResource::make($image));
     }
 
-    public function destroy(Post $post)
+    public function destroy(PostImageDeleteRequest $request, Post $post)
     {
+        $request->validated();
         $path = public_path($post->image->path);
         $post->image->delete();
         if(File::exists($path))

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CommentStoreRequest;
+use App\Http\Requests\CommentDeleteRequest;
 use App\Http\Requests\CommentUpdateRequest;
 use App\Http\Resources\CommentResource;
 use App\Models\Comment;
@@ -13,31 +13,15 @@ class CommentsController extends Controller
         parent::__construct('Comment');
     }
 
-    public function index()
-    {
-        $comments = Comment::byUser($this->currentUserId());
-        return response(CommentResource::collection($comments));
-    }
-
-    public function store(CommentStoreRequest $request)
-    {
-        $comment = Comment::create($request->validated());
-        return response(CommentResource::make($comment), 201);
-    }
-
-    public function show(Comment $comment)
-    {
-        return response(CommentResource::make($comment));
-    }
-
     public function update(CommentUpdateRequest $request, Comment $comment)
     {
         $comment->update($request->validated());
         return response(CommentResource::make($comment));
     }
 
-    public function destroy(Comment $comment)
+    public function destroy(CommentDeleteRequest $request, Comment $comment)
     {
+        $request->validated();
         $comment->delete();
         return response(204);
     }

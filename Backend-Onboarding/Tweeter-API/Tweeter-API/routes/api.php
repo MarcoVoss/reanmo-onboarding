@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\CommentLikesController;
+use App\Http\Controllers\CommentsController;
+use App\Http\Controllers\FollowedController;
 use App\Http\Controllers\PostImageController;
 use App\Http\Controllers\ProfileImageController;
 use App\Http\Controllers\ProfileUtilsController;
@@ -32,12 +35,16 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
 
     Route::get("/posts/{post}/comments", [PostCommentsController::class, "index"]);
     Route::post("/posts/{post}/comments", [PostCommentsController::class, 'store']);
-    //Route::put("/posts/{post}/comments/{comment}", [PostCommentsController::class, 'update']);
-    Route::delete("/posts/{post}/comments/{comment}", [PostCommentsController::class, 'destroy']);
+    //Route::put("/comments/{comment}", [CommentsController::class, 'update']);
+    Route::delete("/comments/{comment}", [CommentsController::class, 'destroy']);
 
     Route::get("/posts/{post}/likes", [PostLikesController::class, "index"]);
     Route::post("/posts/{post}/likes", [PostLikesController::class, "store"]);
     Route::delete("/posts/{post}/likes", [PostLikesController::class, "destroy"]);
+
+    Route::get("/comments/{comment}/likes", [CommentLikesController::class, "index"]);
+    Route::post("/comments/{comment}/likes", [CommentLikesController::class, "store"]);
+    Route::delete("/comments/{comment}/likes", [CommentLikesController::class, "destroy"]);
 
     Route::get("/profiles", [ProfilesController::class, 'index']);
     Route::get("/profiles/{user}", [ProfilesController::class, 'show']);
@@ -55,7 +62,7 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::post("/profiles/{user}/followers/{follower}", [FollowersController::class, 'store']);
     Route::delete("/profiles/{user}/followers/{follower}", [FollowersController::class, 'destroy']);
 
-    Route::get("/profiles/{user}/follows", [FollowersController::class, "index"]);
-    Route::post("/profiles/{user}/follows", [FollowersController::class, 'store']);
-    Route::delete("/profiles/{user}/follows/{follows}", [FollowersController::class, 'destroy']);
+    Route::get("/profiles/{user}/follows", [FollowedController::class, "index"]);
+    Route::post("/profiles/{user}/follows", [FollowedController::class, 'store']);
+    Route::delete("/profiles/{user}/follows/{follows}", [FollowedController::class, 'destroy']);
 });

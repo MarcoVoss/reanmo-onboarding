@@ -4,11 +4,12 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ImageStoreRequest extends FormRequest
+class ProfileImageUpdateRequest extends FormRequest
 {
     public function authorize()
     {
-        return true;
+        $user = $this->route('user');
+        return $user->id == auth()->user()->id;
     }
 
     public function rules()

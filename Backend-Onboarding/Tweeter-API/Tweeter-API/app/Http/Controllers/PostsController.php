@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PostDeleteRequest;
 use App\Http\Requests\PostStoreRequest;
 use App\Http\Requests\PostUpdateRequest;
 use App\Http\Resources\PostResource;
@@ -42,8 +43,9 @@ class PostsController extends Controller
         return response(PostResource::make($post));
     }
 
-    public function destroy(Post $post)
+    public function destroy(PostDeleteRequest $request, Post $post)
     {
+        $request->validated();
         $post->delete();
         return response(status: 204);
     }

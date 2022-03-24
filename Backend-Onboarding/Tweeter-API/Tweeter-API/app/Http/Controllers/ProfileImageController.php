@@ -2,15 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ImageStoreRequest;
-use App\Http\Requests\ImageUpdateRequest;
+use App\Http\Requests\ProfileImageDeleteRequest;
+use App\Http\Requests\ProfileImageStoreRequest;
+use App\Http\Requests\ProfileImageUpdateRequest;
 use App\Http\Resources\ImageResource;
-use App\Http\Resources\PostResource;
-use App\Http\Resources\UserResource;
-use App\Models\Post;
 use App\Models\User;
-use Illuminate\Http\Request;
-use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 
@@ -26,24 +22,25 @@ class ProfileImageController extends Controller
         return response(ImageResource::make($user->image));
     }
 
-    public function store(ImageStoreRequest $request, User $user)
+    public function store(ProfileImageStoreRequest $request, User $user)
     {
         $fields = $request->validated();
         $path = $this->saveImage($fields['image'], Str::uuid());
-        $user->image->update(['path' => $path]);
-        return response(UserResource::make($user));
+        $image = $user->image->create(['path' => $path]);
+        return response(ImageResource::make($image));
     }
 
-    public function update(ImageUpdateRequest $request, User $user)
+    public function update(ProfileImageUpdateRequest $request, User $user)
     {
         $fields = $request->validated();
         $path = $this->saveImage($fields['image'], Str::uuid());
-        $user->image->update(['path' => $path]);
-        return response(UserResource::make($user));
+        $image = $user->image->update(['path' => $path]);
+        return response(ImageResource::make($image));
     }
 
-    public function destroy(User $user)
+    public function destroy(ProfileImageDeleteRequest $request, User $user)
     {
+        $request->validated();
         $path = public_path($user->image->path);
         $user->image->delete();
         if(File::exists($path))

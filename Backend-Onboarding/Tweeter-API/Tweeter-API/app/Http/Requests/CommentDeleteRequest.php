@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CommentUpdateRequest extends FormRequest
+class CommentDeleteRequest extends FormRequest
 {
     public function authorize()
     {
@@ -12,10 +12,7 @@ class CommentUpdateRequest extends FormRequest
         return $comment->user_id == auth()->user()->id;
     }
 
-    public function rules()
-    {
-        return [
-            'message' => 'required|string'
-        ];
+    public function rules() {
+        return [];
     }
 }

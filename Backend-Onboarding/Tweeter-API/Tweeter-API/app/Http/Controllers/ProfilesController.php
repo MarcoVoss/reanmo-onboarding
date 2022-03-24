@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 
+use App\Http\Requests\UserDeleteRequest;
 use App\Http\Requests\UserSearchRequest;
 use App\Http\Requests\UserUpdateRequest;
 use App\Http\Resources\UserResource;
@@ -30,14 +31,10 @@ class ProfilesController extends Controller
         return response(UserResource::make($user));
     }
 
-    public function destroy(User $user)
+    public function destroy(UserDeleteRequest $request, User $user)
     {
+        $request->validated();
         $user->delete();
         return response(status: 204);
-    }
-
-    public function showMe()
-    {
-        return response(UserResource::make(auth()->user()));
     }
 }

@@ -36,7 +36,7 @@ class Comment extends Model
         return $this->belongsTo(Post::class);
     }
 
-    public function users()
+    public function likes()
     {
         return $this->belongsToMany(User::class, 'comment_users', 'comment_id', 'user_id');
     }

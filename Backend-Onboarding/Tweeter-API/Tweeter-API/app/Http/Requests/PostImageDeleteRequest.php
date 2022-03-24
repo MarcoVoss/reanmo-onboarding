@@ -3,14 +3,13 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
-class FollowerStoreRequest extends FormRequest
+class PostImageDeleteRequest extends FormRequest
 {
     public function authorize()
     {
-        $user = $this->route('user');
-        return $user->id == auth()->user()->id;
+        $post = $this->route('post');
+        return $post->user_id == auth()->user()->id;
     }
 
     public function rules()

@@ -42,7 +42,7 @@ class Post extends Model
         return $this->hasMany(Comment::class);
     }
 
-    public function users() {
+    public function likes() {
         return $this->belongsToMany(User::class, 'post_users', 'post_id', 'user_id');
     }
 }

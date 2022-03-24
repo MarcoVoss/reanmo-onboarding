@@ -3,11 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CommentStoreRequest;
-use App\Http\Requests\CommentUpdateRequest;
 use App\Http\Resources\CommentResource;
-use App\Models\Comment;
 use App\Models\Post;
-use Illuminate\Http\Request;
 
 class PostCommentsController extends Controller
 {
@@ -25,18 +22,7 @@ class PostCommentsController extends Controller
     {
         $fields = $request->validated();
         $fields['user_id'] = $this->currentUserId();
-        return response(CommentResource::make($post->comments()->create($fields)), 201);
-    }
-
-    public function update(CommentUpdateRequest $request, Post $post, Comment $comment)
-    {
-        $comment->update($request->validated());
-        return response(CommentResource::make($comment));
-    }
-
-    public function destroy(Post $post, Comment $comment)
-    {
-        $comment->delete();
-        return response(status: 204);
+        $comment = $post->comments()->create($fields);
+        return response(CommentResource::make($comment), 201);
     }
 }

@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CommentLikeStoreRequest;
 use App\Http\Resources\CommentLikeResource;
+use App\Models\Comment;
 
 class CommentLikesController extends Controller
 {
@@ -11,18 +11,17 @@ class CommentLikesController extends Controller
         parent::__construct('Comment-User-Like-Relationship');
     }
 
-    public function index() {
-        return response(CommentLikeResource::collection(auth()->user()->commentLikes()->get()));
+    public function index(Comment $comment) {
+        return response(CommentLikeResource::make($comment));
     }
 
-    public function destroy($id) {
-        auth()->user()->commentLikes()->detach($id);
+    public function destroy(Comment $comment) {
+        $comment->likes()->detach(auth()->user());
         return response(status: 204);
     }
 
-    public function store(CommentLikeStoreRequest $request) {
-        $fields = $request->validated();
-        $result = auth()->user()->commentLikes()->syncWithoutDetaching($fields['comment_id']);
-        return response(CommentLikeResource::collection($result), 201);
+    public function store(Comment $comment) {
+        $comment->likes()->syncWithoutDetaching(auth()->user());
+        return response(CommentLikeResource::make($comment), 201);
     }
 }
