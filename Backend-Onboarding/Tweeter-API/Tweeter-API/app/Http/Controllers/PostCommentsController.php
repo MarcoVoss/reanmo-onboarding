@@ -17,12 +17,4 @@ class PostCommentsController extends Controller
     {
         return response(CommentResource::collection($post->comments()->get()));
     }
-
-    public function store(CommentStoreRequest $request, Post $post)
-    {
-        $fields = $request->validated();
-        $fields['user_id'] = $this->currentUserId();
-        $comment = $post->comments()->create($fields);
-        return response(CommentResource::make($comment), 201);
-    }
 }

@@ -17,8 +17,6 @@ use App\Http\Controllers\PostCommentsController;
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 
-
-
 Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::post('/logout', [AuthController::class, 'logout']);
 
@@ -30,12 +28,12 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
 
     Route::get("/posts/{post}/image", [PostImageController::class, 'show']);
     Route::post("/posts/{post}/image", [PostImageController::class, 'store']);
-    //Route::put("/posts/{post}/image", [PostImageController::class, 'update']);
+    Route::put("/posts/{post}/image", [PostImageController::class, 'update']);
     Route::delete("/posts/{post}/image", [PostImageController::class, 'destroy']);
-
     Route::get("/posts/{post}/comments", [PostCommentsController::class, "index"]);
-    Route::post("/posts/{post}/comments", [PostCommentsController::class, 'store']);
-    //Route::put("/comments/{comment}", [CommentsController::class, 'update']);
+
+    Route::post("/comments", [CommentsController::class, 'store']);
+    Route::put("/comments/{comment}", [CommentsController::class, 'update']);
     Route::delete("/comments/{comment}", [CommentsController::class, 'destroy']);
 
     Route::get("/posts/{post}/likes", [PostLikesController::class, "index"]);
