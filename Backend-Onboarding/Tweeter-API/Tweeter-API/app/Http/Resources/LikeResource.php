@@ -4,14 +4,12 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class UserResource extends JsonResource
+class LikeResource extends JsonResource
 {
     public function toArray($request)
     {
         return [
-            'name' => $this->name,
-            'email' => $this->email,
-            'image' => ImageResource::make($this->image)
+            'user_id' => $this->whenLoaded('user')->id
         ];
     }
 }

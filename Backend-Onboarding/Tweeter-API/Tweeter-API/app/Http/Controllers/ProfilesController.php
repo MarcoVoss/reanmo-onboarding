@@ -19,13 +19,6 @@ class ProfilesController extends Controller
         return response(UserResource::collection(User::all()));
     }
 
-    public function search(UserSearchRequest $request)
-    {
-        $fields = $request->validated();
-        $users = User::latest()->filterName($fields['name'])->get();
-        return response(UserResource::collection($users));
-    }
-
     public function show(User $user)
     {
         return response(UserResource::make($user));
@@ -33,7 +26,7 @@ class ProfilesController extends Controller
 
     public function update(UserUpdateRequest $request, User $user)
     {
-        $user->update($this->forbiddenAccess());
+        $user->update($request->validated());
         return response(UserResource::make($user));
     }
 
@@ -45,7 +38,6 @@ class ProfilesController extends Controller
 
     public function showMe()
     {
-        $user = $this->show($this->currentUserId());
-        return response(UserResource::make($user));
+        return response(UserResource::make(auth()->user()));
     }
 }

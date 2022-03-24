@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\FollowerStoreRequest;
 use App\Http\Resources\FollowerResource;
-use App\Models\UserUser;
+use App\Models\User;
 
 class FollowersController extends Controller
 {
@@ -13,17 +13,16 @@ class FollowersController extends Controller
     }
 
     public function index() {
-        return response(FollowerResource::collection(auth()->user()->followed()->get()));
+        return response(FollowerResource::collection(auth()->user()->follower()->get()));
     }
 
-    public function destroy($id) {
-        auth()->user()->followed()->detach($id);
+    public function destroy(User $user, User $follower) {
+        $user->follower()->detach($follower);
         return response(status: 204);
     }
 
-    public function store(FollowerStoreRequest $request) {
-        $fields = $request->validated();
-        auth()->user()->followed()->syncWithoutDetaching($fields['follower_id']);
+    public function store(FollowerStoreRequest $request, User $user, User $follower) {
+        $user->follower()->syncWithoutDetaching($follower);
         return response(status: 200);
     }
 }

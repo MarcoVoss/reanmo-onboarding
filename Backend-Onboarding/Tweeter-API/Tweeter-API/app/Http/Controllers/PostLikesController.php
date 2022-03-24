@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\PostLikesStoreRequest;
-use App\Http\Resources\PostLikeResource;
+use App\Http\Resources\PostResource;
+use App\Models\Post;
 
 class PostLikesController extends Controller
 {
@@ -11,18 +11,17 @@ class PostLikesController extends Controller
         parent::__construct('Post-User-Like-Relationship');
     }
 
-    public function index() {
-        return response(PostLikeResource::collection(auth()->user()->postLikes()->get()));
+    public function index(Post $post) {
+        return response($post->users()->count());
     }
 
-    public function destroy($id) {
-        auth()->user()->postLikes()->detach($id);
+    public function destroy(Post $post) {
+        $post->users()->detach(auth()->user());
         return response(status: 204);
     }
 
-    public function store(PostLikesStoreRequest $request) {
-        $fields = $request->validated();
-        $result = auth()->user()->postLikes()->syncWithoutDetaching($fields['post_id']);
-        return response(PostLikeResource::collection($result), 201);
+    public function store(Post $post) {
+        $post->users()->syncWithoutDetaching(auth()->user());
+        return response($this->index($post), 201);
     }
 }

@@ -34,9 +34,7 @@ class ImageController extends Controller
     {
         $fields = $request->validated();
         $path = $this->saveImage($fields['image'], Str::uuid());
-        $image->update([
-            'path' => $path
-        ]);
+        $image->update(['path' => $path]);
         return response(ImageResource::make($image));
     }
 
