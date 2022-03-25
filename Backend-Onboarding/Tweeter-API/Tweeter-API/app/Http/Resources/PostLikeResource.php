@@ -10,7 +10,7 @@ class PostLikeResource extends JsonResource
     {
         return [
             'count' => $this->likes()->count(),
-            'users' => UserResource::collection($this->likes()),
+            'users' => UserResource::collection($this->likes()->get()),
         ];
     }
 }

@@ -22,7 +22,6 @@ class AuthController extends Controller
             'name' => $fields['name'],
             'email' => $fields['email'],
             'password' => bcrypt($fields['password']),
-            'image_id' => $fields['image_id'] ?? null
         ]);
 
         return response(UserResource::make($user), 201);
@@ -42,6 +41,6 @@ class AuthController extends Controller
 
     public function logout() {
         auth()->user()->tokens()->delete();
-        return response();
+        return response(status: 204);
     }
 }

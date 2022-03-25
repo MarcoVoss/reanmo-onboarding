@@ -9,7 +9,7 @@ class ImageFactory extends Factory
     public function definition()
     {
         return [
-            'path' => $this->faker->filePath()
+            'path' => "storage/images/{$this->faker->word}.php",
         ];
     }
 }

@@ -22,20 +22,12 @@ class ProfileImageController extends Controller
         return response(ImageResource::make($user->image));
     }
 
-    public function store(ProfileImageStoreRequest $request, User $user)
+    public function store(ProfileImageUpdateRequest $request, User $user)
     {
         $fields = $request->validated();
         $path = $this->saveImage($fields['image'], Str::uuid());
         $image = $user->image->create(['path' => $path]);
-        return response(ImageResource::make($image));
-    }
-
-    public function update(ProfileImageUpdateRequest $request, User $user)
-    {
-        $fields = $request->validated();
-        $path = $this->saveImage($fields['image'], Str::uuid());
-        $image = $user->image->update(['path' => $path]);
-        return response(ImageResource::make($image));
+        return response(ImageResource::make($image), 201);
     }
 
     public function destroy(ProfileImageDeleteRequest $request, User $user)
@@ -43,8 +35,7 @@ class ProfileImageController extends Controller
         $request->validated();
         $path = public_path($user->image->path);
         $user->image->delete();
-        if(File::exists($path))
-            File::delete($path);
+        File::delete($path);
         return response(status: 204);
     }
 }

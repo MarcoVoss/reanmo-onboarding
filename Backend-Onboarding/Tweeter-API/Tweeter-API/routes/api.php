@@ -28,7 +28,6 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
 
     Route::get("/posts/{post}/image", [PostImageController::class, 'show']);
     Route::post("/posts/{post}/image", [PostImageController::class, 'store']);
-    Route::put("/posts/{post}/image", [PostImageController::class, 'update']);
     Route::delete("/posts/{post}/image", [PostImageController::class, 'destroy']);
     Route::get("/posts/{post}/comments", [PostCommentsController::class, "index"]);
 
@@ -36,11 +35,11 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::put("/comments/{comment}", [CommentsController::class, 'update']);
     Route::delete("/comments/{comment}", [CommentsController::class, 'destroy']);
 
-    Route::get("/posts/{post}/likes", [PostLikesController::class, "index"]);
+    Route::get("/posts/{post}/likes", [PostLikesController::class, "show"]);
     Route::post("/posts/{post}/likes", [PostLikesController::class, "store"]);
     Route::delete("/posts/{post}/likes", [PostLikesController::class, "destroy"]);
 
-    Route::get("/comments/{comment}/likes", [CommentLikesController::class, "index"]);
+    Route::get("/comments/{comment}/likes", [CommentLikesController::class, "show"]);
     Route::post("/comments/{comment}/likes", [CommentLikesController::class, "store"]);
     Route::delete("/comments/{comment}/likes", [CommentLikesController::class, "destroy"]);
 
@@ -51,10 +50,10 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
 
     Route::get("/profiles/{user}/image", [ProfileImageController::class, 'show']);
     Route::delete("/profiles/{user}/image", [ProfileImageController::class, 'destroy']);
-    Route::Put('/profiles/{user}/image', [ProfileImageController::class, 'update']);
+    Route::post('/profiles/{user}/image', [ProfileImageController::class, 'store']);
 
-    Route::get('/profiles/search', [ProfileUtilsController::class, 'search']);
-    Route::get("/profiles/{user}/news", [ProfileUtilsController::class, "news"]);
+    Route::get('/search/{name}', [ProfileUtilsController::class, 'search']);
+    Route::get("/news", [ProfileUtilsController::class, "news"]);
 
     Route::get("/profiles/{user}/followers", [FollowersController::class, "index"]);
     Route::post("/profiles/{user}/followers/{follower}", [FollowersController::class, 'store']);

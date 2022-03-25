@@ -17,8 +17,8 @@ class UserUpdateRequest extends FormRequest
     {
         return [
             'name' => 'string',
-            'email' => 'string|unique:users,email',
-            'password' => ['required', 'confirmed', Password::defaults()],
+            'email' => 'email|unique:users,email',
+            'password' => Password::defaults(),
             'image_id' => 'int'
         ];
     }

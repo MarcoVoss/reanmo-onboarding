@@ -11,7 +11,7 @@ class CommentLikesController extends Controller
         parent::__construct('Comment-User-Like-Relationship');
     }
 
-    public function index(Comment $comment) {
+    public function show(Comment $comment) {
         return response(CommentLikeResource::make($comment));
     }
 

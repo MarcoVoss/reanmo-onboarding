@@ -18,7 +18,6 @@ class UserStoreRequest extends FormRequest
             'name' => 'required|string',
             'email' => 'required|string|unique:users,email|email',
             'password' => ['required', 'confirmed', Password::defaults()],
-            'image_id' => 'int'
         ];
     }
 }

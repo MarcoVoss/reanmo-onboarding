@@ -14,15 +14,41 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $users = User::factory(10)->create();
-        $posts = Post::factory(10)->create();
-        $comments = Comment::factory(10)->create();
-        $images = Image::factory(10)->create();
+        $posts = [];
+        $comments = [];
+//        $images = Image::factory(10)->create();
         foreach ($users as $user) {
-            $user->commentLikes()->saveMany($comments);
-            $user->postLikes()->saveMany($posts);
-            $user->save(['image' => $images->random()]);
-            $user->comments()->saveMany(Comment::factory(10)->create());
-            $user->follower()->saveMany($users);
+            $posts = array_merge($posts, $this->createPosts($user, 10));
+            $comments = array_merge($comments, $this->createComments($user, $posts[0], 10));
+
+//            $user->commentLikes()->saveMany($comments);
+//            $user->postLikes()->saveMany($posts);
+//            $user->save(['image' => $images->random()]);
+//            $user->comments()->saveMany(Comment::factory(10)->create());
+//            $user->follower()->saveMany($users);
         }
+    }
+
+    private function createPosts($user, $count){
+        $posts = [];
+        for ($i = 0; $i < $count; $i++) {
+            $posts[] = $user->posts()->create([
+                'message' => 'Test',
+                'user_id' => $user->id,
+            ]);
+        }
+        return $posts;
+    }
+
+    private function createComments($user, $post, $count){
+        $comments = [];
+        for ($i = 0; $i < $count; $i++) {
+            $comments[] = $post->comments()->create([
+                'message' => 'Test',
+                'post_id' => $post->id,
+                'user_id' => $user->id,
+            ]);
+        }
+        return $comments;
     }
 }

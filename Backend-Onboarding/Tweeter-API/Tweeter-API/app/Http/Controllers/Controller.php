@@ -19,19 +19,6 @@ abstract class Controller extends BaseController
         $this->NAME = $name;
     }
 
-    protected function notFoundException() {
-        return $this->exceptionResponse("$this->NAME not found!", 404);
-    }
-
-    protected function failedException() {
-        return $this->exceptionResponse("$this->NAME did not work!", 500);
-    }
-
-    private function exceptionResponse($message, $nr) {
-        Log::error($message);
-        return response($message, $nr);
-    }
-
     protected function saveImage(UploadedFile $image, $fileName) {
         return $image->storeAs('images', "$fileName.{$image->extension()}", 'public');
     }

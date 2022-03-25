@@ -34,6 +34,6 @@ class CommentsController extends Controller
     {
         $request->validated();
         $comment->delete();
-        return response(204);
+        return response(status:204);
     }
 }

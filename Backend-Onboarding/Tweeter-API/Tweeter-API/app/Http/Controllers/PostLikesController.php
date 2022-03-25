@@ -11,7 +11,7 @@ class PostLikesController extends Controller
         parent::__construct('Post-User-Like-Relationship');
     }
 
-    public function index(Post $post) {
+    public function show(Post $post) {
         return response(PostLikeResource::make($post));
     }
 

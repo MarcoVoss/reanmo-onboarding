@@ -12,6 +12,7 @@ class User extends Authenticatable
     use HasApiTokens, HasFactory, Notifiable;
 
     protected $fillable = [
+        'id',
         'name',
         'email',
         'password',
@@ -27,9 +28,7 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function scopeFilterName($query, $name) {
-        if(!$name)
-            return;
+    public function scopeFilterName($query, String $name) {
         $query->where('name', 'like', "%$name%")
             ->get();
     }

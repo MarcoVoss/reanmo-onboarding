@@ -10,10 +10,14 @@ use App\Models\User;
 
 class ProfileUtilsController extends Controller
 {
-    public function search(UserSearchRequest $request)
+    public function __construct()
     {
-        $fields = $request->validated();
-        $users = User::latest()->filterName($fields['name'])->get();
+        parent::__construct("ProfileUtils");
+    }
+
+    public function search(String $name)
+    {
+        $users = User::latest()->filterName($name)->get();
         return response(UserResource::collection($users));
     }
 

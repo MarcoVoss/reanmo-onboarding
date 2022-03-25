@@ -12,7 +12,6 @@ class PostFactory extends Factory
     {
         return [
             'message' => $this->faker->sentence(),
-            'user_id' => User::factory(),
             'image_id' => Image::factory(),
         ];
     }

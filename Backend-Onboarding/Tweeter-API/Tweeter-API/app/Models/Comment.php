@@ -15,12 +15,6 @@ class Comment extends Model
         'post_id'
     ];
 
-    public static function byUser($id)
-    {
-        return Comment::all()
-            ->where('user_id', $id);
-    }
-
     public static function all($columns = ['*'])
     {
         return Comment::with(['user', 'post']);

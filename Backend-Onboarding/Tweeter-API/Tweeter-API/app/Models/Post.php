@@ -15,18 +15,12 @@ class Post extends Model
         'image_id'
     ];
 
-    public static function getByUser($id) {
-        return Post::with(['user', 'comments'])
-            ->where('user_id', $id)
-            ->get();
-    }
-
     public static function getByFollows($id) {
         return Post::with(['user', 'comments'])
             ->whereExists(function ($query) use ($id){
-                $query->select('followers.user_id')
-                    ->from('followers')
-                    ->whereRaw("followers.follower_id = $id and followers.user_id = posts.user_id");
+                $query->select('user_users.user_id')
+                    ->from('user_users')
+                    ->whereRaw("user_users.follower_id = $id and user_users.user_id = posts.user_id");
         })->get();
     }
 

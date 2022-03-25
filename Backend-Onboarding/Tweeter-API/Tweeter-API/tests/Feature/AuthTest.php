@@ -2,20 +2,27 @@
 
 namespace Tests\Feature;
 
+use App\Models\User;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class AuthTest extends TestCase
 {
-    use RefreshDatabase;
+    use DatabaseMigrations, RefreshDatabase;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+        $this->seed();
+    }
 
     public function test_user_registration_success() {
         $data = [
             'name' => 'Marco',
             'email' => 'marco@gmx.de',
-            'image' => 'some/where',
-            'password' => '!1password',
-            'password_confirmation' => '!1password'
+            'password' => '#1LKNnmeE',
+            'password_confirmation' => '#1LKNnmeE'
         ];
         $response = $this->post('/api/register', $data);
         $response->assertStatus(201);
@@ -25,7 +32,7 @@ class AuthTest extends TestCase
         $data = [
             'name' => 'Marco',
             'email' => 'marco@gmx.de',
-            'password' => '!1password',
+            'password' => '#1LKNnmeE',
         ];
         $response = $this->post('/api/register', $data);
         $response->assertStatus(302);
@@ -35,9 +42,8 @@ class AuthTest extends TestCase
         $data = [
             'name' => 'Marco',
             'email' => 'marco_gmx_de',
-            'password' => '!1password',
-            'password_confirmation' => '!1password',
-            'image' => 'some/where',
+            'password' => '#1LKNnmeE',
+            'password_confirmation' => '#1LKNnmeE',
         ];
         $response = $this->post('/api/register', $data);
         $response->assertStatus(302);
@@ -48,12 +54,11 @@ class AuthTest extends TestCase
             'name' => 'Marco',
             'email' => 'test@gmx.de',
             'image' => 'some/where',
-            'password' => '!1password',
-            'password_confirmation' => '!1password'
+            'password' => '#1LKNnmeE',
+            'password_confirmation' => '#1LKNnmeE'
         ];
         $response = $this->post('/api/register', $data);
         $response->assertStatus(201);
-
         $response = $this->post('/api/register', $data);
         $response->assertStatus(302);
     }
@@ -62,16 +67,18 @@ class AuthTest extends TestCase
         $this->test_user_registration_success();
         $data = [
             'email' => 'marco@gmx.de',
-            'password' => '!1password',
+            'password' => '#1LKNnmeE',
         ];
         $response = $this->post('/api/login', $data);
         $response->assertStatus(200);
     }
 
     public function test_login_wrong_credentials() {
+        $user = User::find(1);
+        $this->be($user);
         $data = [
-            'email' => 'bla@gmx.de',
-            'password' => 'bla',
+            'email' => $user->email,
+            'password' => 'nix'
         ];
         $response = $this->post('/api/login', $data);
         $response->assertStatus(401);
@@ -83,5 +90,10 @@ class AuthTest extends TestCase
         ];
         $response = $this->post('/api/login', $data);
         $response->assertStatus(302);
+    }
+
+    public function test_logout() {
+        $this->be(User::find(1));
+        $this->post('/api/logout')->assertStatus(204);
     }
 }
