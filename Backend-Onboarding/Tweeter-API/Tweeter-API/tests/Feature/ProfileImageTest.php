@@ -12,6 +12,10 @@ class ProfileImageTest extends TestCase
 {
     use DatabaseMigrations, RefreshDatabase;
 
+    private const MY_USER_ID = 1;
+    private const OTHER_USER_ID = 2;
+    private const NOT_EXISTING_ID = 100000;
+
     public function setUp(): void
     {
         parent::setUp();
@@ -20,73 +24,74 @@ class ProfileImageTest extends TestCase
 
     public function test_store_success()
     {
-        $this->be(User::find(1));
+        $this->be(User::find(self::MY_USER_ID));
         $data = [
             'image' => UploadedFile::fake()->image('avatar.jpg'),
         ];
-        $this->post('/api/profiles/1/image', $data)
+        $this->post('/api/profiles/'.self::MY_USER_ID.'/image', $data)
             ->assertStatus(201);
     }
 
     public function test_store_failure_wrong_user()
     {
-        $this->be(User::find(1));
+        $this->be(User::find(self::MY_USER_ID));
         $data = [
             'image' => UploadedFile::fake()->image('avatar.jpg'),
         ];
-        $this->post('/api/profiles/10000/image', $data)
+        $this->post('/api/profiles/'.self::NOT_EXISTING_ID.'/image', $data)
             ->assertStatus(404);
     }
 
     public function test_store_failure_no_image()
     {
-        $this->be(User::find(1));
-        $this->post('/api/profiles/1/image')
+        $this->be(User::find(self::MY_USER_ID));
+        $this->post('/api/profiles/'.self::MY_USER_ID.'/image')
             ->assertStatus(302);
     }
 
     public function test_store_failure_unauthorized()
     {
-        $this->be(User::find(1));
+        $this->be(User::find(self::MY_USER_ID));
         $data = [
             'image' => UploadedFile::fake()->image('avatar.jpg'),
         ];
-        $this->post('/api/profiles/2/image', $data)
+        $this->post('/api/profiles/'.self::OTHER_USER_ID.'/image', $data)
             ->assertStatus(403);
     }
 
     public function test_show_success()
     {
-        $this->be(User::find(1));
-        $this->get('/api/profiles/1/image')
+        $this->be(User::find(self::MY_USER_ID));
+        $this->get('/api/profiles/'.self::MY_USER_ID.'/image')
             ->assertStatus(200);
     }
 
     public function test_show_failure_non_existing_user()
     {
-        $this->be(User::find(1));
-        $this->get('/api/profiles/1000000/image')
+        $this->be(User::find(self::MY_USER_ID));
+        $this->get('/api/profiles/'.self::NOT_EXISTING_ID.'/image')
             ->assertStatus(404);
     }
 
     public function test_destroy_failure_non_existing_user()
     {
-        $this->be(User::find(1));
-        $this->delete('/api/profiles/1000000/image')
+        $this->be(User::find(self::MY_USER_ID));
+        $this->delete('/api/profiles/'.self::NOT_EXISTING_ID.'/image')
             ->assertStatus(404);
     }
 
     public function test_destroy_failure_unauthenticated()
     {
-        $this->be(User::find(1));
-        $this->delete('/api/profiles/2/image')
+        $this->be(User::find(self::MY_USER_ID));
+        $this->delete('/api/profiles/'.self::OTHER_USER_ID.'/image')
             ->assertStatus(403);
     }
 
     public function test_destroy_success()
     {
-        $this->be(User::find(1));
-        $this->delete('/api/profiles/1/image')
+        $user = User::find(self::MY_USER_ID);
+        $this->be($user);
+        $this->delete('/api/profiles/'.self::MY_USER_ID.'/image')
             ->assertStatus(204);
     }
 }

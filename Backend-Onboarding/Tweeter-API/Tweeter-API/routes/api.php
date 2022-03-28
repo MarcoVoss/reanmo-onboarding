@@ -23,8 +23,8 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::get("/posts/{post}", [PostsController::class, 'show']);
     Route::get("/posts", [PostsController::class, 'index']);
     Route::post("/posts", [PostsController::class, 'store']);
-    Route::put("/posts/{post}", [PostsController::class, 'update']);
-    Route::delete("/posts/{post}", [PostsController::class, 'destroy']);
+    Route::put("/posts/{post}", [PostsController::class, 'update'])->middleware('can:update,post');
+    Route::delete("/posts/{post}", [PostsController::class, 'destroy'])->middleware('can:delete,post');
 
     Route::get("/posts/{post}/image", [PostImageController::class, 'show']);
     Route::post("/posts/{post}/image", [PostImageController::class, 'store']);

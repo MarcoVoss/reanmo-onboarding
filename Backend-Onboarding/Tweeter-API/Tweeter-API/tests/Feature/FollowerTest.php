@@ -11,6 +11,10 @@ class FollowerTest extends TestCase
 {
     use DatabaseMigrations, RefreshDatabase;
 
+    private const MY_USER_ID = 1;
+    private const OTHER_USER_ID = 2;
+    private const NOT_EXISTING_ID = 100000;
+
     public function setUp(): void
     {
         parent::setUp();
@@ -19,7 +23,7 @@ class FollowerTest extends TestCase
 
     public function test_index_success()
     {
-        $user = User::first();
+        $user = User::find(self::MY_USER_ID);
         $this->be($user);
         $this->get("/api/profiles/{$user->id}/followers")
             ->assertStatus(200);
@@ -27,32 +31,32 @@ class FollowerTest extends TestCase
 
     public function test_index_failure_wrong_user()
     {
-        $this->be(User::find(1));
-        $this->get('/api/profiles/100000/followers')
+        $this->be(User::find(self::MY_USER_ID));
+        $this->get('/api/profiles/'.self::NOT_EXISTING_ID.'/followers')
             ->assertStatus(404);
     }
 
     public function test_store_success()
     {
-        $user = User::find(1);
+        $user = User::find(self::MY_USER_ID);
         $this->be($user);
-        $this->post("/api/profiles/{$user->id}/followers/3")
+        $this->post("/api/profiles/{$user->id}/followers/".self::OTHER_USER_ID)
             ->assertStatus(201);
     }
 
     public function test_store_failure_wrong_base_user()
     {
-        $user = User::find(1);
+        $user = User::find(self::MY_USER_ID);
         $this->be($user);
-        $this->post("/api/profiles/100000/followers/{$user->id}")
+        $this->post("/api/profiles/".self::NOT_EXISTING_ID."/followers/{$user->id}")
             ->assertStatus(404);
     }
 
     public function test_store_failure_wrong_follows_user()
     {
-        $user = User::find(1);
-        $this->be(User::find(1));
-        $this->post("/api/profiles/{$user->id}/followers/100000")
+        $user = User::find(self::MY_USER_ID);
+        $this->be($user);
+        $this->post("/api/profiles/{$user->id}/followers/".self::NOT_EXISTING_ID)
             ->assertStatus(404);
     }
 
@@ -66,26 +70,25 @@ class FollowerTest extends TestCase
 
     public function test_destroy_failure_wrong_base_user()
     {
-        $user = User::find(1);
+        $user = User::find(self::MY_USER_ID);
         $this->be($user);
-        $this->delete("/api/profiles/100000/followers/4")
+        $this->delete("/api/profiles/".self::NOT_EXISTING_ID."/followers/".self::OTHER_USER_ID)
             ->assertStatus(404);
     }
 
     public function test_destroy_failure_wrong_follows_user()
     {
-        $user = User::find(1);
+        $user = User::find(self::MY_USER_ID);
         $this->be($user);
-        $this->delete("/api/profiles/{$user->id}/followers/100000")
+        $this->delete("/api/profiles/{$user->id}/followers/".self::NOT_EXISTING_ID)
             ->assertStatus(404);
     }
 
     public function test_destroy_success()
     {
-        $user = User::first();
-        $follower = User::find(2);
+        $user = User::find(self::MY_USER_ID);
         $this->be($user);
-        $this->delete("/api/profiles/{$user->id}/followers/{$follower->id}")
+        $this->delete("/api/profiles/{$user->id}/followers/".self::OTHER_USER_ID)
             ->assertStatus(204);
     }
 }

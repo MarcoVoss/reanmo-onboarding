@@ -2,37 +2,33 @@
 
 namespace App\Providers;
 
+use App\Models\Comment;
+use App\Models\Post;
+use App\Policies\CommentPolicy;
+use App\Policies\PostPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Validation\Rules\Password;
 
 class AuthServiceProvider extends ServiceProvider
 {
-    /**
-     * The policy mappings for the application.
-     *
-     * @var array<class-string, class-string>
-     */
     protected $policies = [
-        // 'App\Models\Model' => 'App\Policies\ModelPolicy',
+        Post::class => PostPolicy::class,
+        // Comment::class => CommentPolicy::class
     ];
 
-    /**
-     * Register any authentication / authorization services.
-     *
-     * @return void
-     */
+    private function passwordDefaults()
+    {
+        return Password::min(8)
+            ->mixedCase()
+            ->uncompromised()
+            ->numbers()
+            ->letters()
+            ->symbols();
+    }
+
     public function boot()
     {
         $this->registerPolicies();
-        Password::defaults(function () {
-            return Password::min(8)
-                ->mixedCase()
-                ->uncompromised()
-                ->numbers()
-                ->letters()
-                ->symbols();
-        });
-        //
+        Password::defaults($this->passwordDefaults());
     }
 }

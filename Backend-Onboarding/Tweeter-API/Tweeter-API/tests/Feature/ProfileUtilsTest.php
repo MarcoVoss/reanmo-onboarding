@@ -11,6 +11,8 @@ class ProfileUtilsTest extends TestCase
 {
     use DatabaseMigrations, RefreshDatabase;
 
+    private const MY_USER_ID = 1;
+
     public function setUp(): void
     {
         parent::setUp();
@@ -19,21 +21,21 @@ class ProfileUtilsTest extends TestCase
 
     public function test_search_success()
     {
-        $this->be(User::find(1));
+        $this->be(User::find(self::MY_USER_ID));
         $this->get('/api/search/test')
             ->assertStatus(200);
     }
 
     public function test_search_failure_missing_parameter()
     {
-        $this->be(User::find(1));
+        $this->be(User::find(self::MY_USER_ID));
         $this->get('/api/search/')
             ->assertStatus(404);
     }
 
     public function test_news_success()
     {
-        $this->be(User::find(1));
+        $this->be(User::find(self::MY_USER_ID));
         $this->get('/api/news')
             ->assertStatus(200);
     }
