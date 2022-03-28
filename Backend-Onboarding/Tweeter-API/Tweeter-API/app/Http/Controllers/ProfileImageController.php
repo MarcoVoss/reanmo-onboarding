@@ -22,7 +22,7 @@ class ProfileImageController extends Controller
         return response(ImageResource::make($user->image));
     }
 
-    public function store(ProfileImageUpdateRequest $request, User $user)
+    public function store(ProfileImageStoreRequest $request, User $user)
     {
         $fields = $request->validated();
         $path = $this->saveImage($fields['image'], Str::uuid());

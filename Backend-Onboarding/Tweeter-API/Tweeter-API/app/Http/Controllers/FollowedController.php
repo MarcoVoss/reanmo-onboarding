@@ -13,8 +13,8 @@ class FollowedController extends Controller
         parent::__construct('Followed');
     }
 
-    public function index() {
-        return response(FollowerResource::collection(auth()->user()->followed()->get()));
+    public function index(User $user) {
+        return response(FollowerResource::collection($user->followed()->get()));
     }
 
     public function destroy(FollowerDeleteRequest $request, User $user, User $follows) {

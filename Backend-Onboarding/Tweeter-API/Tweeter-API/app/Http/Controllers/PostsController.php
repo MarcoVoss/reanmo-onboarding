@@ -44,7 +44,6 @@ class PostsController extends Controller
 
     public function destroy(PostDeleteRequest $request, Post $post)
     {
-        $request->validated();
         $post->delete();
         return response(status: 204);
     }

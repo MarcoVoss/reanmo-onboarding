@@ -13,18 +13,16 @@ class FollowersController extends Controller
         parent::__construct('Follower');
     }
 
-    public function index() {
-        return response(FollowerResource::collection(auth()->user()->follower()->get()));
+    public function index(User $user) {
+        return response(FollowerResource::collection($user->follower()->get()));
     }
 
     public function destroy(FollowerDeleteRequest $request, User $user, User $follower) {
-        $request->validated();
         $user->follower()->detach($follower);
         return response(status: 204);
     }
 
     public function store(FollowerStoreRequest $request, User $user, User $follower) {
-        $request->validated();
         $user->follower()->syncWithoutDetaching($follower);
         return response(FollowerResource::make($follower), 201);
     }
