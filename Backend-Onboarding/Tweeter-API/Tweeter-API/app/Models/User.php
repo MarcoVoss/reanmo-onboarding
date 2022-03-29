@@ -29,8 +29,7 @@ class User extends Authenticatable
     ];
 
     public function scopeFilterName($query, String $name) {
-        $query->where('name', 'like', "%$name%")
-            ->get();
+        $query->where('name', 'like', "%$name%");
     }
 
     public static function getByEmail(String $email) {
