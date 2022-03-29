@@ -12,12 +12,12 @@ class ProfilesController extends Controller
     public function update(UserUpdateRequest $request)
     {
         auth()->user()->update($request->validated());
-        return response(UserResource::make(auth()->user()));
+        return response()->json(UserResource::make(auth()->user()));
     }
 
     public function destroy()
     {
         auth()->user()->delete();
-        return response(status: 204);
+        return response()->json(status: 204);
     }
 }

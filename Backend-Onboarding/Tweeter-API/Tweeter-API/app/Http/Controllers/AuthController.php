@@ -20,7 +20,7 @@ class AuthController extends Controller
             'password' => bcrypt($fields['password']),
         ]);
 
-        return response(UserResource::make($user), 201);
+        return response()->json(UserResource::make($user), 201);
     }
 
     public function login(UserLoginRequest $request) {
@@ -32,11 +32,11 @@ class AuthController extends Controller
             return response('Bad Credentials', 401);
 
         $token = $user->createToken('token');
-        return LoginResource::make($user, $token);
+        return response()->json(LoginResource::make($user, $token), 200);
     }
 
     public function logout() {
         auth()->user()->tokens()->delete();
-        return response(status: 204);
+        return response()->json(status: 204);
     }
 }

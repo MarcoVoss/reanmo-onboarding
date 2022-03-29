@@ -23,10 +23,10 @@ class PostImageController extends Controller
             $image = $fields['image'];
             $path = $this->saveImage($image, Str::uuid());
             $image = $post->image = Image::create(['path' => $path]);
-            return response(ImageResource::make($image), 201);
+            return response()->json(ImageResource::make($image), 201);
         } else {
             $post->image = null;
-            return response(status: 204);
+            return response()->json(status: 204);
         }
     }
 }

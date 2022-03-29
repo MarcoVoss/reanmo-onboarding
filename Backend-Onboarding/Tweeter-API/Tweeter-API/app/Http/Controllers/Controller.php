@@ -16,8 +16,4 @@ abstract class Controller extends BaseController
     protected function saveImage(UploadedFile $image, $fileName) {
         return $image->storeAs('images', "$fileName.{$image->extension()}", 'public');
     }
-
-    protected function currentUserId() {
-        return auth()->user()->id;
-    }
 }

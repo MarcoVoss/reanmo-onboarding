@@ -17,7 +17,7 @@ class PostsController extends Controller
 
     public function index()
     {
-        return response(PostResource::collection(Post::all()));
+        return response()->json(PostResource::collection(Post::all()));
     }
 
     public function store(PostStoreRequest $request)
@@ -26,7 +26,7 @@ class PostsController extends Controller
 
         $post = Post::create([
             'message' => $fields['message'],
-            'user_id' => $this->currentUserId(),
+            'user_id' => auth()->id(),
         ]);
 
         return response(PostResource::make($post), 201);
@@ -34,18 +34,18 @@ class PostsController extends Controller
 
     public function show(Post $post)
     {
-        return response(PostResource::make($post));
+        return response()->json(PostResource::make($post));
     }
 
     public function update(PostUpdateRequest $request, Post $post)
     {
         $post->update($request->validated());
-        return response(PostResource::make($post));
+        return response()->json(PostResource::make($post));
     }
 
     public function destroy(Post $post)
     {
         $post->delete();
-        return response(status: 204);
+        return response()->json(status: 204);
     }
 }

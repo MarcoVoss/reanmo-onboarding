@@ -19,10 +19,10 @@ class ProfileImageController extends Controller
             $image = $fields['image'];
             $path = $this->saveImage($image, Str::uuid());
             $image = $user->image = Image::create(['path' => $path]);
-            return response(ImageResource::make($image), 201);
+            return response()->json(ImageResource::make($image), 201);
         } else {
             $user->image = null;
-            return response(status: 204);
+            return response()->json(status: 204);
         }
     }
 }

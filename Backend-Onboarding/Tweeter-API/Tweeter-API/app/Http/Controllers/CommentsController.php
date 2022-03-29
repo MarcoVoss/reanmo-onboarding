@@ -21,20 +21,20 @@ class CommentsController extends Controller
     {
         $fields = $request->validated();
         $post = Post::find($fields['post_id']);
-        $fields['user_id'] = $this->currentUserId();
+        $fields['user_id'] = auth()->id();
         $comment = $post->comments()->create($fields);
-        return response(CommentResource::make($comment), 201);
+        return response()->json(CommentResource::make($comment), 201);
     }
 
     public function update(CommentUpdateRequest $request, Comment $comment)
     {
         $comment->update($request->validated());
-        return response(CommentResource::make($comment));
+        return response()->json(CommentResource::make($comment));
     }
 
     public function destroy(Comment $comment)
     {
         $comment->delete();
-        return response(status:204);
+        return response()->json(status:204);
     }
 }

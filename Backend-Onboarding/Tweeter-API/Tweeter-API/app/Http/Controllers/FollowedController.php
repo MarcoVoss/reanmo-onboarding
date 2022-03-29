@@ -11,6 +11,6 @@ class FollowedController extends Controller
 {
     public function store(User $follows) {
         auth()->user()->followed()->toggle($follows);
-        return response(FollowerResource::make($follows), 201);
+        return response()->json(FollowerResource::make($follows), 201);
     }
 }

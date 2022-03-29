@@ -9,6 +9,6 @@ class CommentLikesController extends Controller
 {
     public function store(Comment $comment) {
         $comment->likes()->toggle(auth()->user());
-        return response(CommentLikeResource::make($comment), 201);
+        return response()->json(CommentLikeResource::make($comment), 201);
     }
 }

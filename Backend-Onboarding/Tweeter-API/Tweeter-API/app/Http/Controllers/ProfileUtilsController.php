@@ -12,12 +12,12 @@ class ProfileUtilsController extends Controller
     public function search(String $name)
     {
         $users = User::latest()->filterName($name)->get();
-        return response(UserResource::collection($users));
+        return response()->json(UserResource::collection($users));
     }
 
     public function news()
     {
-        $posts = Post::getByFollows($this->currentUserId());
-        return response(PostResource::collection($posts));
+        $posts = Post::getByFollows(auth()->id());
+        return response()->json(PostResource::collection($posts));
     }
 }
