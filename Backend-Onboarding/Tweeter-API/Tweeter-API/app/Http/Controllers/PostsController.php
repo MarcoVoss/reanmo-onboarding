@@ -29,17 +29,20 @@ class PostsController extends Controller
             'user_id' => auth()->id(),
         ]);
 
+        $post->load(['likes', 'comments']);
         return response(PostResource::make($post), 201);
     }
 
     public function show(Post $post)
     {
+        $post->load(['likes', 'comments']);
         return response()->json(PostResource::make($post));
     }
 
     public function update(PostUpdateRequest $request, Post $post)
     {
         $post->update($request->validated());
+        $post->load(['likes', 'comments']);
         return response()->json(PostResource::make($post));
     }
 

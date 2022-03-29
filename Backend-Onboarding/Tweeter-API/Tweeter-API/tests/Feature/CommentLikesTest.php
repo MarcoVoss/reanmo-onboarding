@@ -11,6 +11,9 @@ class CommentLikesTest extends TestCase
 {
     use DatabaseMigrations, RefreshDatabase;
 
+    private const MY_USER_ID = 1;
+    private const NOT_EXISTING_ID = 100000;
+
     public function setUp(): void
     {
         parent::setUp();
@@ -19,15 +22,15 @@ class CommentLikesTest extends TestCase
 
     public function test_store_success()
     {
-        $this->be(User::find(1));
-        $this->post('/api/comments/1/like')
+        $this->be(User::find(self::MY_USER_ID));
+        $this->post('/api/comments/'.self::MY_USER_ID.'/like')
             ->assertStatus(201);
     }
 
     public function test_store_failure_wrong_id()
     {
-        $this->be(User::find(1));
-        $this->post('/api/comments/10000/like')
+        $this->be(User::find(self::MY_USER_ID));
+        $this->post('/api/comments/'.self::NOT_EXISTING_ID.'/like')
             ->assertStatus(404);
     }
 }

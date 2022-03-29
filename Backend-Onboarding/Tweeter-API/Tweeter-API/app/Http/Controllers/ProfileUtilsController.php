@@ -11,7 +11,7 @@ class ProfileUtilsController extends Controller
 {
     public function search(String $name)
     {
-        $users = User::latest()->filterName($name)->get();
+        $users = User::latest()->filterName($name)->with('follower')->get();
         return response()->json(UserResource::collection($users));
     }
 

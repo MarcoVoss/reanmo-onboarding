@@ -11,8 +11,10 @@ class ProfilesController extends Controller
 {
     public function update(UserUpdateRequest $request)
     {
-        auth()->user()->update($request->validated());
-        return response()->json(UserResource::make(auth()->user()));
+        $user = auth()->user();
+        $user->update($request->validated());
+        $user->load(['follower', 'followed', 'image']);
+        return response()->json(UserResource::make($user));
     }
 
     public function destroy()

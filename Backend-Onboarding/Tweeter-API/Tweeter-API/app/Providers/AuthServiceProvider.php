@@ -16,7 +16,6 @@ class AuthServiceProvider extends ServiceProvider
     protected $policies = [
         Post::class => PostPolicy::class,
         Comment::class => CommentPolicy::class,
-        Test::class => TestPolicy::class,
     ];
 
     private function passwordDefaults()

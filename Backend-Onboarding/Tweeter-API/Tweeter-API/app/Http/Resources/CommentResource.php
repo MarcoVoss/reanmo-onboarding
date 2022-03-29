@@ -2,8 +2,12 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Comment;
 use Illuminate\Http\Resources\Json\JsonResource;
 
+/**
+ * @mixin Comment
+ */
 class CommentResource extends JsonResource
 {
     public function toArray($request)
@@ -11,8 +15,10 @@ class CommentResource extends JsonResource
         return [
             'id' => $this->id,
             'message' => $this->message,
-            'post' => PostResource::make($this->whenLoaded('post')),
             'user' => UserResource::make($this->whenLoaded('user')),
+            'likes' => $this->whenLoaded('likes', function () {
+                return $this->likes->count();
+            }),
         ];
     }
 }

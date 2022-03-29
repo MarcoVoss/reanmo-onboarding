@@ -15,11 +15,6 @@ class Comment extends Model
         'post_id'
     ];
 
-    public static function all($columns = ['*'])
-    {
-        return Comment::with(['user', 'post']);
-    }
-
     public function user()
     {
         return $this->belongsTo(User::class);

@@ -23,11 +23,13 @@ class CommentsController extends Controller
         $post = Post::find($fields['post_id']);
         $fields['user_id'] = auth()->id();
         $comment = $post->comments()->create($fields);
+        $comment->load(['likes', 'user']);
         return response()->json(CommentResource::make($comment), 201);
     }
 
     public function update(CommentUpdateRequest $request, Comment $comment)
     {
+        $comment->load(['likes', 'user']);
         $comment->update($request->validated());
         return response()->json(CommentResource::make($comment));
     }
