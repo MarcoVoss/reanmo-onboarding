@@ -26,7 +26,7 @@ class FollowedTest extends TestCase
     {
         $user = User::find(self::MY_USER_ID);
         $this->be($user);
-        $this->post("/api/follows/".self::OTHER_USER_ID)
+        $this->post("/api/profile/follows/".self::OTHER_USER_ID)
             ->assertStatus(201);
     }
 
@@ -34,7 +34,7 @@ class FollowedTest extends TestCase
     {
         $user = User::find(self::MY_USER_ID);
         $this->be($user);
-        $this->post("/api/follows/".self::NOT_EXISTING_ID)
+        $this->post("/api/profile/follows/".self::NOT_EXISTING_ID)
             ->assertStatus(404);
     }
 

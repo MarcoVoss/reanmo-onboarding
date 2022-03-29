@@ -45,11 +45,11 @@ class PostImageTest extends TestCase
             ->assertStatus(404);
     }
 
-    public function test_update_failure_no_image()
+    public function test_update_success_no_image()
     {
         $this->be(User::find(self::MY_USER_ID));
         $this->put('/api/posts/'.self::MY_POST_ID.'/image')
-            ->assertStatus(302);
+            ->assertStatus(204);
     }
 
     public function test_update_failure_unauthorized()
@@ -62,38 +62,24 @@ class PostImageTest extends TestCase
             ->assertStatus(403);
     }
 
-    public function test_show_success()
-    {
-        $this->be(User::find(self::MY_USER_ID));
-        $this->get('/api/posts/'.self::MY_USER_ID.'/image')
-            ->assertStatus(200);
-    }
-
-    public function test_show_failure_non_existing_post()
-    {
-        $this->be(User::find(self::MY_USER_ID));
-        $this->get('/api/posts/'.self::NOT_EXISTING_ID.'/image')
-            ->assertStatus(404);
-    }
-
     public function test_destroy_failure_non_existing_post()
     {
         $this->be(User::find(self::MY_USER_ID));
-        $this->delete('/api/posts/'.self::NOT_EXISTING_ID.'/image')
+        $this->put('/api/posts/'.self::NOT_EXISTING_ID.'/image')
             ->assertStatus(404);
     }
 
     public function test_destroy_failure_unauthenticated()
     {
         $this->be(User::find(self::MY_USER_ID));
-        $this->delete('/api/posts/'.self::OTHER_POST_ID.'/image')
+        $this->put('/api/posts/'.self::OTHER_POST_ID.'/image')
             ->assertStatus(403);
     }
 
     public function test_destroy_success()
     {
         $this->be(User::find(self::MY_USER_ID));
-        $this->delete('/api/posts/'.self::MY_POST_ID.'/image')
+        $this->put('/api/posts/'.self::MY_POST_ID.'/image')
             ->assertStatus(204);
     }
 }

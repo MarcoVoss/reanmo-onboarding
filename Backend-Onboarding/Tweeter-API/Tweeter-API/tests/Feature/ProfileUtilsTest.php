@@ -36,7 +36,7 @@ class ProfileUtilsTest extends TestCase
     public function test_news_success()
     {
         $this->be(User::find(self::MY_USER_ID));
-        $this->get('/api/news')
+        $this->get('/api/profile/news')
             ->assertStatus(200);
     }
 }

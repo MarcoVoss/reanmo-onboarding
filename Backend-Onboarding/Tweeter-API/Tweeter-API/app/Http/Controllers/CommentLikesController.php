@@ -7,17 +7,8 @@ use App\Models\Comment;
 
 class CommentLikesController extends Controller
 {
-    public function show(Comment $comment) {
-        return response(CommentLikeResource::make($comment));
-    }
-
-    public function destroy(Comment $comment) {
-        $comment->likes()->detach(auth()->user());
-        return response(status: 204);
-    }
-
     public function store(Comment $comment) {
-        $comment->likes()->syncWithoutDetaching(auth()->user());
+        $comment->likes()->toggle(auth()->user());
         return response(CommentLikeResource::make($comment), 201);
     }
 }

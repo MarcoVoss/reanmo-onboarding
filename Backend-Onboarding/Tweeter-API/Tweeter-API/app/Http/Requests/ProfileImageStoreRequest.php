@@ -9,7 +9,7 @@ class ProfileImageStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'image' => 'required|image|file'
+            'image' => 'nullable|image|file'
         ];
     }
 }

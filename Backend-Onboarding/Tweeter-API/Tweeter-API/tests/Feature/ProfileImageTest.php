@@ -28,70 +28,14 @@ class ProfileImageTest extends TestCase
         $data = [
             'image' => UploadedFile::fake()->image('avatar.jpg'),
         ];
-        $this->put('/api/profiles/'.self::MY_USER_ID.'/image', $data)
+        $this->put('/api/profile/image', $data)
             ->assertStatus(201);
     }
 
-    public function test_update_failure_wrong_user()
+    public function test_update_success_no_image()
     {
         $this->be(User::find(self::MY_USER_ID));
-        $data = [
-            'image' => UploadedFile::fake()->image('avatar.jpg'),
-        ];
-        $this->put('/api/profiles/'.self::NOT_EXISTING_ID.'/image', $data)
-            ->assertStatus(404);
-    }
-
-    public function test_update_failure_no_image()
-    {
-        $this->be(User::find(self::MY_USER_ID));
-        $this->put('/api/profiles/'.self::MY_USER_ID.'/image')
-            ->assertStatus(302);
-    }
-
-    public function test_update_failure_unauthorized()
-    {
-        $this->be(User::find(self::MY_USER_ID));
-        $data = [
-            'image' => UploadedFile::fake()->image('avatar.jpg'),
-        ];
-        $this->put('/api/profiles/'.self::OTHER_USER_ID.'/image', $data)
-            ->assertStatus(403);
-    }
-
-    public function test_show_success()
-    {
-        $this->be(User::find(self::MY_USER_ID));
-        $this->get('/api/profiles/'.self::MY_USER_ID.'/image')
-            ->assertStatus(200);
-    }
-
-    public function test_show_failure_non_existing_user()
-    {
-        $this->be(User::find(self::MY_USER_ID));
-        $this->get('/api/profiles/'.self::NOT_EXISTING_ID.'/image')
-            ->assertStatus(404);
-    }
-
-    public function test_destroy_failure_non_existing_user()
-    {
-        $this->be(User::find(self::MY_USER_ID));
-        $this->delete('/api/profiles/'.self::NOT_EXISTING_ID.'/image')
-            ->assertStatus(404);
-    }
-
-    public function test_destroy_failure_unauthenticated()
-    {
-        $this->be(User::find(self::MY_USER_ID));
-        $this->delete('/api/profiles/'.self::OTHER_USER_ID.'/image')
-            ->assertStatus(403);
-    }
-
-    public function test_destroy_success()
-    {
-        $user = User::find(self::MY_USER_ID);
-        $this->be($user);
-        $this->delete('/api/profiles/'.self::MY_USER_ID.'/image')
+        $this->put('/api/profile/image')
             ->assertStatus(204);
     }
 }

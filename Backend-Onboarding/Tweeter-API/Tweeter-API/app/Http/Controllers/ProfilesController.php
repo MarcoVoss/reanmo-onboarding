@@ -9,31 +9,15 @@ use App\Models\User;
 
 class ProfilesController extends Controller
 {
-    public function __construct()
+    public function update(UserUpdateRequest $request)
     {
-        $this->middleware('can:update,user')->only('update');
-        $this->middleware('can:delete,user')->only('destroy');
+        auth()->user()->update($request->validated());
+        return response(UserResource::make(auth()->user()));
     }
 
-    public function index()
+    public function destroy()
     {
-        return response(UserResource::collection(User::all()));
-    }
-
-    public function show(User $user)
-    {
-        return response(UserResource::make($user));
-    }
-
-    public function update(UserUpdateRequest $request, User $user)
-    {
-        $user->update($request->validated());
-        return response(UserResource::make($user));
-    }
-
-    public function destroy(User $user)
-    {
-        $user->delete();
+        auth()->user()->delete();
         return response(status: 204);
     }
 }

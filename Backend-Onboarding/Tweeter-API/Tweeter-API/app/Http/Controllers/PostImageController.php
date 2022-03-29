@@ -14,28 +14,19 @@ class PostImageController extends Controller
     public function __construct()
     {
         $this->middleware('can:update,post')->only('update');
-        $this->middleware('can:delete,post')->only('destroy');
-    }
-
-    public function show(Post $post)
-    {
-        return response(ImageResource::make($post->image)) ?? [];
     }
 
     public function update(PostImageStoreRequest $request, Post $post)
     {
         $fields = $request->validated();
-        $path = $this->saveImage($fields['image'], Str::uuid());
-        $post->image?->delete();
-        $post->image = Image::create(['path' => $path]);
-        return response(ImageResource::make($post->image), 201);
-    }
-
-    public function destroy(Post $post)
-    {
-        $path = public_path($post->image?->path);
-        $post->image?->delete();
-        File::delete($path ?? "");
-        return response(status: 204);
+        if(isset($fields['image'])) {
+            $image = $fields['image'];
+            $path = $this->saveImage($image, Str::uuid());
+            $image = $post->image = Image::create(['path' => $path]);
+            return response(ImageResource::make($image), 201);
+        } else {
+            $post->image = null;
+            return response(status: 204);
+        }
     }
 }
