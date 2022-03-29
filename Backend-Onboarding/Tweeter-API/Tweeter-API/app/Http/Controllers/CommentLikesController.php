@@ -7,10 +7,6 @@ use App\Models\Comment;
 
 class CommentLikesController extends Controller
 {
-    public function __construct() {
-        parent::__construct('Comment-User-Like-Relationship');
-    }
-
     public function show(Comment $comment) {
         return response(CommentLikeResource::make($comment));
     }

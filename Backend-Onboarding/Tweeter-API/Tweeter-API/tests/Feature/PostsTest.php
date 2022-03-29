@@ -96,10 +96,10 @@ class PostsTest extends TestCase
         $response->assertStatus(403);
     }
 
-//    public function test_destroy_success()
-//    {
-//        $this->be(User::find(self::MY_USER_ID));
-//        $response = $this->delete('/api/posts/'.self::MY_POST_ID);
-//        $response->assertStatus(204);
-//    }
+    public function test_destroy_success()
+    {
+        $this->be(User::find(self::MY_USER_ID));
+        $response = $this->delete('/api/posts/'.self::MY_POST_ID);
+        $response->assertStatus(204);
+    }
 }

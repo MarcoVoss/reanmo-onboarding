@@ -14,7 +14,7 @@ class CommentsTest extends TestCase
     private const MY_USER_ID = 1;
     private const NOT_EXISTING_ID = 10000000;
     private const MY_COMMENT_ID = 1;
-    private const OTHER_COMMENT_ID = 11;
+    private const OTHER_COMMENT_ID = 20;
     private const EXISTING_POST_ID = 1;
 
     public function setUp(): void

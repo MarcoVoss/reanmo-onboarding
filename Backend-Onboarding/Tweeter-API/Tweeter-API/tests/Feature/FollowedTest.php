@@ -22,42 +22,19 @@ class FollowedTest extends TestCase
         $this->seed();
     }
 
-    public function test_index_success()
-    {
-        $user = User::find(self::MY_USER_ID);
-        $this->be($user);
-        $this->get("/api/profiles/{$user->id}/follows")
-            ->assertStatus(200);
-    }
-
-    public function test_index_failure_wrong_user()
-    {
-        $this->be(User::find(self::MY_USER_ID));
-        $this->get('/api/profiles/'.self::NOT_EXISTING_ID.'/follows')
-            ->assertStatus(404);
-    }
-
     public function test_store_success()
     {
         $user = User::find(self::MY_USER_ID);
         $this->be($user);
-        $this->post("/api/profiles/{$user->id}/follows/".self::OTHER_USER_ID)
+        $this->post("/api/follows/".self::OTHER_USER_ID)
             ->assertStatus(201);
-    }
-
-    public function test_store_failure_wrong_base_user()
-    {
-        $user = User::find(self::MY_USER_ID);
-        $this->be($user);
-        $this->post("/api/profiles/".self::NOT_EXISTING_ID."/follows/{$user->id}")
-            ->assertStatus(404);
     }
 
     public function test_store_failure_wrong_follows_user()
     {
         $user = User::find(self::MY_USER_ID);
         $this->be($user);
-        $this->post("/api/profiles/{$user->id}/follows/".self::NOT_EXISTING_ID)
+        $this->post("/api/follows/".self::NOT_EXISTING_ID)
             ->assertStatus(404);
     }
 
@@ -68,28 +45,4 @@ class FollowedTest extends TestCase
 //        $this->post("/profiles/{$user->id}/follows/{$user->id}")
 //            ->assertStatus(302);
 //    }
-
-    public function test_destroy_failure_wrong_base_user()
-    {
-        $user = User::find(self::MY_USER_ID);
-        $this->be($user);
-        $this->delete("/api/profiles/".self::NOT_EXISTING_ID."/follows/".self::OTHER_USER_ID)
-            ->assertStatus(404);
-    }
-
-    public function test_destroy_failure_wrong_follows_user()
-    {
-        $user = User::find(self::MY_USER_ID);
-        $this->be($user);
-        $this->delete("/api/profiles/{$user->id}/follows/".self::NOT_EXISTING_ID)
-            ->assertStatus(404);
-    }
-
-    public function test_destroy_success()
-    {
-        $user = User::first();
-        $this->be($user);
-        $this->delete("/api/profiles/{$user->id}/follows/".self::OTHER_USER_ID)
-            ->assertStatus(204);
-    }
 }

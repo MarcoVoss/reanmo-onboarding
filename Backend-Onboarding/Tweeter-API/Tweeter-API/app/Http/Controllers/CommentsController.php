@@ -11,8 +11,10 @@ use App\Models\Post;
 
 class CommentsController extends Controller
 {
-    public function __construct() {
-        parent::__construct('Comment');
+    public function __construct()
+    {
+        $this->middleware('can:update,comment')->only('update');
+        $this->middleware('can:delete,comment')->only('destroy');
     }
 
     public function store(CommentStoreRequest $request)
@@ -30,9 +32,8 @@ class CommentsController extends Controller
         return response(CommentResource::make($comment));
     }
 
-    public function destroy(CommentDeleteRequest $request, Comment $comment)
+    public function destroy(Comment $comment)
     {
-        $request->validated();
         $comment->delete();
         return response(status:204);
     }

@@ -9,8 +9,10 @@ use App\Models\Post;
 
 class PostsController extends Controller
 {
-    public function __construct() {
-        parent::__construct('Post');
+    public function __construct()
+    {
+        $this->middleware('can:update,post')->only('update');
+        $this->middleware('can:delete,post')->only('destroy');
     }
 
     public function index()

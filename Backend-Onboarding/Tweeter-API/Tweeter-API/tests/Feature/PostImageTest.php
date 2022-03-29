@@ -25,40 +25,40 @@ class PostImageTest extends TestCase
         $this->seed();
     }
 
-    public function test_store_success()
+    public function test_update_success()
     {
         $this->be(User::find(self::MY_USER_ID));
         $data = [
             'image' => UploadedFile::fake()->image('avatar.jpg'),
         ];
-        $this->post('/api/posts/'.self::MY_POST_ID.'/image', $data)
+        $this->put('/api/posts/'.self::MY_POST_ID.'/image', $data)
             ->assertStatus(201);
     }
 
-    public function test_store_failure_wrong_user()
+    public function test_update_failure_wrong_user()
     {
         $this->be(User::find(self::MY_USER_ID));
         $data = [
             'image' => UploadedFile::fake()->image('avatar.jpg'),
         ];
-        $this->post('/api/posts/'.self::NOT_EXISTING_ID.'/image', $data)
+        $this->put('/api/posts/'.self::NOT_EXISTING_ID.'/image', $data)
             ->assertStatus(404);
     }
 
-    public function test_store_failure_no_image()
+    public function test_update_failure_no_image()
     {
         $this->be(User::find(self::MY_USER_ID));
-        $this->post('/api/posts/'.self::MY_POST_ID.'/image')
+        $this->put('/api/posts/'.self::MY_POST_ID.'/image')
             ->assertStatus(302);
     }
 
-    public function test_store_failure_unauthorized()
+    public function test_update_failure_unauthorized()
     {
         $this->be(User::find(self::MY_USER_ID));
         $data = [
             'image' => UploadedFile::fake()->image('avatar.jpg'),
         ];
-        $this->post('/api/posts/'.self::OTHER_POST_ID.'/image', $data)
+        $this->put('/api/posts/'.self::OTHER_POST_ID.'/image', $data)
             ->assertStatus(403);
     }
 

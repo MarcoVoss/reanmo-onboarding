@@ -3,15 +3,16 @@
 namespace App\Http\Controllers;
 
 
-use App\Http\Requests\UserDeleteRequest;
 use App\Http\Requests\UserUpdateRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 
 class ProfilesController extends Controller
 {
-    public function __construct() {
-        parent::__construct('Profile');
+    public function __construct()
+    {
+        $this->middleware('can:update,user')->only('update');
+        $this->middleware('can:delete,user')->only('destroy');
     }
 
     public function index()
@@ -30,9 +31,8 @@ class ProfilesController extends Controller
         return response(UserResource::make($user));
     }
 
-    public function destroy(UserDeleteRequest $request, User $user)
+    public function destroy(User $user)
     {
-        $request->validated();
         $user->delete();
         return response(status: 204);
     }

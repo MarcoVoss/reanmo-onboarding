@@ -13,12 +13,6 @@ abstract class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-    protected string $NAME = 'Base-Controller';
-
-    protected function __construct($name) {
-        $this->NAME = $name;
-    }
-
     protected function saveImage(UploadedFile $image, $fileName) {
         return $image->storeAs('images', "$fileName.{$image->extension()}", 'public');
     }

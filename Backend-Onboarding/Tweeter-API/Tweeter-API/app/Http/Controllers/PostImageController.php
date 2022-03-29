@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\PostImageDeleteRequest;
 use App\Http\Requests\PostImageStoreRequest;
-use App\Http\Requests\PostImageUpdateRequest;
 use App\Http\Resources\ImageResource;
 use App\Models\Image;
 use App\Models\Post;
@@ -15,7 +13,8 @@ class PostImageController extends Controller
 {
     public function __construct()
     {
-        parent::__construct("PostImage");
+        $this->middleware('can:update,post')->only('update');
+        $this->middleware('can:delete,post')->only('destroy');
     }
 
     public function show(Post $post)
@@ -23,7 +22,7 @@ class PostImageController extends Controller
         return response(ImageResource::make($post->image)) ?? [];
     }
 
-    public function store(PostImageStoreRequest $request, Post $post)
+    public function update(PostImageStoreRequest $request, Post $post)
     {
         $fields = $request->validated();
         $path = $this->saveImage($fields['image'], Str::uuid());
@@ -32,9 +31,8 @@ class PostImageController extends Controller
         return response(ImageResource::make($post->image), 201);
     }
 
-    public function destroy(PostImageDeleteRequest $request, Post $post)
+    public function destroy(Post $post)
     {
-        $request->validated();
         $path = public_path($post->image?->path);
         $post->image?->delete();
         File::delete($path ?? "");
