@@ -21,22 +21,34 @@ class ProfileUtilsTest extends TestCase
 
     public function test_search_success()
     {
-        $this->be(User::find(self::MY_USER_ID));
+        $this->be(User::factory()->create());
         $this->get('/api/search/test')
             ->assertStatus(200);
     }
 
     public function test_search_failure_missing_parameter()
     {
-        $this->be(User::find(self::MY_USER_ID));
+        $this->be(User::factory()->create());
         $this->get('/api/search/')
             ->assertStatus(404);
     }
 
     public function test_news_success()
     {
-        $this->be(User::find(self::MY_USER_ID));
+        $user = User::factory()->create();
+        $puma = User::factory()->create();
+        $puma->posts()->create([
+            "message" => "Test"
+        ]);
+        $adidas = User::factory()->create();
+        $adidas->posts()->create([
+            "message" => "Test"
+        ]);
+        $user->followed()->syncWithoutDetaching([$puma->id, $adidas->id]);
+
+        $this->be($user);
         $this->get('/api/profile/news')
-            ->assertStatus(200);
+            ->assertStatus(200)
+            ->assertJsonCount(2);
     }
 }
