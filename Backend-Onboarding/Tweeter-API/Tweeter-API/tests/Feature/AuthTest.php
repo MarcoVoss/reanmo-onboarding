@@ -11,94 +11,94 @@ class AuthTest extends TestCase
 {
     use DatabaseMigrations, RefreshDatabase;
 
-    private ?User $user = null;
-
     public function setUp(): void
     {
         parent::setUp();
         $this->seed();
-        $this->user = User::factory()->makeOne();
     }
 
-    private function generateUserLoginData(User $user)
+    public function test_CanRegister()
     {
-        return [
-            'email' => $user->email,
-            'password' => $user->password,
-        ];
-    }
-
-    private function generateUserRegisterData(User $user)
-    {
-        return [
+        $user = User::factory()->makeOne();
+        $data = [
             'name' => $user->name,
             'email' => $user->email,
             'password' => $user->password,
             'password_confirmation' => $user->password
         ];
+        $this->post("/api/register", $data)
+            ->assertCreated();
     }
 
-
-    public function test_user_registration_success() {
-
-        $response = $this->post('/api/register', $this->generateUserRegisterData($this->user));
-        $response->assertStatus(201);
-    }
-
-    public function test_user_registration_failure_missing_password_confirmation() {
-        $data = $this->generateUserRegisterData($this->user);
-        unset($data['password_confirmation']);
-        $response = $this->post('/api/register', $data);
-        $response->assertStatus(302);
-    }
-
-    public function test_user_registration_failure_wrong_email() {
-        $data = $this->generateUserRegisterData($this->user);
-        $data['email'] = 'marco_gmx_de';
-        $response = $this->post('/api/register', $data);
-        $response->assertStatus(302);
-    }
-
-    public function test_user_duplicate_mail() {
-        $data = $this->generateUserRegisterData($this->user);
-        $response = $this->post('/api/register', $data);
-        $response->assertStatus(201);
-        $response = $this->post('/api/register', $data);
-        $response->assertStatus(302);
-    }
-
-    public function test_login_success() {
-        $this->test_user_registration_success();
-        $data = $this->generateUserLoginData($this->user);
-        $response = $this->post('/api/login', $data);
-        $response->assertStatus(200);
-        $this->assertIsString($response['token']);
-        $response->assertJson([
+    public function test_CanLogin()
+    {
+        $user = User::factory()->create();
+        $response = $this->post("/api/login", [
+            'email' => $user->email,
+            'password' => 'password',
+        ]);
+        $response->assertOk()
+            ->assertJson([
             "user" => [
-                "name" => $this->user->name,
-                "email" => $this->user->email
+                "name" => $user->name,
+                "email" => $user->email
             ],
         ]);
+        $this->assertIsString($response['token']);
         $this->assertIsInt($response["user"]["id"]);
         $this->assertIsString($response["token"]);
     }
 
-    public function test_login_wrong_credentials() {
-        $user = User::find(1);
+    public function test_CantRegisterWithoutBody()
+    {
+        $this->post('/api/register')
+            ->assertStatus(302);
+    }
+
+    public function test_user_registration_failure_missing_password_confirmation() {
+        $response = $this->post('/api/register', [
+            'name' => 'Name',
+            'email' => 'no_mail.de',
+            'password' => 'badPassword',
+            'password_confirmation' => 'badPassword'
+        ])->assertStatus(302);
+    }
+
+    public function test_ItDoesNotAllowDuplicatedEmail() {
+        $user = User::factory()->makeOne();
+        $data = [
+            'name' => $user->name,
+            'email' => $user->email,
+            'password' => $user->password,
+            'password_confirmation' => $user->password
+        ];
+        $this->post("/api/register", $data)
+            ->assertCreated();
+        $this->post("/api/register", $data)
+            ->assertStatus(302);
+    }
+
+    public function test_CantLoginWithWrongCredentials() {
+        $user = User::factory()->makeOne();
+        $this->post("/api/login", [
+            'email' => $user->email,
+            'password' => 'password',
+        ])->assertStatus(401);
+    }
+
+    public function test_CantLoginWithoutCredentials() {
+        $this->post("/api/login")
+            ->assertStatus(302);
+    }
+
+    public function test_ItDoesNotAllowLoginWithoutBody() {
+        $this->post('/api/login')
+            ->assertStatus(302);
+    }
+
+    public function test_LogoutSuccess() {
+        $user = User::factory()->create();
         $this->be($user);
-        $data = $this->generateUserLoginData($this->user);
-        $data['password'] = 'nix';
-        $response = $this->post('/api/login', $data);
-        $response->assertStatus(401);
-    }
-
-    public function test_not_enough_credentials() {
-        $response = $this->post('/api/login');
-        $response->assertStatus(302);
-    }
-
-    public function test_logout() {
-        $this->be($this->user);
         $this->post('/api/logout')->assertStatus(204);
     }
 }
