@@ -21,38 +21,33 @@ class ProfileTest extends TestCase
         $this->seed();
     }
 
-    public function loginWithFakeUser()
+    public function test_CanUpdateData()
     {
-        $this->be(User::find(self::MY_USER_ID));
-    }
-
-    public function test_update_success()
-    {
-        $this->loginWithFakeUser();
-        $data = [
+        $user = User::factory()->create();
+        $this->be($user);
+        $this->put('/api/profile', [
             'name' => 'Marco'
-        ];
-        $response = $this->put('/api/profile', $data);
-        $response->assertStatus(200);
+        ])->assertStatus(200)
+            ->assertJson([
+                'id' => $user->id,
+                'name' => $user->name,
+                'email' => $user->email,
+                'follows' =>  false,
+            ])
+            ->assertJsonStructure([
+                'id',
+                'name',
+                'email',
+                'image',
+                'follows',
+            ]);
     }
 
-    public function test_update_wrong_data()
+    public function test_CanDeleteProfile()
     {
-        $this->loginWithFakeUser();
-        $data = [
-            'name' => '5',
-            'password' => 'd',
-            'email' => 'll',
-            'image_id' => 'f',
-        ];
-        $response = $this->put('/api/profile', $data);
-        $response->assertStatus(302);
-    }
-
-    public function test_destroy_success()
-    {
-        $this->loginWithFakeUser();
-        $response = $this->delete('/api/profile');
-        $response->assertStatus(204);
+        $user = User::factory()->create();
+        $this->be($user);
+        $this->delete('/api/profile')
+            ->assertStatus(204);
     }
 }
