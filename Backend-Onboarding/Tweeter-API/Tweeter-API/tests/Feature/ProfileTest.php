@@ -11,10 +11,6 @@ class ProfileTest extends TestCase
 {
     use DatabaseMigrations, RefreshDatabase;
 
-    private const MY_USER_ID = 1;
-    private const OTHER_USER_ID = 2;
-    private const NOT_EXISTING_ID = 100000;
-
     public function setUp(): void
     {
         parent::setUp();
