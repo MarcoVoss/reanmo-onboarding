@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\Comment;
+use App\Models\Post;
 use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -12,39 +13,42 @@ class CommentLikesTest extends TestCase
 {
     use DatabaseMigrations, RefreshDatabase;
 
-    private User $user;
-    private User $otherUser;
-    private Comment $comment;
-
     public function setUp(): void
     {
         parent::setUp();
         $this->seed();
-        $this->user = User::find(1);
-        $this->otherUser = User::find(2);
-        $this->comment = Comment::find(1);
     }
 
-    public function test_store_success()
+    public function test_CreatesAndRemovesLike()
     {
-        $this->be($this->user);
-        $this->post('/api/comments/'.$this->comment->id.'/like')
+        $user = User::factory()->create();
+        $post = $user->posts()->create([
+            "message" => "Test"
+        ]);
+        $comment = $post->comments()->create([
+            "user_id" => $user->id,
+            "message" => "Comment",
+        ]);
+        $this->be($user);
+        $this->post('/api/comments/'.$comment->id.'/like')
             ->assertStatus(201)
             ->assertJson([
-                'id' => $this->comment->id,
-                'message' => $this->comment->message,
+                'id' => $comment->id,
+                'message' => $comment->message,
                 'user' => [
-                    "id" => $this->comment->user->id,
+                    "id" => $comment->user->id,
                 ],
-                'likes' => $this->comment->likes->count(),
+                'likes' => 1,
             ]);
-    }
-
-    public function test_store_failure_wrong_id()
-    {
-        $this->be($this->user);
-        $notExistingId = -1;
-        $this->post('/api/comments/'.$notExistingId.'/like')
-            ->assertStatus(404);
+        $this->post('/api/comments/'.$comment->id.'/like')
+            ->assertStatus(201)
+            ->assertJson([
+                'id' => $comment->id,
+                'message' => $comment->message,
+                'user' => [
+                    "id" => $comment->user->id,
+                ],
+                'likes' => 0,
+            ]);
     }
 }
