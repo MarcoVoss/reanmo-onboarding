@@ -12,30 +12,35 @@ class ProfileImageTest extends TestCase
 {
     use DatabaseMigrations, RefreshDatabase;
 
-    private const MY_USER_ID = 1;
-    private const OTHER_USER_ID = 2;
-    private const NOT_EXISTING_ID = 100000;
-
     public function setUp(): void
     {
         parent::setUp();
         $this->seed();
     }
 
-    public function test_update_success()
+    public function test_CanUploadProfileImage()
     {
-        $this->be(User::find(self::MY_USER_ID));
-        $data = [
+        $this->be(User::factory()->create());
+        $this->put('/api/profile/image', [
             'image' => UploadedFile::fake()->image('avatar.jpg'),
-        ];
-        $this->put('/api/profile/image', $data)
-            ->assertStatus(201);
+        ])->assertStatus(201);
     }
 
-    public function test_update_success_no_image()
+    public function test_CanDeleteProfileImage()
     {
-        $this->be(User::find(self::MY_USER_ID));
+        $this->be(User::factory()->create());
+        $this->put('/api/profile/image', [
+            'image' => UploadedFile::fake()->image('avatar.jpg'),
+        ])->assertStatus(201);
         $this->put('/api/profile/image')
             ->assertStatus(204);
+    }
+
+    public function test_CanNotUploadOtherFile()
+    {
+        $this->be(User::factory()->create());
+        $this->put('/api/profile/image', [
+            'image' => UploadedFile::fake()->create("Test.txt"),
+        ])->assertStatus(302);
     }
 }
