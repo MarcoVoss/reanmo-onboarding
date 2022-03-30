@@ -7,6 +7,11 @@ use App\Models\User;
 
 class FollowedController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:follow,follows')->only('store');
+    }
+
     public function store(User $follows) {
         auth()->user()->followed()->toggle($follows);
         $follows->load(['follower', 'followed']);

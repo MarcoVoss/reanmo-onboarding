@@ -12,37 +12,30 @@ class FollowedTest extends TestCase
 {
     use DatabaseMigrations, RefreshDatabase;
 
-    private const MY_USER_ID = 1;
-    private const NOT_EXISTING_ID = 100000;
-    private const OTHER_USER_ID = 2;
-
     public function setUp(): void
     {
         parent::setUp();
         $this->seed();
     }
 
-    public function test_store_success()
+    public function test_CanFollowAndUnfollow()
     {
-        $user = User::find(self::MY_USER_ID);
-        $this->be($user);
-        $this->post("/api/profile/follows/".self::OTHER_USER_ID)
-            ->assertStatus(201);
+        $otherUser = User::factory()->create();
+        $this->be(User::factory()->create());
+
+        $this->post("/api/profile/follows/".$otherUser->id)
+            ->assertStatus(201)
+            ->assertJsonPath("follows", true);
+        $this->post("/api/profile/follows/".$otherUser->id)
+            ->assertStatus(201)
+            ->assertJsonPath("follows", false);
     }
 
-    public function test_store_failure_wrong_follows_user()
+    public function test_CantFollowHimself()
     {
-        $user = User::find(self::MY_USER_ID);
+        $user = User::factory()->create();
         $this->be($user);
-        $this->post("/api/profile/follows/".self::NOT_EXISTING_ID)
-            ->assertStatus(404);
+        $this->post("/api/profile/follows/".$user->id)
+            ->assertStatus(403);
     }
-
-//    public function test_store_failure_follows_himself()
-//    {
-//        $user = User::find(1);
-//        $this->be($user);
-//        $this->post("/profiles/{$user->id}/follows/{$user->id}")
-//            ->assertStatus(302);
-//    }
 }
