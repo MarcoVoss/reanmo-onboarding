@@ -11,26 +11,25 @@ class PostLikesTest extends TestCase
 {
     use DatabaseMigrations, RefreshDatabase;
 
-    private const MY_USER_ID = 1;
-    private const NOT_EXISTING_ID = 100000;
-
     public function setUp(): void
     {
         parent::setUp();
         $this->seed();
     }
 
-    public function test_store_success()
+    public function test_CanStoreAndRemoveLikes()
     {
-        $this->be(User::find(self::MY_USER_ID));
-        $this->post('/api/posts/'.self::MY_USER_ID.'/like')
-            ->assertStatus(201);
-    }
+        $user = User::factory()->create();
+        $post = $user->posts()->create([
+            "message" => "Test"
+        ]);
+        $this->be($user);
+        $this->post('/api/posts/'.$post->id.'/like')
+            ->assertStatus(201)
+            ->assertJsonPath("likes", 1);
 
-    public function test_store_failure_wrong_id()
-    {
-        $this->be(User::find(self::MY_USER_ID));
-        $this->post('/api/posts/'.self::NOT_EXISTING_ID.'/like')
-            ->assertStatus(404);
+        $this->post('/api/posts/'.$post->id.'/like')
+            ->assertStatus(201)
+            ->assertJsonPath("likes", 0);
     }
 }
