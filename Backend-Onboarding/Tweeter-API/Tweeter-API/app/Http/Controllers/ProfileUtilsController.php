@@ -20,4 +20,9 @@ class ProfileUtilsController extends Controller
         $posts = Post::getByFollows(auth()->id());
         return response()->json(PostResource::collection($posts));
     }
+
+    public function home()
+    {
+        return response()->json(PostResource::collection(auth()->user()->posts));
+    }
 }

@@ -51,4 +51,18 @@ class ProfileUtilsTest extends TestCase
             ->assertStatus(200)
             ->assertJsonCount(2);
     }
+
+    public function test_CanSeeOwnPosts()
+    {
+        $user = User::factory()->create();
+        for($i = 0; $i < 10; $i++) {
+            $user->posts()->create([
+                "message" => $i
+            ]);
+        }
+        $this->be($user);
+        $this->get('/api/profile/home')
+            ->assertStatus(200)
+            ->assertJsonCount($user->posts()->count());
+    }
 }

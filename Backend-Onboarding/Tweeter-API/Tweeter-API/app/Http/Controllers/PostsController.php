@@ -15,11 +15,6 @@ class PostsController extends Controller
         $this->middleware('can:delete,post')->only('destroy');
     }
 
-    public function index()
-    {
-        return response()->json(PostResource::collection(Post::all()));
-    }
-
     public function store(PostStoreRequest $request)
     {
         $fields = $request->validated();

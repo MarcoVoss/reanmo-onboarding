@@ -22,84 +22,98 @@ class PostsTest extends TestCase
         $this->seed();
     }
 
-    public function test_index()
+    public function test_CanPost()
     {
-        $this->be(User::find(self::MY_USER_ID));
-        $response = $this->get('/api/posts');
-        $response->assertStatus(200);
-    }
-
-    public function test_show_failure()
-    {
-        $this->be(User::find(self::MY_USER_ID));
-        $response = $this->get('/api/posts/'.self::NOT_EXISTING_ID);
-        $response->assertStatus(404);
-    }
-
-    public function test_show_success()
-    {
-        $this->be(User::find(self::MY_USER_ID));
-        $response = $this->get('/api/posts/'.self::MY_POST_ID);
-        $response->assertStatus(200);
-    }
-
-    public function test_update_failure_unauthenticated()
-    {
-        $this->be(User::find(self::MY_USER_ID));
-        $data = [
+        $this->be(User::factory()->create());
+        $this->post('/api/posts', [
             'message' => 'Text'
-        ];
-        $response = $this->put('/api/posts/'.self::OTHER_POST_ID, $data);
-        $response->assertStatus(403);
+        ])->assertStatus(201);
     }
 
-    public function test_update_failure_missing_data()
+    public function test_CanNotPostWithoutBody()
     {
-        $this->be(User::find(self::MY_USER_ID));
-        $data = [];
-        $response = $this->put('/api/posts/'.self::MY_POST_ID, $data);
-        $response->assertStatus(302);
+        $this->be(User::factory()->create());
+        $this->post('/api/posts', )
+            ->assertStatus(302);
     }
 
-    public function test_update_success()
+    public function test_CanUpdatePost()
     {
-        $this->be(User::find(self::MY_USER_ID));
-        $data = [
+        $user = User::factory()->create();
+        $post = $user->posts()->create([
+            "message" => "Before"
+        ]);
+        $this->be($user);
+        $this->put('/api/posts/'.$post->id, [
+            'message' => 'After'
+        ])->assertStatus(200)
+            ->assertJsonPath("message", "After");
+    }
+
+    public function test_CanNotUpdateWithoutBody()
+    {
+        $user = User::factory()->create();
+        $post = $user->posts()->create([
+            "message" => "Before"
+        ]);
+        $this->be($user);
+        $this->put('/api/posts/'.$post->id)
+            ->assertStatus(302);
+    }
+
+    public function test_CanNotUpdateOthersPost()
+    {
+        $user = User::factory()->create();
+        $otherUser = User::factory()->create();
+        $post = $otherUser->posts()->create([
+            "message" => "Before"
+        ]);
+        $this->be($user);
+        $this->put('/api/posts/'.$post->id, [
             'message' => 'Text'
-        ];
-        $response = $this->put('/api/posts/'.self::MY_POST_ID, $data);
-        $response->assertStatus(200);
+        ])->assertStatus(403);
     }
 
-    public function test_store_success()
+    public function test_CanDeletePost()
     {
-        $this->be(User::find(self::MY_USER_ID));
-        $data = [
-            'message' => 'Text'
-        ];
-        $response = $this->post('/api/posts', $data);
-        $response->assertStatus(201);
+        $user = User::factory()->create();
+        $this->be($user);
+        $post = $user->posts()->create([
+            "message" => "Before"
+        ]);
+        $this->delete('/api/posts/'.$post->id)
+            ->assertStatus(204);
     }
 
-    public function test_store_failure_missing_data()
+    public function test_CanNotDeleteOthersPost()
     {
-        $this->be(User::find(self::MY_USER_ID));
-        $data = [];
-        $response = $this->post('/api/posts', $data);
-        $response->assertStatus(302);
+        $user = User::factory()->create();
+        $otherUser = User::factory()->create();
+        $this->be($user);
+        $post = $otherUser->posts()->create([
+            "message" => "Before"
+        ]);
+        $this->delete('/api/posts/'.$post->id)
+            ->assertStatus(403);
     }
 
-    public function test_destroy_failure()
+    public function test_CanSeeSinglePost()
     {
-        $this->be(User::find(self::MY_USER_ID));
-        $response = $this->delete('/api/posts/'.self::OTHER_POST_ID);
-        $response->assertStatus(403);
-    }
+        $user = User::factory()->create();
+        $this->be($user);
+        $post = $user->posts()->create([
+            "message" => "Test"
+        ]);
 
-    public function test_destroy_success()
-    {
-        $this->be(User::find(self::MY_USER_ID));
-        $response = $this->delete('/api/posts/'.self::MY_POST_ID);
-        $response->assertStatus(204);
+        $this->get('/api/posts/'.$post->id)
+            ->assertStatus(200);
+
+        $otherUser = User::factory()->create();
+        $otherPost = $otherUser->posts()->create([
+            "message" => "Test"
+        ]);
+
+        $this->get('/api/posts/'.$otherPost->id)
+            ->assertStatus(200);
     }
 }
