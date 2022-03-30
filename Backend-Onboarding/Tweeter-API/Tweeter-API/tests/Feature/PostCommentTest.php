@@ -20,18 +20,22 @@ class PostCommentTest extends TestCase
         $this->seed();
     }
 
-    public function test_index_success()
-    {
-        $user = User::find(self::MY_USER_ID);
-        $this->be($user);
-        $this->get("/api/posts/$user->id/comments")
-            ->assertStatus(200);
-    }
 
-    public function test_index_failure_non_existing_post()
+    public function test_CanReadCommentsByPost()
     {
-        $this->be(User::find(self::MY_USER_ID));
-        $this->get('/api/posts/'.self::NOT_EXISTING_ID.'/comments')
-            ->assertStatus(404);
+        $user = User::factory()->create();
+        $post = $user->posts()->create([
+            "message" => "MyPost",
+        ]);
+        for($i = 0; $i < 10; $i++){
+            $post->comments()->create([
+                "message" => $i,
+                "user_id" => $user->id,
+            ]);
+        }
+        $this->be($user);
+        $this->get("/api/posts/$post->id/comments")
+            ->assertOk()
+            ->assertJsonCount(10);
     }
 }
