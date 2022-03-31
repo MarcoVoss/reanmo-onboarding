@@ -3,6 +3,7 @@
 use App\Http\Controllers\CommentLikesController;
 use App\Http\Controllers\CommentsController;
 use App\Http\Controllers\FollowedController;
+use App\Http\Controllers\PasswordResetController;
 use App\Http\Controllers\PostImageController;
 use App\Http\Controllers\ProfileImageController;
 use App\Http\Controllers\ProfilesController;
@@ -40,4 +41,6 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::post('/logout', [AuthController::class, 'logout']);
 
     Route::get('/search/{name}', [ProfileUtilsController::class, 'search']);
+
+    Route::put("/password-reset", [PasswordResetController::class, "update"]);
 });

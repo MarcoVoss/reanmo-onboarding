@@ -32,7 +32,7 @@ class AuthController extends Controller
             return response('Bad Credentials', 401);
 
         $token = $user->createToken('token');
-        return response()->json(LoginResource::make($user, $token), 200);
+        return response()->json(LoginResource::make($user, $token));
     }
 
     public function logout() {

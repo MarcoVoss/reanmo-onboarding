@@ -5,14 +5,12 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rules\Password;
 
-class UserUpdateRequest extends FormRequest
+class PasswordResetRequest extends FormRequest
 {
     public function rules()
     {
         return [
-            'name' => 'string',
-            'email' => 'email|unique:users,email',
-            'image_id' => 'int'
-        ];
+            'current' => ['required'],
+            'password' => ['required', 'confirmed', Password::defaults()],        ];
     }
 }
