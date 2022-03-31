@@ -16,7 +16,37 @@ class PostCommentTest extends TestCase
         parent::setUp();
         $this->seed();
     }
-    
+
+    public function test_CanCreateCommentOnExistingPost()
+    {
+        $user = User::factory()->create();
+        $post = $user->posts()->create([
+            "message" => "Test"
+        ]);
+
+        $this->be($user);
+        $this->post('/api/posts/'.$post->id.'/comments', [
+            'message' => 'Test',
+        ])->assertCreated()
+            ->assertJsonStructure([
+                "message",
+                "user"
+            ])
+            ->assertJsonPath("likes", 0)
+            ->assertStatus(201);
+    }
+
+    public function test_CantStoreWithMissingBody()
+    {
+        $user = User::factory()->create();
+        $this->be($user);
+        $post = $user->posts()->create([
+            "message" => "Test"
+        ]);
+        $this->post('/api/posts/'.$post->id.'/comments')
+            ->assertStatus(302);
+    }
+
     public function test_CanReadCommentsByPost()
     {
         $user = User::factory()->create();

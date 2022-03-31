@@ -10,7 +10,6 @@ class CommentStoreRequest extends FormRequest
     {
         return [
             'message' => 'required|string',
-            'post_id' => 'required|exists:posts,id'
         ];
     }
 }

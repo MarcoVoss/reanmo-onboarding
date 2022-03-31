@@ -20,12 +20,14 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::apiResource("posts", PostsController::class)
         ->except("index");
     Route::get("/posts/{post}/comments", [PostCommentsController::class, "index"]);
+    Route::post("/posts/{post}/comments", [PostCommentsController::class, "store"]);
+
     Route::put("/posts/{post}/image", [PostImageController::class, 'update']);
     Route::post("/posts/{post}/like", [PostLikesController::class, "store"]);
 
     Route::post("/comments/{comment}/like", [CommentLikesController::class, "store"]);
     Route::apiResource("comments", CommentsController::class)
-        ->except(['index', 'show']);
+        ->except(['index', 'show', 'store']);
 
     Route::get("/profile/home", [ProfileUtilsController::class, "home"]);
     Route::get("/profile/news", [ProfileUtilsController::class, "news"]);

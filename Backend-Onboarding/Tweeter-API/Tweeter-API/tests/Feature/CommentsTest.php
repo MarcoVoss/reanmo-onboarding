@@ -62,33 +62,6 @@ class CommentsTest extends TestCase
             ->assertStatus(403);
     }
 
-    public function test_CanCreateCommentOnExistingPost()
-    {
-        $user = User::factory()->create();
-        $post = $user->posts()->create([
-            "message" => "Test"
-        ]);
-
-        $this->be($user);
-        $this->post('/api/comments', [
-            'post_id' => $post->id,
-            'message' => 'Test',
-        ])->assertCreated()
-            ->assertJsonStructure([
-                "message",
-                "user"
-            ])
-            ->assertJsonPath("likes", 0)
-            ->assertStatus(201);
-    }
-
-    public function test_CantStoreWithMissingBody()
-    {
-        $this->be(User::factory()->create());
-        $this->post('/api/comments')
-            ->assertStatus(302);
-    }
-
     public function test_CanUpdateComment()
     {
         $user = User::factory()->create();

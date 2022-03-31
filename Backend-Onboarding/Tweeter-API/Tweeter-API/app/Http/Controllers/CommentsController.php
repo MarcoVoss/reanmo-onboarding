@@ -17,16 +17,6 @@ class CommentsController extends Controller
         $this->middleware('can:delete,comment')->only('destroy');
     }
 
-    public function store(CommentStoreRequest $request)
-    {
-        $fields = $request->validated();
-        $post = Post::find($fields['post_id']);
-        $fields['user_id'] = auth()->id();
-        $comment = $post->comments()->create($fields);
-        $comment->load(['likes', 'user']);
-        return response()->json(CommentResource::make($comment), 201);
-    }
-
     public function update(CommentUpdateRequest $request, Comment $comment)
     {
         $comment->load(['likes', 'user']);
