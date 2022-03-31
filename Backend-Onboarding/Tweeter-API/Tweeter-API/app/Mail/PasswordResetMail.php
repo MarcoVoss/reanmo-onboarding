@@ -14,7 +14,7 @@ class PasswordResetMail extends Mailable
     public function build()
     {
         return  $this->from('mail@example.com', 'Mailtrap')
-            ->subject(env("APP_NAME").": Password reset information")
+            ->subject(config("mail.content.main_title").": Password reset information")
             ->markdown('password_reset');
     }
 }

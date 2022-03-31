@@ -114,4 +114,8 @@ return [
         ],
     ],
 
+    'content' => [
+        'main_title' => 'Laravel-Mail'
+    ]
+
 ];
