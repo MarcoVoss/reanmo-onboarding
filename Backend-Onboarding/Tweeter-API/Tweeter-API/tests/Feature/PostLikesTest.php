@@ -31,5 +31,6 @@ class PostLikesTest extends TestCase
         $this->post('/api/posts/'.$post->id.'/like')
             ->assertStatus(201)
             ->assertJsonPath("likes", 0);
+        self::assertNotNull($user->postLikes);
     }
 }

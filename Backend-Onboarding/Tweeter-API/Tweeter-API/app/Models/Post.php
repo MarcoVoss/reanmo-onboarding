@@ -21,7 +21,7 @@ class Post extends Model
                 $query->select('user_users.user_id')
                     ->from('user_users')
                     ->whereRaw("user_users.follower_id = $id and user_users.user_id = posts.user_id");
-        })->get();
+        })->paginate(15);
     }
 
     public function user() {

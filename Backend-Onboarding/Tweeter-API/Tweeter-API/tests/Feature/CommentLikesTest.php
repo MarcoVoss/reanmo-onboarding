@@ -50,5 +50,6 @@ class CommentLikesTest extends TestCase
                 ],
                 'likes' => 0,
             ]);
+        self::assertNotNull($user->commentLikes);
     }
 }

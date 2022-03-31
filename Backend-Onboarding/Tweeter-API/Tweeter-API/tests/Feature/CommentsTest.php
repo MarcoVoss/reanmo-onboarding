@@ -17,6 +17,20 @@ class CommentsTest extends TestCase
         $this->seed();
     }
 
+    public function test_PostBelongsToIsWorking()
+    {
+        $user = User::factory()->create();
+        $comment = $user->posts()->create([
+            "user_id" => $user->id,
+            "message" => "Test"
+        ])->comments()->create([
+            "user_id" => $user->id,
+            "message" => "Test"
+        ]);
+        self::assertNotNull($comment->post);
+        self::assertNotNull($user->comments);
+    }
+
     public function test_CanDestroyOwnComment()
     {
         $user = User::factory()->create();

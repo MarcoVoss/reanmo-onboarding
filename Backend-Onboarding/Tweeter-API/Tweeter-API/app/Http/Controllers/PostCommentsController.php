@@ -10,6 +10,6 @@ class PostCommentsController extends Controller
 {
     public function index(Post $post)
     {
-        return response()->json(CommentResource::collection($post->comments()->get()));
+        return response()->json(CommentResource::collection($post->comments()->paginate(15)));
     }
 }

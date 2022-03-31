@@ -11,7 +11,7 @@ class ProfileUtilsController extends Controller
 {
     public function search(String $name)
     {
-        $users = User::latest()->filterName($name)->with('follower')->get();
+        $users = User::latest()->filterName($name)->with('follower')->paginate(15);
         return response()->json(UserResource::collection($users));
     }
 
@@ -23,6 +23,6 @@ class ProfileUtilsController extends Controller
 
     public function home()
     {
-        return response()->json(PostResource::collection(auth()->user()->posts));
+        return response()->json(PostResource::collection(auth()->user()->posts()->paginate(15)));
     }
 }
