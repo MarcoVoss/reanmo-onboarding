@@ -15,6 +15,10 @@ class Post extends Model
         'image_id'
     ];
 
+    protected $casts = [
+        'id' => 'int',
+    ];
+
     public static function getByFollows($id) {
         return Post::with(['user', 'comments'])
             ->whereExists(function ($query) use ($id){

@@ -15,6 +15,10 @@ class Comment extends Model
         'post_id'
     ];
 
+    protected $casts = [
+        'id' => 'int'
+    ];
+
     public function user()
     {
         return $this->belongsTo(User::class);
