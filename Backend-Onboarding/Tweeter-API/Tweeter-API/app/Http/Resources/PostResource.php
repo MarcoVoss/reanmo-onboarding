@@ -18,15 +18,11 @@ class PostResource extends JsonResource
             'image' => ImageResource::make($this->image),
             'message' => $this->message,
             'created_at' => $this->created_at,
-            'liked' =>  $this->whenLoaded('likes', function () {
+            'is_liked' =>  $this->whenLoaded('likes', function () {
                 return $this->likes->where('pivot.user_id', '=', auth()->id())->isNotEmpty();
             }),
-            'likes' =>  $this->whenLoaded('likes', function () {
-                return $this->likes->count();
-            }),
-            'comments' => $this->whenLoaded('comments', function () {
-                return $this->comments->count();
-            }),
+            'likes_count' =>  $this->likes_count,
+            'comments_count' => $this->comments_count,
         ];
     }
 }

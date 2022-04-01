@@ -18,7 +18,8 @@ class PostCommentsController extends Controller
         $fields = $request->validated();
         $fields['user_id'] = auth()->id();
         $comment = $post->comments()->create($fields);
-        $comment->load(['likes', 'user']);
+        $comment->loadCount(['likes']);
+        $comment->load(['user']);
         return response()->json(CommentResource::make($comment), 201);
     }
 }

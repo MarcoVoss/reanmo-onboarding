@@ -32,7 +32,6 @@ class PostCommentTest extends TestCase
                 "message",
                 "user"
             ])
-            ->assertJsonPath("likes", 0)
             ->assertStatus(201);
     }
 

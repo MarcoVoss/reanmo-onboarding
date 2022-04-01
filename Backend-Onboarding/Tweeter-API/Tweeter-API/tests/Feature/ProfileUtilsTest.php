@@ -11,8 +11,6 @@ class ProfileUtilsTest extends TestCase
 {
     use DatabaseMigrations, RefreshDatabase;
 
-    private const MY_USER_ID = 1;
-
     public function setUp(): void
     {
         parent::setUp();

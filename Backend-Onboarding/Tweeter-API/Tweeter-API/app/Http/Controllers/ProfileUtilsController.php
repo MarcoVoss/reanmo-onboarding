@@ -17,7 +17,7 @@ class ProfileUtilsController extends Controller
 
     public function news()
     {
-        $posts = Post::getByFollows(auth()->id());
+        $posts = Post::getByFollows(auth()->id())->loadCount(['likes', 'comments']);
         return response()->json(PostResource::collection($posts));
     }
 

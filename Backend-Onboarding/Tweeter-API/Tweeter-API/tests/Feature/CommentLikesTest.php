@@ -38,7 +38,7 @@ class CommentLikesTest extends TestCase
                 'user' => [
                     "id" => $comment->user->id,
                 ],
-                'likes' => 1,
+                'likes_count' => 1,
             ]);
         $this->post('/api/comments/'.$comment->id.'/like')
             ->assertStatus(201)
@@ -48,7 +48,7 @@ class CommentLikesTest extends TestCase
                 'user' => [
                     "id" => $comment->user->id,
                 ],
-                'likes' => 0,
+                'likes_count' => 0,
             ]);
         self::assertNotNull($user->commentLikes);
     }

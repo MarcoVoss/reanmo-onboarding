@@ -19,7 +19,8 @@ class CommentsController extends Controller
 
     public function update(CommentUpdateRequest $request, Comment $comment)
     {
-        $comment->load(['likes', 'user']);
+        $comment->loadCount(['likes']);
+        $comment->load(['user']);
         $comment->update($request->validated());
         return response()->json(CommentResource::make($comment));
     }

@@ -16,9 +16,7 @@ class CommentResource extends JsonResource
             'id' => $this->id,
             'message' => $this->message,
             'user' => UserResource::make($this->whenLoaded('user')),
-            'likes' => $this->whenLoaded('likes', function () {
-                return $this->likes->count();
-            }),
+            'likes_count' => $this->likes_count,
         ];
     }
 }

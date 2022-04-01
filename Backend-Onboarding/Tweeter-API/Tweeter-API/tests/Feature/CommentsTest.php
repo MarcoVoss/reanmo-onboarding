@@ -76,13 +76,13 @@ class CommentsTest extends TestCase
         $data = [
             'message' => 'Test',
         ];
-        $this->put('/api/comments/'.$comment->id, $data)
-            ->assertOk()
+        $response = $this->put('/api/comments/'.$comment->id, $data);
+        $response->assertOk()
             ->assertJsonStructure([
                 "message",
-                "user"
-            ])
-            ->assertJsonPath("likes", $comment->likes->count());
+                "user",
+                "likes_count"
+            ]);
     }
 
     public function test_CantUpdateWithMissingBody()
