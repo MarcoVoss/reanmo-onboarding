@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\Image;
 use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -42,5 +43,17 @@ class ProfileImageTest extends TestCase
         $this->put('/api/profile/image', [
             'image' => UploadedFile::fake()->create("Test.txt"),
         ])->assertStatus(302);
+    }
+
+    public function test_ImageToUsersRelationWorks()
+    {
+        $user = User::factory()->create();
+        $this->be($user);
+        $image = Image::create([
+            "path" => "Leer",
+        ]);
+        $user->image()->associate($image);
+        $user->save();
+        $this->assertCount(1, $image->users);
     }
 }

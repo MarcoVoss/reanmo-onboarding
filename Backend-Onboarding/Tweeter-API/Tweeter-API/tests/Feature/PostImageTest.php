@@ -40,11 +40,12 @@ class PostImageTest extends TestCase
             "message" => "Test"
         ]);
         $this->be($user);
-        $post->image()->create([
-            "path" => "",
+        $image = Image::create([
+            "path" => "Leer",
         ]);
-        $post->refresh();
-        self::assertTrue($post->image->posts->count() == 1);
+        $post->image()->associate($image);
+        $post->save();
+        $this->assertCount(1, $image->posts);
     }
 
     public function test_CanNotUpdateOthersImage()
