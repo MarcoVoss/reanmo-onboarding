@@ -12,4 +12,14 @@ class Image extends Model
     protected $fillable = [
         'path',
     ];
+
+    public function users()
+    {
+        return $this->hasMany(User::class);
+    }
+
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
+    }
 }
