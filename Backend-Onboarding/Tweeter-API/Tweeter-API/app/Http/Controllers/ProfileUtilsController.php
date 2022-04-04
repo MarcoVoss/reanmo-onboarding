@@ -18,11 +18,16 @@ class ProfileUtilsController extends Controller
     public function news()
     {
         $posts = Post::getByFollows(auth()->id())->loadCount(['likes', 'comments']);
+        $posts->loadCount(['likes', 'comments']);
+        $posts->load(["user", "likes", "image"]);
         return response()->json(PostResource::collection($posts));
     }
 
     public function home()
     {
-        return response()->json(PostResource::collection(auth()->user()->posts()->paginate(15)));
+        $posts = auth()->user()->posts()->paginate(15);
+        $posts->loadCount(['likes', 'comments']);
+        $post->load(["user", "likes", "image"]);
+        return response()->json(PostResource::collection($posts));
     }
 }

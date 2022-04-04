@@ -11,7 +11,7 @@ class PostLikesController extends Controller
     {
         $post->likes()->toggle(auth()->user());
         $post->loadCount(['likes', 'comments']);
-        $post->load(["user"]);
+        $post->load(["user", "likes", "image"]);
         return response()->json(PostResource::make($post), 201);
     }
 }

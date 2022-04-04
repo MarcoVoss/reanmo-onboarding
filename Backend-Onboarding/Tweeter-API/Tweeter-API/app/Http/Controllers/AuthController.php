@@ -19,7 +19,7 @@ class AuthController extends Controller
             'email' => $fields['email'],
             'password' => bcrypt($fields['password']),
         ]);
-
+        $user->load('image', 'follower');
         return response()->json(UserResource::make($user), 201);
     }
 

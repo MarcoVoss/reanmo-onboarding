@@ -13,11 +13,13 @@ class PasswordResetController extends Controller
 {
     public function update(PasswordResetRequest $request)
     {
+        $user = auth()->user();
         $fields = $request->validated();
-        if(!Hash::check($fields['current'], auth()->user()->password))
+        if(!Hash::check($fields['current'], $user->password))
             return response('Bad Credentials', 401);
-        auth()->user()->password = bcrypt($fields['password']);
-        PasswordMailService::sendPasswordResetNotification(auth()->user()->email);
-        return response()->json(UserResource::make(auth()->user()));
+        $user->password = bcrypt($fields['password']);
+        PasswordMailService::sendPasswordResetNotification($user->email);
+        $user->load('image', 'follower');
+        return response()->json(UserResource::make($user));
     }
 }

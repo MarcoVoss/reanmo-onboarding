@@ -23,21 +23,23 @@ class PostsController extends Controller
             'message' => $fields['message'],
             'user_id' => auth()->id(),
         ]);
-
-        $post->load(['likes', 'comments']);
+        $post->loadCount(['likes', 'comments']);
+        $post->load(["user", "likes", "image"]);
         return response(PostResource::make($post), 201);
     }
 
     public function show(Post $post)
     {
-        $post->load(['likes', 'comments']);
+        $post->loadCount('likes', 'comments');
+        $post->load(["user", "likes", "image"]);
         return response()->json(PostResource::make($post));
     }
 
     public function update(PostUpdateRequest $request, Post $post)
     {
         $post->update($request->validated());
-        $post->load(['likes', 'comments']);
+        $post->loadCount(['likes', 'comments']);
+        $post->load(["user", "likes", "image"]);
         return response()->json(PostResource::make($post));
     }
 
